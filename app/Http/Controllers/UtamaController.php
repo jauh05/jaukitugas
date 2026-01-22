@@ -10,50 +10,55 @@ use App\Models\Admin;
 
 class UtamaController extends Controller
 {
-    function index(){
+    function index()
+    {
         $bulanSekarang = date('m');
         $tahunSekarang = date('Y');
 
-        $data['jumlah_costomer_belum'] = Costomer::where('selesaikan','belum')->whereMonth('tanggal',$bulanSekarang)->whereYear('tanggal',$tahunSekarang)->count();
-        $data['komentar'] = Komentar::all(); 
+        $data['jumlah_costomer_belum'] = Costomer::where('selesaikan', 'belum')->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->count();
+        $data['komentar'] = Komentar::all();
 
-        return view('halUtama',$data);
+        return view('halUtama', $data);
     }
-    function index2(){
-        $data['komentar'] = Komentar::all(); 
+    function index2()
+    {
+        $data['komentar'] = Komentar::all();
 
-        return view('login',$data);
+        return view('login', $data);
     }
 
-    function dologin(Request $request): RedirectResponse{
+    function dologin(Request $request): RedirectResponse
+    {
         $validatedData = $request->validate([
-            'username' => ['required'], 
+            'username' => ['required'],
             'password' => ['required'],
-           
+
         ]);
 
         $username = $request->username;
         $pass = sha1($request->password);
 
-        $user = Admin::where('username',$username)->where('password',$pass)->first();
-        if(empty($user)){
-            return redirect('login')->with('pesan_gagal','password dan username salah');
-        }else{
-            $request->session()->put('id_admin',$user->id_admin);
-            $request->session()->put('username',$user->username);
-            return redirect('dashboard')->with('pesan_berhasil','berhasil login');
+        $user = Admin::where('username', $username)->where('password', $pass)->first();
+        if (empty($user)) {
+            return redirect('login')->with('pesan_gagal', 'password dan username salah');
+        } else {
+            $request->session()->put('id_admin', $user->id_admin);
+            $request->session()->put('username', $user->username);
+            return redirect('dashboard')->with('pesan_berhasil', 'berhasil login');
         }
 
     }
 
-    function logout(Request $request){
-        $request->session()->forget(['id_admin','username']);
+    function logout(Request $request)
+    {
+        $request->session()->forget(['id_admin', 'username']);
         $request->session()->flush();
-        return redirect('login')->with('pesan_gagal','berhasil logout');
+        return redirect('login')->with('pesan_berhasil', 'berhasil logout');
     }
 
-    function store(Request $request){
-        
+    function store(Request $request)
+    {
+
         $nama = $request->nama;
         $tentang = $request->tentang;
         $komentar = $request->komentar;
@@ -62,9 +67,14 @@ class UtamaController extends Controller
         $masuk['tentang'] = $tentang;
         $masuk['komentar'] = $komentar;
 
-      
-        Komentar::create($masuk);
-        return redirect('/utama');
 
+        Komentar::create($masuk);
+        return redirect('/')->with('pesan_berhasil', 'Terima kasih! Komentar Anda berhasil dikirim.');
+
+    }
+
+    function pricelist()
+    {
+        return view('pricelist');
     }
 }

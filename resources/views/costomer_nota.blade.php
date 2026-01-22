@@ -1,263 +1,206 @@
 @extends('dashboard')
 @section('info')
-<div class="container mt-5">
-    @if (session('pesan_berhasil'))
-    <script>
-        Swal.fire({
-            position: "top-center",
-            icon: "success",
-            html: "<p style='color: #28a745; font-size: 18px;'>{{ session('pesan_berhasil') }}</p>",
-            showConfirmButton: false,
-            timer: 2500,
-            customClass: {
-            popup: 'swal-borderless'
-        }
-    });
-    </script>
-    @endif
-    @if (session('pesan_gagal'))
-    <script>
-        Swal.fire({
-            position: "top-center",
-            icon: "error",
-            html: "<p style='color: #dc3545; font-size: 18px;'>{{ session('pesan_gagal') }}</p>",
-            showConfirmButton: false,
-            timer: 2500,
-            customClass: {
-            popup: 'swal-borderless'
-        }
-    });
-    </script>
-    @endif
-    <div class="row justify-content-center">
-        <div class="card col-md-8 shadow-sm border" id="notaCard" style="border-radius: 15px; overflow: hidden;">
-            <div class="card-header bg-dark text-center text mt-3" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                <h4 class="mb-0 text-white">
-                    <img src="{{ asset('asset/jlogo.svg') }}" alt=""> Nota Jauki Tugas
-                </h4>
-            </div>
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="badge bg-warning text-dark">
-                        Nama : <i class="bi bi-person"></i> {{ $costomer['nama'] }}
-                    </span>
-                    <span class="badge bg-info text-dark">
-                        Tanggal :  <i class="bi bi-calendar"></i> {{ $costomer['tanggal'] }}
-                    </span>
-                </div>
+    <div class="container mt-5">
+        @if (session('pesan_berhasil'))
+            <script>
+                Swal.fire({
+                    position: "top-center",
+                    icon: "success",
+                    title: "Berhasil",
+                    text: "{{ session('pesan_berhasil') }}",
+                    showConfirmButton: false,
+                    timer: 2500,
+                    background: '#fff',
+                    color: '#2d3436'
+                });
+            </script>
+        @endif
 
-                <table class="table table-striped text-center">
-                    <thead class="table-light">
-                        <tr>
-                            <th><i class="bi bi-cart"></i> Item</th>
-                            <th><i class="bi bi-journal"></i> Hal</th>
-                            <th><i class="bi bi-cash"></i> Harga</th>
-                            <th><i class="bi bi-cash-stack"></i> Jumlah</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($nota as $item => $value)
-                            <tr>
-                                <td>{{ $value['nama_produk'] }}</td>
-                                <td>{{ $value['jumlah'] }}</td>
-                                <td>{{ number_format($value['harga'])  }}</td>
-                                <td>{{ number_format($value['total_harga'])  }}</td>
-                            </tr>
-                        @endforeach
-                        
-                    </tbody>
-                </table>
-
-                <div class="text-center mt-4">
-                    <h3>
-                        <span class="badge bg-dark text-white px-4 py-3 shadow-lg" style="font-size: 1rem; border-radius: 15px;">
-                            <i class="bi bi-wallet"></i> Total : Rp {{ number_format($costomer['total'], 0, ',', '.') }}
-                        </span>
-                    </h3>
+        <!-- Action Buttons -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-8 d-flex justify-content-between">
+                <a href="{{ url('dashboard/costomer') }}" class="btn btn-outline-secondary rounded-pill px-4"><i class="bi bi-arrow-left me-2"></i>Kembali</a>
+                <div class="d-flex gap-2">
+                     <button class="btn btn-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#addItemModal">
+                        <i class="bi bi-plus-lg me-2"></i>Tambah Item
+                    </button>
+                    <button class="btn btn-dark rounded-pill px-4" id="btnCapture">
+                        <i class="bi bi-download me-2"></i>Download JPG
+                    </button>
                 </div>
-            </div>
-            <div class="card-footer text-center bg-light py-2 mb-3" style="border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
-                <p class="mb-2 text-muted" style="font-size: 0.85rem;">
-                    Setiap tugas selesai, kami berikan <strong>1x free revisi</strong> jika sudah mengikuti media sosial kami.
-                </p>
-                <div class="d-flex justify-content-center gap-3">
-                    <a href="https://instagram.com/jaukitugas" class="text-dark text-decoration-none" target="_blank">
-                        <i class="bi bi-instagram"></i> <span style="font-size: 0.85rem;">@jaukitugas</span>
-                    </a>
-                    <a href="https://wa.me/6285184771744" class="text-dark text-decoration-none" target="_blank">
-                        <i class="bi bi-whatsapp"></i> <span style="font-size: 0.85rem;">0851-8477-1744</span>
-                    </a>
-                </div>
-            </div>
-        </div> 
-        {{-- button --}}
-        <div class="col-md-8 mt-3 mb-3 d-flex justify-content-between align-items-center text-center">
-            <div>
-                <a href="{{ url('dashboard/costomer') }}" class="btn btn-danger"><i class="bi bi-backspace-fill"></i> Batal</a>
-                <button data-bs-toggle="modal" data-bs-target="#exampleModal" 
-                class="btn btn-primary tambah_nota" name="tambah_nota"
-                id = "{{ $costomer['id_costomer'] }}"
-                ><i class="bi bi-bag-plus-fill"> Tambah</i></button>
-                <button class="btn btn-info" name="edit_nota"> <i class="bi bi-pencil-fill"> Edit Nota</i></button>
-            </div>
-            <div>
-                <button class="btn btn-warning btn-sm px-3 py-2 fw-bold shadow-sm" id="btnCapture">
-                    <i class="bi bi-printer"></i> Cetak Nota
-                </button>
             </div>
         </div>
-    </div>
-{{-- batas --}}
-    </div>
 
-   
-    {{-- data nota untuk edit dan hapus --}}
-    <div class="row justify-content-center mb-5">
-    <div class="card col-md-8" style="display: none" id="muncul_edit">
-        <div class="card-header mt-3">Data Nota</div>
-        <div class="card-body">
-            <table class="table table-striped table-light text-center text-small">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th><i class="bi bi-cart"></i> Item</th>
-                        <th><i class="bi bi-journal"></i> Hal</th>
-                        <th><i class="bi bi-cash"></i> Harga</th>
-                        <th><i class="bi bi-cash-stack"></i> Jumlah</th>
-                        <th>action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($nota as $key => $item)
-                    <tr>
-                            <td>{{ $key+1 }}</td>
-                            <td>{{ $item['nama_produk'] }}</td>
-                            <td>{{ $item['jumlah'] }}</td>
-                            <td>{{ $item['harga'] }}</td>
-                            <td>{{ $item['total_harga'] }}</td>
-                            <td>
-                                <form action="{{ 'hapus/harga/'.$item['id_nota'] }}" method="post">
-                                @method('delete')
-                                @csrf
-                                    <button class="btn btn-danger btn-sm"><i class="bi bi-trash2"></i> </button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-        </div>
-    </div>
-</div>
+        <!-- Professional Invoice Card -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="bg-white shadow-lg p-0" id="notaCard" style="min-height: 800px; position: relative;">
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Nota</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form action="{{ url('tambah/harga/'.$costomer['id_costomer']) }}" method="post" id="modal_tambah_nota">
-            @method('post')
-            @csrf
-                <div>
-                    <h6>id costomer : <span class="badge text-bg-dark" nama = "id">{{ $costomer['id_costomer'] }}</span></h6>
-                </div>
-                <div class="row">
-                    <div class="mb-3 col-md-12">
-                        <label for="">Produk</label>
-                        <input type="text" name="nama_produk" class="form-control @error('nama_produk') is-invalid @enderror" value="{{ old('nama_produk') }}">
-                        @error('nama_produk')
-                        <div class="text-danger small">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="col-md-3">
-                        <div class="mb-3">
-                            <label for="">Jumlah</label>
-                            <input type="number" class="form-control @error('jumlah') is-invalid @enderror" name="jumlah" value="{{ old('jumlah') }}">
-                            @error('jumlah')
-                            <div class="text-danger small">
-                                {{ $message }}
+                    <!-- Ribbon Decoration -->
+                    <div class="position-absolute top-0 start-0 w-100" style="height: 6px; background: linear-gradient(90deg, #4834d4, #686de0);"></div>
+
+                    <div class="p-5">
+                        <!-- Header -->
+                        <div class="d-flex justify-content-between align-items-start mb-5">
+                            <div>
+                                <div class="d-flex align-items-center gap-3 mb-2">
+                                    <img src="{{ asset('asset/jlogo.svg') }}" alt="Logo" width="50">
+                                    <h2 class="fw-bold m-0" style="color: #4834d4; letter-spacing: -1px;">JAUKI TUGAS</h2>
+                                </div>
+                                <p class="text-muted small mb-0">Solusi Akademik Terpercaya</p>
+                                <p class="text-muted small">0851-8477-1744 | @jaukitugas</p>
                             </div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-9">
-                        <div class="mb-3">
-                            <label for="">Harga</label>
-                            <input type="number" class="form-control @error('harga') is-invalid @enderror" name="harga" value="{{ old('harga') }}">
-                            @error('harga')
-                            <div class="text-danger small">
-                                {{ $message }}
+                            <div class="text-end">
+                                <h1 class="fw-bold text-light-gray display-6" style="color: #dfe6e9;">INVOICE</h1>
+                                <p class="fw-bold mb-1">#INV-{{ str_pad($costomer['id_costomer'], 4, '0', STR_PAD_LEFT) }}</p>
+                                <p class="text-muted small">{{ \Carbon\Carbon::parse($costomer['created_at'])->format('d F Y') }}</p>
                             </div>
-                            @enderror
                         </div>
+
+                        <!-- Bill To Info -->
+                        <div class="row mb-5">
+                            <div class="col-6">
+                                <h6 class="text-uppercase text-muted small fw-bold mb-3">Tagihan Untuk:</h6>
+                                <h4 class="fw-bold mb-1">{{ $costomer['nama'] }}</h4>
+                                <p class="text-muted mb-0">ID: #{{ $costomer['id_costomer'] }}</p>
+                                <p class="text-muted mb-0">Metode: <span class="badge bg-primary bg-opacity-10 text-primary">{{ $costomer['nama_metode'] ?? 'Transfer Update' }}</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Items Table -->
+                        <div class="table-responsive mb-4">
+                            <table class="table table-borderless">
+                                <thead style="background-color: #f8f9fa;">
+                                    <tr>
+                                        <th class="py-3 ps-4 text-uppercase small text-muted">Deskripsi Item</th>
+                                        <th class="py-3 text-center text-uppercase small text-muted">Qty</th>
+                                        <th class="py-3 text-center text-uppercase small text-muted">Harga Satuan</th>
+                                        <th class="py-3 pe-4 text-end text-uppercase small text-muted">Total</th>
+                                        <th class="py-3 text-uppercase small text-muted"></th> <!-- Aksi -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($nota as $item)
+                                        <tr class="border-bottom">
+                                            <td class="ps-4 py-3 fw-medium">{{ $item['nama_produk'] }}</td>
+                                            <td class="text-center py-3">{{ $item['jumlah'] }}</td>
+                                            <td class="text-center py-3">Rp {{ number_format($item['harga']) }}</td>
+                                            <td class="pe-4 text-end py-3 fw-bold">Rp {{ number_format($item['total_harga']) }}</td>
+                                            <td class="py-3 text-end action-cell">
+                                                <form action="{{ url('costomer/' . $costomer['id_costomer'] . '/hapus/harga/' . $item['id_nota']) }}" method="post" class="d-inline">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button class="btn btn-link text-danger p-0 delete-btn"><i class="bi bi-x-circle"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Total Section -->
+                        <div class="row justify-content-end">
+                            <div class="col-md-5">
+                                <div class="bg-light p-4 rounded-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="text-muted">Subtotal</span>
+                                        <span class="fw-bold">Rp {{ number_format($costomer['total']) }}</span>
+                                    </div>
+                                    <div class="border-top my-2"></div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-bold fs-5 text-primary">Total Harus Dibayar</span>
+                                        <span class="fw-bold fs-4 text-primary">Rp {{ number_format($costomer['total']) }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="mt-5 pt-5 text-center text-muted small">
+                            <p class="mb-1">Terima kasih telah mempercayakan tugas Anda kepada Jauki Tugas.</p>
+                            <p>Harap lakukan pembayaran secepatnya agar pesanan dapat segera diproses.</p>
+                        </div>
+
                     </div>
                 </div>
-                <div class="mb-3">
-                    <h6>Total Harga : <span class="badge text-bg-dark" id="total_harga"></span></h6>
-                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button class="btn btn-primary">Tambah</button>
-            </div>
-        </form>
         </div>
     </div>
-  </div>
 
+    <!-- Add Item Modal -->
+    <div class="modal fade" id="addItemModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold">Tambah Item Tagihan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                     <form action="{{ url('tambah/harga/' . $costomer['id_costomer']) }}" method="post" id="addItemForm">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted">Nama Layanan/Produk</label>
+                            <input type="text" name="nama_produk" class="form-control" placeholder="Contoh: Bab 1-3 Skripsi" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                 <label class="form-label small fw-bold text-muted">Jumlah</label>
+                                 <input type="number" name="jumlah" class="form-control" value="1" id="inputQty" required>
+                            </div>
+                            <div class="col-8">
+                                 <label class="form-label small fw-bold text-muted">Harga Satuan</label>
+                                 <input type="number" name="harga" class="form-control" id="inputHarga" required>
+                            </div>
+                        </div>
+                        <div class="mt-3 p-3 bg-light rounded text-center">
+                            <small class="text-muted d-block">Est. Total</small>
+                            <h4 class="fw-bold m-0 text-primary" id="estTotal">Rp 0</h4>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mt-4 rounded-pill py-2">Tambahkan ke Nota</button>
+                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        // Live Calculation for Modal
+        const qty = document.getElementById('inputQty');
+        const harga = document.getElementById('inputHarga');
+        const totalDisplay = document.getElementById('estTotal');
 
-<!-- Tambahkan Library html2canvas -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+        function calcTotal() {
+            let q = qty.value || 0;
+            let p = harga.value || 0;
+            let t = q * p;
+            totalDisplay.innerText = "Rp " + t.toLocaleString('id-ID');
+        }
 
-<script>
-    document.getElementById("btnCapture").addEventListener("click", function() {
-        let cardElement = document.getElementById("notaCard"); // Tangkap elemen card
+        qty.addEventListener('input', calcTotal);
+        harga.addEventListener('input', calcTotal);
 
-        html2canvas(cardElement, {
-            scale: 3, // Menambah resolusi agar tidak burik
-            useCORS: true, // Mengizinkan elemen dengan gambar eksternal
-            backgroundColor: null // Agar background tetap transparan
-        }).then(canvas => {
-            let imageData = canvas.toDataURL("image/jpeg", 1.0); // Kualitas maksimal
+        // Capture & Download
+        document.getElementById("btnCapture").addEventListener("click", function() {
+            let cardElement = document.getElementById("notaCard");
 
-            // Buat elemen <a> untuk mengunduh gambar
-            let downloadLink = document.createElement("a");
-            downloadLink.href = imageData;
-            downloadLink.download = "Nota_Jauki_Tugas.jpg";
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
+            // Hide delete buttons before capture
+            document.querySelectorAll('.action-cell').forEach(el => el.style.display = 'none');
+
+            html2canvas(cardElement, {
+                scale: 2, 
+                useCORS: true,
+                backgroundColor: "#ffffff"
+            }).then(canvas => {
+                let link = document.createElement("a");
+                link.href = canvas.toDataURL("image/jpeg", 0.9);
+                link.download = "Invoice_{{ $costomer['nama'] }}.jpg";
+                link.click();
+
+                // Show buttons again
+                document.querySelectorAll('.action-cell').forEach(el => el.style.display = '');
+            });
         });
-    });
-</script>
-<script>
-    $(document).ready(function(){
-        $('button[name = tambah_nota]').click(function(){
-            $id = $(this).attr('id');
-            
-        })
-        $('input[name = harga]').keyup(function(){
-            var harga = $('input[name = harga]').val();
-            var jumlah = $('input[name = jumlah]').val();
-
-            var total_harga = harga * jumlah ;
-
-            $('#total_harga').html(total_harga.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
-        
-       
-        })
-
-        $('button[name = edit_nota]').click(function(){
-            $('#muncul_edit').toggle(300);
-        })
-    })
-    
-</script>
+    </script>
 @endsection
