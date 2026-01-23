@@ -281,7 +281,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light glass-nav sticky-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="#">
+            <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
                 <img src="{{ asset("asset/jlogo.svg") }}" alt="Logo" height="40" class="me-2">
                 <span class="fw-bold fs-3">Jauki<span class="text-primary">Tugas</span></span>
             </a>
@@ -291,16 +291,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Beranda</a>
+                        <a class="nav-link active" href="{{ url('/') }}">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#features">Layanan</a>
+                        <a class="nav-link" href="{{ url('/#features') }}">Layanan</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#process">Cara Kerja</a>
+                        <a class="nav-link" href="{{ url('/#process') }}">Cara Kerja</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#testimonials">Testimoni</a>
+                        <a class="nav-link" href="{{ url('/#testimonials') }}">Testimoni</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link fw-bold text-primary" href="{{ url('/payment') }}">
