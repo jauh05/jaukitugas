@@ -77,4 +77,9 @@ class UtamaController extends Controller
     {
         return view('pricelist');
     }
+
+    function payment()
+    {
+        return view('payment');
+    }
 }

@@ -12,6 +12,7 @@ Route::post('/login/admin', [UtamaController::class, 'dologin']);
 Route::get('/logout', [UtamaController::class, 'logout'])->middleware('cekuser');
 Route::post('/utama/komentar', [UtamaController::class, 'store']);
 Route::get('/pricelist', [UtamaController::class, 'pricelist']);
+Route::get('/payment', [UtamaController::class, 'payment']);
 
 Route::get('/dashboard', [AdminController::class, 'index'])->middleware('cekuser');
 Route::get('/dashboard2', [AdminController::class, 'index2'])->middleware('cekuser');

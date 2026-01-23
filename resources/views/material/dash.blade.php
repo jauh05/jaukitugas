@@ -302,6 +302,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#testimonials">Testimoni</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold text-primary" href="{{ url('/payment') }}">
+                            Info Pembayaran
+                        </a>
+                    </li>
                 </ul>
                 <div class="d-flex align-items-center gap-2">
                     <a href="https://www.instagram.com/jaukitugas" class="btn btn-light rounded-circle shadow-sm"
@@ -364,8 +369,105 @@
         </div>
     </footer>
 
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content glass-card border-0 overflow-hidden">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-primary"><i class="bi bi-wallet2 me-2"></i>Informasi Pembayaran
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 p-lg-5">
+                    <div class="row align-items-center g-4">
+                        <div class="col-md-5 text-center">
+                            <div class="bg-white p-3 rounded-4 shadow-sm d-inline-block">
+                                <img src="{{ asset('asset/qris.jpeg') }}" alt="QRIS Payment" class="img-fluid rounded-3"
+                                    style="max-height: 300px;">
+                            </div>
+                            <small class="d-block text-muted mt-2 fw-bold">Scan QRIS untuk Pembayaran</small>
+                        </div>
+                        <div class="col-md-7">
+                            <div
+                                class="alert alert-primary bg-primary bg-opacity-10 border-0 mb-4 rounded-3 text-primary">
+                                <i class="bi bi-info-circle-fill me-2"></i>Pastikan nominal transfer sesuai dengan
+                                tagihan.
+                            </div>
+
+                            <div class="d-flex flex-column gap-3">
+                                <!-- DANA -->
+                                <div class="bg-white p-3 rounded-4 shadow-sm border-start border-4 border-primary">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/1200px-Logo_dana_blue.svg.png"
+                                            alt="DANA" height="20" class="me-2">
+                                        <span class="fw-bold text-dark">DANA</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-end">
+                                        <div>
+                                            <h5 class="fw-bold mb-0 font-monospace text-dark copy-text" role="button"
+                                                onclick="copyToClipboard('089529104230')">089529104230 <i
+                                                    class="bi bi-copy fs-6 text-muted ms-1"></i></h5>
+                                            <small class="text-muted text-uppercase" style="font-size: 0.75rem;">A.N
+                                                JAUHAR FAUZI ULUL ALBAB</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- SHOPEEPAY -->
+                                <div class="bg-white p-3 rounded-4 shadow-sm border-start border-4 border-warning">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Shopee.svg/2560px-Shopee.svg.png"
+                                            alt="ShopeePay" height="25" class="me-2">
+                                        <span class="fw-bold text-dark">SHOPEEPAY</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-end">
+                                        <div>
+                                            <h5 class="fw-bold mb-0 font-monospace text-dark copy-text" role="button"
+                                                onclick="copyToClipboard('089529104230')">089529104230 <i
+                                                    class="bi bi-copy fs-6 text-muted ms-1"></i></h5>
+                                            <small class="text-muted text-uppercase" style="font-size: 0.75rem;">A.N
+                                                JAU.ID</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0 justify-content-center pb-4">
+                    <small class="text-muted">Simpan bukti transfer untuk konfirmasi pembayaran.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast for Copy -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1060">
+        <div id="copyToast" class="toast align-items-center text-white bg-success border-0" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="bi bi-check-circle me-2"></i>Nomor berhasil disalin!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url('asset/animation.js') }}"></script>
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function () {
+                var toastEl = document.getElementById('copyToast');
+                var toast = new bootstrap.Toast(toastEl);
+                toast.show();
+            }, function (err) {
+                console.error('Could not copy text: ', err);
+            });
+        }
+    </script>
 </body>
 
 </html>
