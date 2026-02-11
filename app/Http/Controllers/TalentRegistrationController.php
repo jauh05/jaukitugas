@@ -36,8 +36,8 @@ class TalentRegistrationController extends Controller
 
         if ($request->hasFile('file_pdf')) {
             $file = $request->file('file_pdf');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs('talent_files', $filename, 'public');
+            // Save to storage/app/public/talent_files
+            $path = $file->store('talent_files', 'public');
             $data['file_pdf'] = $path;
         }
 
@@ -62,6 +62,20 @@ class TalentRegistrationController extends Controller
     {
         $talent = TalentRegistration::findOrFail($id);
         return view('admin.talent_show', compact('talent'));
+    }
+
+    /**
+     * View the uploaded PDF file.
+     */
+    public function viewFile($id)
+    {
+        $talent = TalentRegistration::findOrFail($id);
+
+        if (!Storage::disk('public')->exists($talent->file_pdf)) {
+            return abort(404, 'File tidak ditemukan.');
+        }
+
+        return Storage::disk('public')->response($talent->file_pdf);
     }
 
     /**

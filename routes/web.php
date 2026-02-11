@@ -23,6 +23,7 @@ Route::post('/talent/register', [TalentRegistrationController::class, 'store'])-
 Route::middleware('cekuser')->prefix('dashboard')->group(function () {
     Route::get('/talent', [TalentRegistrationController::class, 'index'])->name('admin.talent.index');
     Route::get('/talent/{id}', [TalentRegistrationController::class, 'show'])->name('admin.talent.show');
+    Route::get('/talent/{id}/file', [TalentRegistrationController::class, 'viewFile'])->name('admin.talent.file');
     Route::put('/talent/{id}/status', [TalentRegistrationController::class, 'updateStatus'])->name('admin.talent.updateStatus');
     Route::delete('/talent/{id}', [TalentRegistrationController::class, 'destroy'])->name('admin.talent.destroy');
 });

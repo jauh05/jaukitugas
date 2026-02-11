@@ -60,7 +60,7 @@
                         <h6 class="mb-1 fw-bold">Berkas Gabungan (PDF)</h6>
                         <small class="text-muted">CV, Ijazah, Transkrip, dll</small>
                     </div>
-                    <a href="{{ asset('storage/' . $talent->file_pdf) }}" target="_blank"
+                    <a href="{{ route('admin.talent.file', $talent->id) }}" target="_blank"
                         class="btn btn-outline-primary rounded-pill px-4">
                         <i class="bi bi-download me-2"></i> Lihat Berkas
                     </a>
