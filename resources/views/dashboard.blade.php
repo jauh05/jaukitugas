@@ -398,6 +398,11 @@
                 <i class="bi bi-people-fill"></i> Data Customer
             </a>
 
+            <a class="nav-link {{ Request::is('dashboard/talent*') ? 'active' : '' }}"
+                href="{{ route('admin.talent.index') }}">
+                <i class="bi bi-person-badge-fill"></i> Data Talent
+            </a>
+
             <div class="accordion accordion-flush bg-transparent" id="menuLainnya">
                 <div class="accordion-item bg-transparent border-0">
                     <h2 class="accordion-header">

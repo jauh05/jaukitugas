@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CostomerController;
 use App\Http\Controllers\MetodepembayaranController;
+use App\Http\Controllers\TalentRegistrationController;
 
 Route::get('/', [UtamaController::class, 'index']);
 Route::get('/login', [UtamaController::class, 'index2']);
@@ -13,6 +14,18 @@ Route::get('/logout', [UtamaController::class, 'logout'])->middleware('cekuser')
 Route::post('/utama/komentar', [UtamaController::class, 'store']);
 Route::get('/pricelist', [UtamaController::class, 'pricelist']);
 Route::get('/payment', [UtamaController::class, 'payment']);
+
+// Talent Registration Routes
+Route::get('/talent/register', [TalentRegistrationController::class, 'create'])->name('talent.register');
+Route::post('/talent/register', [TalentRegistrationController::class, 'store'])->name('talent.register.store');
+
+// Admin Talent Dashboard Routes
+Route::middleware('cekuser')->prefix('dashboard')->group(function () {
+    Route::get('/talent', [TalentRegistrationController::class, 'index'])->name('admin.talent.index');
+    Route::get('/talent/{id}', [TalentRegistrationController::class, 'show'])->name('admin.talent.show');
+    Route::put('/talent/{id}/status', [TalentRegistrationController::class, 'updateStatus'])->name('admin.talent.updateStatus');
+    Route::delete('/talent/{id}', [TalentRegistrationController::class, 'destroy'])->name('admin.talent.destroy');
+});
 
 Route::get('/dashboard', [AdminController::class, 'index'])->middleware('cekuser');
 Route::get('/dashboard2', [AdminController::class, 'index2'])->middleware('cekuser');

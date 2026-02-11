@@ -80,29 +80,8 @@
         </div>
 
         <div class="row g-4 pt-3">
-            <!-- Service Card 1 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="glass-card h-100 p-4 p-xl-5 position-relative overflow-hidden group-hover">
-                    <div class="d-flex justify-content-between align-items-start mb-4">
-                        <div class="icon-box bg-white shadow-sm p-3 rounded-4">
-                            <i class="bi bi-people fw-bold fs-3 text-primary"></i>
-                        </div>
-                        <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">Terpopuler</span>
-                    </div>
-                    <h3 class="fw-bold mb-3">Open Talent</h3>
-                    <p class="text-muted mb-4">Bergabunglah dengan ekosistem kami. Bekerja fleksibel, asah skill, dan
-                        dapatkan penghasilan tambahan sambil kuliah.</p>
-                    <div class="mb-4 rounded-4 overflow-hidden bg-light" style="height: 180px;">
-                        <img src="{{ asset('asset/talent.png') }}" class="w-100 h-100 object-fit-cover" alt="Talent">
-                    </div>
-                    <a href="https://forms.gle/5QYUNjTukfX5GMsP9"
-                        class="stretched-link fw-bold text-decoration-none text-primary">Daftar Sekarang <i
-                            class="bi bi-arrow-right ms-2"></i></a>
-                </div>
-            </div>
-
             <!-- Service Card 2 -->
-            <div class="col-lg-4 col-md-6">
+            <div class="col-lg-6 col-md-6">
                 <div class="glass-card h-100 p-4 p-xl-5 position-relative overflow-hidden border-primary">
                     <div class="d-flex justify-content-between align-items-start mb-4">
                         <div class="icon-box bg-primary text-white shadow-lg p-3 rounded-4">
@@ -112,7 +91,7 @@
                     <h3 class="fw-bold mb-3">Joki Skripsi</h3>
                     <p class="text-muted mb-4">Macet di Bab 2? Atau bingung olah data? Kami bantu dari judul sampai wisuda
                         dengan garansi bimbingan.</p>
-                    <div class="mb-4 rounded-4 overflow-hidden bg-light" style="height: 180px;">
+                    <div class="mb-4 rounded-4 overflow-hidden bg-light" style="height: 220px;">
                         <img src="{{ asset('asset/writing.png') }}" class="w-100 h-100 object-fit-cover" alt="Skripsi">
                     </div>
                     <a href="https://wa.me/6285184771744?text=Halo%20Jauki%20Tugas%2C%20saya%20ingin%20konsultasi"
@@ -122,7 +101,7 @@
             </div>
 
             <!-- Service Card 3 -->
-            <div class="col-lg-4 col-md-6">
+            <div class="col-lg-6 col-md-6">
                 <div class="glass-card h-100 p-4 p-xl-5 position-relative overflow-hidden">
                     <div class="d-flex justify-content-between align-items-start mb-4">
                         <div class="icon-box bg-white shadow-sm p-3 rounded-4">
@@ -132,11 +111,65 @@
                     <h3 class="fw-bold mb-3">Cek Harga</h3>
                     <p class="text-muted mb-4">Transparansi adalah kunci. Unduh daftar harga lengkap layanan kami. Mulai
                         dari tugas harian hingga paket skripsi.</p>
-                    <div class="mb-4 rounded-4 overflow-hidden bg-light" style="height: 180px;">
+                    <div class="mb-4 rounded-4 overflow-hidden bg-light" style="height: 220px;">
                         <img src="{{ asset('asset/pricing.png') }}" class="w-100 h-100 object-fit-cover" alt="Pricing">
                     </div>
                     <a href="{{ url('/pricelist') }}" class="stretched-link fw-bold text-decoration-none text-primary">Lihat
                         Pricelist List <i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Talent Highlight Section -->
+    <section class="container py-5">
+        <div class="glass-card p-0 overflow-hidden border-0 shadow-xl"
+            style="background: linear-gradient(135deg, #4834d4 0%, #686de0 100%);">
+            <div class="row g-0 align-items-center">
+                <div class="col-lg-7 p-4 p-md-5 text-white">
+                    <span class="badge bg-white bg-opacity-20 text-white rounded-pill px-3 py-2 mb-3 fw-bold">
+                        <i class="bi bi-megaphone-fill me-2"></i>WE ARE HIRING!
+                    </span>
+                    <h2 class="display-4 fw-bold mb-4 text-white">Bergabunglah Sebagai <br> <span
+                            class="text-warning">Talent Jauki Tugas</span></h2>
+                    <p class="lead mb-5 opacity-75">
+                        Jadilah bagian dari ekosistem bantuan akademik terbesar. Dapatkan penghasilan jutaan rupiah, bekerja
+                        fleksibel dari mana saja, dan asah kemampuan akademikmu.
+                    </p>
+                    <div class="row g-4 mb-5">
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill text-warning fs-4 me-3"></i>
+                                <span>Waktu Fleksibel</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill text-warning fs-4 me-3"></i>
+                                <span>Penghasilan Menarik</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill text-warning fs-4 me-3"></i>
+                                <span>Asah Kemampuan</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill text-warning fs-4 me-3"></i>
+                                <span>Relasi Luas</span>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="{{ route('talent.register') }}"
+                        class="btn btn-warning btn-lg px-5 py-3 rounded-pill fw-bold shadow-lg">
+                        Daftar Talent Sekarang <i class="bi bi-arrow-right ms-2"></i>
+                    </a>
+                </div>
+                <div class="col-lg-5 d-none d-lg-block p-0">
+                    <img src="{{ asset('asset/talent.png') }}" class="w-100 h-100 object-fit-cover" alt="Join Jauki Talent"
+                        style="min-height: 500px; filter: brightness(0.9);">
                 </div>
             </div>
         </div>

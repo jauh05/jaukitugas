@@ -49,25 +49,40 @@
     <!-- Stats Row 1 -->
     <div class="row g-4 mb-4">
         <!-- New Comment Card -->
-        <div class="col-xl-3 col-md-6">
+        <div class="col-xl col-md-4">
             <div class="glass-card h-100 p-4 position-relative overflow-hidden border-0"
                 style="background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white;">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <p class="mb-0 opacity-75 fw-bold">Total Komentar</p>
+                        <p class="mb-0 opacity-75 fw-bold">Komentar</p>
                         <h2 class="display-5 fw-bold mb-0">{{ $jumlah_komentar }}</h2>
                     </div>
-                    <i class="bi bi-chat-quote-fill opacity-25" style="font-size: 3rem;"></i>
+                    <i class="bi bi-chat-quote-fill opacity-25" style="font-size: 2.5rem;"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Talent -->
+        <div class="col-xl col-md-4">
+            <div class="glass-card h-100 p-4 position-relative overflow-hidden border-0"
+                style="background: linear-gradient(135deg, #f0932b, #ffbe76); color: white;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="mb-0 opacity-75 fw-bold">Pendaftar Talent</p>
+                        <h2 class="display-5 fw-bold mb-0">{{ $jumlah_talent }}</h2>
+                    </div>
+                    <i class="bi bi-person-badge-fill opacity-25" style="font-size: 2.5rem;"></i>
                 </div>
                 <div class="mt-3">
-                    <span class="badge bg-white bg-opacity-25 rounded-pill"><i class="bi bi-arrow-up-right"></i>
-                        Aktif</span>
+                    <a href="{{ route('admin.talent.index') }}" class="badge bg-white bg-opacity-25 rounded-pill text-white text-decoration-none">
+                        Cek Pendaftar <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
 
         <!-- Completed Tasks -->
-        <div class="col-xl-3 col-md-6">
+        <div class="col-xl col-md-4">
             <div class="glass-card h-100 p-4 position-relative overflow-hidden border-0"
                 style="background: linear-gradient(135deg, #00b894, #55efc4); color: white;">
                 <div class="d-flex justify-content-between align-items-center">
@@ -75,17 +90,13 @@
                         <p class="mb-0 opacity-75 fw-bold">Selesai</p>
                         <h2 class="display-5 fw-bold mb-0">{{ $jumlah_costomer_sudah }}</h2>
                     </div>
-                    <i class="bi bi-check-circle-fill opacity-25" style="font-size: 3rem;"></i>
-                </div>
-                <div class="mt-3">
-                    <span class="badge bg-white bg-opacity-25 rounded-pill"><i class="bi bi-people-fill"></i>
-                        Customer</span>
+                    <i class="bi bi-check-circle-fill opacity-25" style="font-size: 2.5rem;"></i>
                 </div>
             </div>
         </div>
 
         <!-- Pending Tasks -->
-        <div class="col-xl-3 col-md-6">
+        <div class="col-xl col-md-6">
             <div class="glass-card h-100 p-4 position-relative overflow-hidden border-0"
                 style="background: linear-gradient(135deg, #ff7675, #fab1a0); color: white;">
                 <div class="d-flex justify-content-between align-items-center">
@@ -93,29 +104,21 @@
                         <p class="mb-0 opacity-75 fw-bold">Pending</p>
                         <h2 class="display-5 fw-bold mb-0">{{ $jumlah_costomer_belum }}</h2>
                     </div>
-                    <i class="bi bi-clock-history opacity-25" style="font-size: 3rem;"></i>
-                </div>
-                <div class="mt-3">
-                    <span class="badge bg-white bg-opacity-25 rounded-pill">Perlu Tindakan</span>
+                    <i class="bi bi-clock-history opacity-25" style="font-size: 2.5rem;"></i>
                 </div>
             </div>
         </div>
 
         <!-- Total Revenue -->
-        <div class="col-xl-3 col-md-6">
+        <div class="col-xl col-md-6">
             <div class="glass-card h-100 p-4 position-relative overflow-hidden border-0"
                 style="background: linear-gradient(135deg, #0984e3, #74b9ff); color: white;">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <p class="mb-0 opacity-75 fw-bold">Pendapatan Bulan Ini</p>
-                        <h3 class="fw-bold mb-0 fs-2">Rp {{ number_format($total_pendapatan) }}</h3>
+                        <p class="mb-0 opacity-75 fw-bold">Pendapatan (Bln)</p>
+                        <h3 class="fw-bold mb-0 fs-3">Rp {{ number_format($total_pendapatan) }}</h3>
                     </div>
-                    <i class="bi bi-wallet-fill opacity-25" style="font-size: 3rem;"></i>
-                </div>
-                <div class="mt-3">
-                    <div class="progress bg-white bg-opacity-25" style="height: 5px;">
-                        <div class="progress-bar bg-white" role="progressbar" style="width: 70%"></div>
-                    </div>
+                    <i class="bi bi-wallet-fill opacity-25" style="font-size: 2.5rem;"></i>
                 </div>
             </div>
         </div>

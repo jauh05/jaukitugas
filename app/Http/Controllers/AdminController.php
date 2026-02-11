@@ -8,6 +8,7 @@ use App\Models\Komentar;
 use App\Models\Costomer;
 use App\Models\Admin;
 use App\Models\MetodePembayaran;
+use App\Models\TalentRegistration;
 use App\Charts\RekapCharts;
 use App\Charts\CostomerCharts;
 use Carbon\Carbon;
@@ -57,6 +58,7 @@ class AdminController extends Controller
         $data['jumlah_komentar'] = Komentar::all()->count();
         $data['jumlah_costomer_sudah'] = Costomer::where('selesaikan', 'sudah')->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->count();
         $data['jumlah_costomer_belum'] = Costomer::where('selesaikan', 'belum')->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->count();
+        $data['jumlah_talent'] = TalentRegistration::where('status', 'pending')->count();
         $data['total_pendapatan'] = Costomer::whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->sum('total');
 
         $data['metode'] = MetodePembayaran::all();
