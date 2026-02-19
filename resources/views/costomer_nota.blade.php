@@ -191,7 +191,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                     <form action="{{ url('update/diskon/' . $costomer->id_costomer) }}" method="post">
+                     <form action="{{ route('update.diskon', $costomer->id_costomer) }}" method="post">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label small fw-bold text-muted">Diskon (%)</label>

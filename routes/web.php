@@ -44,7 +44,7 @@ Route::get('/costomer/{id_costomer}/nota', [CostomerController::class, 'nota'])-
 Route::put('/update/data/{id_costomer}', [CostomerController::class, 'updatedata'])->middleware('cekuser');
 Route::delete('/hapus/{id_costomer}', [CostomerController::class, 'delete'])->middleware('cekuser');
 Route::post('/tambah/harga/{id_costomer}', [CostomerController::class, 'tambah_nota'])->middleware('cekuser');
-Route::post('/update/diskon/{id_costomer}', [CostomerController::class, 'update_diskon'])->middleware('cekuser');
+Route::post('/update/diskon/{id_costomer}', [CostomerController::class, 'update_diskon'])->middleware('cekuser')->name('update.diskon');
 
 Route::delete('costomer/{id_costomer}/hapus/harga/{id_nota}', [CostomerController::class, 'hapus_harga'])->middleware('cekuser');
 
