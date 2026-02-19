@@ -10,19 +10,21 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('talent_registrations', function (Blueprint $col) {
-            $col->id();
-            $col->string('nama_lengkap');
-            $col->string('email');
-            $col->string('instagram');
-            $col->string('no_wa');
-            $col->string('asal_univ');
-            $col->string('program_study_semester');
-            $col->text('keahlian'); // Will store as JSON or comma separated
-            $col->string('file_pdf');
-            $col->enum('status', ['pending', 'verified', 'rejected'])->default('pending');
-            $col->timestamps();
-        });
+        if (!Schema::hasTable('talent_registrations')) {
+            Schema::create('talent_registrations', function (Blueprint $col) {
+                $col->id();
+                $col->string('nama_lengkap');
+                $col->string('email');
+                $col->string('instagram');
+                $col->string('no_wa');
+                $col->string('asal_univ');
+                $col->string('program_study_semester');
+                $col->text('keahlian'); // Will store as JSON or comma separated
+                $col->string('file_pdf');
+                $col->enum('status', ['pending', 'verified', 'rejected'])->default('pending');
+                $col->timestamps();
+            });
+        }
     }
 
     /**
