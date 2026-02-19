@@ -21,6 +21,9 @@
             <div class="col-lg-8 d-flex justify-content-between">
                 <a href="{{ url('dashboard/costomer') }}" class="btn btn-outline-secondary rounded-pill px-4"><i class="bi bi-arrow-left me-2"></i>Kembali</a>
                 <div class="d-flex gap-2">
+                    <button class="btn btn-info rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#editDiskonModal">
+                        <i class="bi bi-percent me-2"></i>Set Diskon
+                    </button>
                      <button class="btn btn-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#addItemModal">
                         <i class="bi bi-plus-lg me-2"></i>Tambah Item
                     </button>
@@ -107,10 +110,24 @@
                                         <span class="text-muted">Subtotal</span>
                                         <span class="fw-bold">Rp {{ number_format($costomer['total']) }}</span>
                                     </div>
+                                    @if($costomer['diskon'] > 0)
+                                    @php
+                                        $nominal_diskon = ($costomer['diskon'] / 100) * $costomer['total'];
+                                        $total_akhir = $costomer['total'] - $nominal_diskon;
+                                    @endphp
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="text-muted">Diskon ({{ $costomer['diskon'] }}%)</span>
+                                        <span class="text-danger fw-bold">- Rp {{ number_format($nominal_diskon) }}</span>
+                                    </div>
+                                    @else
+                                    @php
+                                        $total_akhir = $costomer['total'];
+                                    @endphp
+                                    @endif
                                     <div class="border-top my-2"></div>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <span class="fw-bold fs-5 text-primary">Total Harus Dibayar</span>
-                                        <span class="fw-bold fs-4 text-primary">Rp {{ number_format($costomer['total']) }}</span>
+                                        <span class="fw-bold fs-4 text-primary">Rp {{ number_format($total_akhir) }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -158,6 +175,31 @@
                             <h4 class="fw-bold m-0 text-primary" id="estTotal">Rp 0</h4>
                         </div>
                         <button type="submit" class="btn btn-primary w-100 mt-4 rounded-pill py-2">Tambahkan ke Nota</button>
+                     </form>
+                </div>
+            </div>
+        </div>
+    <!-- Edit Diskon Modal -->
+    <div class="modal fade" id="editDiskonModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold">Atur Diskon</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                     <form action="{{ url('update/diskon/' . $costomer['id_costomer']) }}" method="post">
+                        @csrf
+                        @method('put')
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted">Diskon (%)</label>
+                            <div class="input-group">
+                                <input type="number" name="diskon" class="form-control" value="{{ $costomer['diskon'] }}" min="0" max="100" required>
+                                <span class="input-group-text">%</span>
+                            </div>
+                            <small class="text-muted">Masukkan angka 0-100</small>
+                        </div>
+                        <button type="submit" class="btn btn-info w-100 mt-2 rounded-pill py-2 text-white">Simpan Diskon</button>
                      </form>
                 </div>
             </div>
