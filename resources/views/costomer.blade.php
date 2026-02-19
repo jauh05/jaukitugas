@@ -72,11 +72,11 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="avatar-circle me-3" style="background: {{ 
-                                                                            $value['selesaikan'] == 'sudah' ? 'linear-gradient(135deg, #198754, #20c997)' :
+                                                                                            $value['selesaikan'] == 'sudah' ? 'linear-gradient(135deg, #198754, #20c997)' :
                         ($value['selesaikan'] == 'pembayaran' ? 'linear-gradient(135deg, #dc3545, #ff6b6b)' :
                             ($value['selesaikan'] == 'proses' ? 'linear-gradient(135deg, #0d6efd, #0dcaf0)' :
                                 'linear-gradient(135deg, #6c757d, #adb5bd)')) 
-                                                                         }};">
+                                                                                         }};">
                                                 {{ substr($value['nama'], 0, 1) }}
                                             </div>
                                             <div>
@@ -100,7 +100,13 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <span class="fw-bold text-success">Rp {{ number_format($value['total'])}}</span>
+                                        @php
+                                            $final_total = $value['total'] - (($value['diskon'] ?? 0) / 100 * $value['total']);
+                                        @endphp
+                                        <span class="fw-bold text-success">Rp {{ number_format($final_total) }}</span>
+                                        @if(($value['diskon'] ?? 0) > 0)
+                                            <div class="small text-muted" style="font-size: 0.65rem;">Disc. {{ $value['diskon'] }}%</div>
+                                        @endif
                                     </td>
                                     <td style="min-width: 200px;">
                                         <form action="{{ url('selesaikan/' . $value['id_costomer']) }}" method="post"
@@ -109,12 +115,13 @@
                                             @csrf
                                             <div class="d-flex gap-2">
                                                 <input type="hidden" name="metode" value="{{ $value['id_metode'] }}">
-                                                <select name="selesaikan" class="form-select form-select-sm border-0 shadow-sm rounded-pill fw-bold cursor-pointer status-select
-                                                                                                                        @if($value['selesaikan'] == 'sudah') bg-success bg-opacity-10 text-success
-                                                                                                                        @elseif($value['selesaikan'] == 'pembayaran') bg-danger bg-opacity-10 text-danger
-                                                                                                                        @elseif($value['selesaikan'] == 'proses') bg-primary bg-opacity-10 text-primary
-                                                                                                                        @else bg-secondary bg-opacity-10 text-secondary
-                                                                                                                        @endif"
+                                                <select name="selesaikan"
+                                                    class="form-select form-select-sm border-0 shadow-sm rounded-pill fw-bold cursor-pointer status-select
+                                                                                                                                        @if($value['selesaikan'] == 'sudah') bg-success bg-opacity-10 text-success
+                                                                                                                                        @elseif($value['selesaikan'] == 'pembayaran') bg-danger bg-opacity-10 text-danger
+                                                                                                                                        @elseif($value['selesaikan'] == 'proses') bg-primary bg-opacity-10 text-primary
+                                                                                                                                        @else bg-secondary bg-opacity-10 text-secondary
+                                                                                                                                        @endif"
                                                     onchange="this.form.submit()">
                                                     <option value="sudah" @selected($value['selesaikan'] == 'sudah')>✅ Selesai</option>
                                                     <option value="pembayaran" @selected($value['selesaikan'] == 'pembayaran')>💰 Bayar

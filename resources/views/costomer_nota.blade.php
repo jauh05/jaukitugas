@@ -110,20 +110,20 @@
                                         <span class="text-muted">Subtotal</span>
                                         <span class="fw-bold">Rp {{ number_format($costomer['total']) }}</span>
                                     </div>
-                                    @if($costomer['diskon'] > 0)
                                     @php
-                                        $nominal_diskon = ($costomer['diskon'] / 100) * $costomer['total'];
-                                        $total_akhir = $costomer['total'] - $nominal_diskon;
+                                        $subtotal = floatval($costomer->total);
+                                        $persen_diskon = intval($costomer->diskon);
+                                        $nominal_diskon = ($persen_diskon / 100) * $subtotal;
+                                        $total_akhir = $subtotal - $nominal_diskon;
                                     @endphp
+                                    
+                                    @if($persen_diskon > 0)
                                     <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="text-muted">Diskon ({{ $costomer['diskon'] }}%)</span>
+                                        <span class="text-muted">Diskon ({{ $persen_diskon }}%)</span>
                                         <span class="text-danger fw-bold">- Rp {{ number_format($nominal_diskon) }}</span>
                                     </div>
-                                    @else
-                                    @php
-                                        $total_akhir = $costomer['total'];
-                                    @endphp
                                     @endif
+                                    
                                     <div class="border-top my-2"></div>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <span class="fw-bold fs-5 text-primary">Total Harus Dibayar</span>

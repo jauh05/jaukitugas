@@ -155,9 +155,9 @@ class CostomerController extends Controller
       'diskon' => ['required', 'numeric', 'min:0', 'max:100'],
     ]);
 
-    Costomer::where('id_costomer', $id_costomer)->update([
-      'diskon' => $request->diskon
-    ]);
+    $costomer = Costomer::find($id_costomer);
+    $costomer->diskon = $request->diskon;
+    $costomer->save();
 
     return redirect('costomer/' . $id_costomer . '/nota')->with('pesan_berhasil', 'Diskon berhasil diperbarui');
   }
