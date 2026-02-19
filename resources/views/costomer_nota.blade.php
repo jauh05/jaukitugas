@@ -106,17 +106,19 @@
                         <div class="row justify-content-end">
                             <div class="col-md-5">
                                 <div class="bg-light p-4 rounded-3">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="text-muted">Subtotal</span>
-                                        <span class="fw-bold">Rp {{ number_format($costomer['total']) }}</span>
-                                    </div>
                                     @php
-                                        $subtotal = floatval($costomer->total);
-                                        $persen_diskon = intval($costomer->diskon);
+                                        // Menghitung subtotal langsung dari data nota untuk akurasi
+                                        $subtotal = $nota->sum('total_harga') ?: ($costomer->total ?? 0);
+                                        $persen_diskon = intval($costomer->diskon ?? 0);
                                         $nominal_diskon = ($persen_diskon / 100) * $subtotal;
                                         $total_akhir = $subtotal - $nominal_diskon;
                                     @endphp
                                     
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="text-muted">Subtotal</span>
+                                        <span class="fw-bold">Rp {{ number_format($subtotal) }}</span>
+                                    </div>
+
                                     @if($persen_diskon > 0)
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <span class="text-muted">Diskon ({{ $persen_diskon }}%)</span>
@@ -189,9 +191,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                     <form action="{{ url('update/diskon/' . $costomer['id_costomer']) }}" method="post">
+                     <form action="{{ url('update/diskon/' . $costomer->id_costomer) }}" method="post">
                         @csrf
-                        @method('put')
                         <div class="mb-3">
                             <label class="form-label small fw-bold text-muted">Diskon (%)</label>
                             <div class="input-group">

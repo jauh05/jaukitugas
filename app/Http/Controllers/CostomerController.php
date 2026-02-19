@@ -132,7 +132,7 @@ class CostomerController extends Controller
 
     Nota::create($masuk);
     Costomer::find($id_costomer)->update($masukan);
-    return redirect('costomer/' . $id_costomer . '/nota')->with('pesan_berhasil', 'Nota berhasil ditambahkan');
+    return redirect('/costomer/' . $id_costomer . '/nota')->with('pesan_berhasil', 'Nota berhasil ditambahkan');
   }
 
   function hapus_harga($id_costomer, $id_nota)
@@ -146,7 +146,7 @@ class CostomerController extends Controller
 
     Costomer::find($id_costomer)->update($masukan);
     Nota::find($id_nota)->delete();
-    return redirect('costomer/' . $id_costomer . '/nota')->with('pesan_berhasil', 'Nota berhasil dihapus');
+    return redirect('/costomer/' . $id_costomer . '/nota')->with('pesan_berhasil', 'Nota berhasil dihapus');
     ;
   }
   function update_diskon(Request $request, $id_costomer)
@@ -159,7 +159,7 @@ class CostomerController extends Controller
     $costomer->diskon = $request->diskon;
     $costomer->save();
 
-    return redirect('costomer/' . $id_costomer . '/nota')->with('pesan_berhasil', 'Diskon berhasil diperbarui');
+    return redirect('/costomer/' . $id_costomer . '/nota')->with('pesan_berhasil', 'Diskon berhasil diperbarui');
   }
 }
 
