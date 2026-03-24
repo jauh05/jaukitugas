@@ -4,26 +4,26 @@
     <!-- Hero Section -->
     <!-- Hero Section -->
     <header class="container py-5 mt-3">
-        <div class="row align-items-center g-5 py-lg-5 py-3">
+        <div class="row align-items-center flex-column-reverse flex-lg-row g-5 py-lg-5 py-3">
             <div class="col-lg-6 text-center-sm">
                 <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill mb-3 fw-bold">
-                    <i class="bi bi-stars me-2"></i>Solusi Akademik #1 di Indonesia
+                    <i class="bi bi-stars me-2"></i>Sahabat Setia Mahasiswa #1 di Indonesia
                 </span>
                 <h1 class="display-3 fw-bold mb-4 lh-sm">
-                    Raih Nilai Sempurna <br>
-                    <span class="text-gradient">Tanpa Stress</span>
+                    Joki Tugas Jogja <br>
+                    <span class="text-gradient">Solusi Cerdas Bimbingan Akademik</span>
                 </h1>
                 <p class="lead text-muted mb-5 pe-lg-5">
                     Serahkan tumpukan tugasmu kepada tim profesional kami. Dari makalah, presentasi, hingga skripsi, kami
                     siap membantu Anda lulus tepat waktu dengan hasil terbaik.
                 </p>
-                <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center-sm">
+                <div class="d-flex flex-row gap-2 justify-content-center-sm">
                     <a href="https://wa.me/6285184771744?text=Halo%20Jauki%20Tugas%2C%20saya%20ingin%20konsultasi"
-                        class="btn btn-premium shadow-lg">
-                        <i class="bi bi-whatsapp me-2"></i> Hubungi Kami
+                        class="btn btn-premium shadow-lg px-2 px-sm-4">
+                        <i class="bi bi-whatsapp me-1 me-sm-2"></i> Hubungi Kami
                     </a>
-                    <a href="#features" class="btn btn-glass-outline">
-                        Pelajari Layanan
+                    <a href="{{ url('/pricelist') }}" class="btn btn-glass-outline px-2 px-sm-4">
+                        <i class="bi bi-tag-fill me-1 me-sm-2"></i> Cek Harga
                     </a>
                 </div>
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jauki Tugas | Solusi Akademik Profesional</title>
+    <title>Jauki Tugas | Joki Tugas Jogja Terpercaya</title>
 
     <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -332,7 +332,7 @@
                         <img src="{{ asset("asset/jlogo.svg") }}" alt="Logo" height="35" class="me-2">
                         <span class="fw-bold fs-4">Jauki<span class="text-primary">Tugas</span></span>
                     </div>
-                    <p class="text-muted pe-lg-5">Platform bantuan akademik terpercaya nomor 1 di Indonesia. Kami hadir
+                    <p class="text-muted pe-lg-5">Joki tugas Jogja terpercaya nomor 1 di Indonesia. Kami hadir
                         untuk meringankan beban studi Anda dengan kualitas terbaik.</p>
                 </div>
                 <div class="col-6 col-md-3">

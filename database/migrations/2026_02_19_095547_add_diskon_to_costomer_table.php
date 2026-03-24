@@ -11,7 +11,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('costomer', function (Blueprint $table) {
-            $table->integer('diskon')->default(0)->after('total');
+            if (!Schema::hasColumn('costomer', 'diskon')) {
+                $table->integer('diskon')->default(0)->after('total');
+            }
         });
     }
 
