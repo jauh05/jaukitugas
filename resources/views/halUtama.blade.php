@@ -3,28 +3,39 @@
 @section('temp')
     <!-- Hero Section -->
     <!-- Hero Section -->
-    <header class="container py-5 mt-3">
+    <header class="container py-5 mt-3 position-relative overflow-hidden">
+        <!-- Decorative Shapes for Premium Feel -->
+        <div class="position-absolute d-none d-lg-block" style="top: -10%; right: -5%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(72, 52, 212, 0.1) 0%, transparent 70%); border-radius: 50%; filter: blur(40px); z-index: -1;"></div>
+        <div class="position-absolute d-none d-lg-block" style="bottom: 0; left: -5%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(162, 155, 254, 0.1) 0%, transparent 70%); border-radius: 50%; filter: blur(40px); z-index: -1;"></div>
+        
         <div class="row align-items-center flex-column-reverse flex-lg-row g-5 py-lg-5 py-3">
             <div class="col-lg-6 text-center-sm">
-                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill mb-3 fw-bold">
-                    <i class="bi bi-stars me-2"></i>Sahabat Setia Mahasiswa #1 di Indonesia
-                </span>
-                <h1 class="display-3 fw-bold mb-4 lh-sm">
-                    Joki Tugas Jogja <br>
-                    <span class="text-gradient">Solusi Cerdas Bimbingan Akademik</span>
-                </h1>
-                <p class="lead text-muted mb-5 pe-lg-5">
-                    Serahkan tumpukan tugasmu kepada tim profesional kami. Dari makalah, presentasi, hingga skripsi, kami
-                    siap membantu Anda lulus tepat waktu dengan hasil terbaik.
-                </p>
-                <div class="d-flex flex-row gap-2 justify-content-center-sm">
-                    <a href="https://wa.me/6285184771744?text=Halo%20Jauki%20Tugas%2C%20saya%20ingin%20konsultasi"
-                        class="btn btn-premium shadow-lg px-2 px-sm-4">
-                        <i class="bi bi-whatsapp me-1 me-sm-2"></i> Hubungi Kami
-                    </a>
-                    <a href="{{ url('/pricelist') }}" class="btn btn-glass-outline px-2 px-sm-4">
-                        <i class="bi bi-tag-fill me-1 me-sm-2"></i> Cek Harga
-                    </a>
+                <div class="hero-content">
+                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill mb-3 fw-bold animate-glow"
+                        style="letter-spacing: 0.1rem; font-size: 0.75rem;">
+                        <i class="bi bi-stars me-2"></i>SAHABAT SETIA MAHASISWA #1 DI INDONESIA
+                    </span>
+
+                    <h1 class="display-3 fw-bold mb-4 lh-base hero-title main-reveal" style="font-weight: 800 !important;">
+                        <span class="d-block word-reveal" style="letter-spacing: -0.02em;">Joki Tugas <span class="text-primary">Jogja</span></span>
+                        <span class="text-gradient d-block highlight-reveal" style="font-size: 0.85em; margin-top: -0.2rem;">Solusi Cerdas Bimbingan Akademik</span>
+                    </h1>
+
+                    <p class="lead text-muted mb-5 pe-lg-5 para-reveal opacity-0">
+                        Raih nilai puncak tanpa harus begadang. Serahkan tugasmu kepada tim profesional kami. Dari makalah,
+                        presentasi, hingga skripsi — kami siap membantu Anda lulus tepat waktu dengan hasil terbaik.
+                    </p>
+
+                    <div class="d-flex flex-row gap-3 justify-content-center-sm btn-reveal opacity-0">
+                        <a href="https://wa.me/6285184771744?text=Halo%20Jauki%20Tugas%2C%20saya%20ingin%20konsultasi"
+                            class="btn btn-premium shadow-lg px-4 py-3 rounded-4 d-flex align-items-center">
+                            <i class="bi bi-whatsapp me-2 fs-5"></i> Hubungi Konsultan
+                        </a>
+                        <a href="{{ url('/pricelist') }}"
+                            class="btn btn-glass-outline px-4 py-3 rounded-4 d-flex align-items-center">
+                            <i class="bi bi-tag me-2 fs-5 text-primary"></i> Cek Katalog
+                        </a>
+                    </div>
                 </div>
 
                 <div class="mt-5 d-flex align-items-center gap-4 justify-content-center-sm">
@@ -492,27 +503,88 @@
             </div>
         </div>
     </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tl = gsap.timeline({
+                defaults: {
+                    ease: "expo.out"
+                }
+            });
 
+            // Initial State
+            gsap.set(".main-reveal", {
+                visibility: "visible"
+            });
+
+            // Animation sequence
+            tl.from(".word-reveal", {
+                    y: 50,
+                    opacity: 0,
+                    duration: 1.5,
+                    delay: 0.2
+                })
+                .from(".highlight-reveal", {
+                    y: 30,
+                    opacity: 0,
+                    duration: 1.2
+                }, "-=1")
+                .to(".para-reveal", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.2,
+                    startAt: {
+                        y: 20
+                    }
+                }, "-=0.8")
+                .to(".btn-reveal", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.2,
+                    startAt: {
+                        y: 20
+                    }
+                }, "-=1")
+                .from(".hero-img", {
+                    scale: 0.8,
+                    opacity: 0,
+                    duration: 1.5,
+                    ease: "power4.out"
+                }, "-=1.5");
+
+            // Floating effect for hero image
+            gsap.to(".hero-img", {
+                y: 15,
+                duration: 2.5,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+        });
+    </script>
 
     <style>
+        .animate-glow {
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px rgba(72, 52, 212, 0.1);
+            }
+
+            to {
+                box-shadow: 0 0 20px rgba(72, 52, 212, 0.3);
+            }
+        }
+
+        .main-reveal {
+            overflow: hidden;
+        }
+
         .floating-animation {
-            animation: float 6s ease-in-out infinite;
+            /* Handled by GSAP now */
+            animation: none !important;
         }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0px) scale(1.1);
-            }
-
-            50% {
-                transform: translateY(-20px) scale(1.1);
-            }
-
-            100% {
-                transform: translateY(0px) scale(1.1);
-            }
-        }
-
 
         .tracking-wider {
             letter-spacing: 0.1em;
@@ -541,3 +613,4 @@
         }
     </style>
 @endsection
+on

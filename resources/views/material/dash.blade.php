@@ -15,6 +15,10 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- GSAP for Premium Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="{{ asset('asset/jlogo.svg') }}" />
@@ -187,9 +191,24 @@
         }
 
         .text-gradient {
-            background: linear-gradient(135deg, var(--primary-accent) 0%, #a29bfe 100%);
+            background: linear-gradient(135deg, #4834d4 0%, #a29bfe 50%, #6c5ce7 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+            background-size: 200% auto;
+            animation: shine 5s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .hero-title {
+            text-shadow: 0 10px 30px rgba(72, 52, 212, 0.1);
+            letter-spacing: -0.05em;
         }
 
         /* Navigation */
