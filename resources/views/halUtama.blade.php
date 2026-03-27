@@ -11,14 +11,27 @@
         <div class="row align-items-center flex-column-reverse flex-lg-row g-5 py-lg-5 py-3">
             <div class="col-lg-6 text-center-sm">
                 <div class="hero-content">
-                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill mb-3 fw-bold animate-glow"
-                        style="letter-spacing: 0.1rem; font-size: 0.75rem;">
-                        <i class="bi bi-stars me-2"></i>SAHABAT SETIA MAHASISWA #1 DI INDONESIA
-                    </span>
+                    <div class="d-inline-flex align-items-center mb-3 mb-lg-4 word-reveal overflow-visible">
+                        <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold animate-glow"
+                            style="letter-spacing: 0.1rem; font-size: 0.75rem;">
+                            <i class="bi bi-stars me-2"></i>SAHABAT SETIA MAHASISWA #1 DI INDONESIA
+                        </span>
+                        <span class="ms-2 badge bg-warning text-dark px-2 py-1 rounded-pill small fw-bold d-none d-sm-inline-block" style="font-size: 0.6rem; animation: pulse 2s infinite;">HOT</span>
+                    </div>
 
-                    <h1 class="display-3 fw-bold mb-4 lh-base hero-title main-reveal" style="font-weight: 800 !important;">
-                        <span class="d-block word-reveal" style="letter-spacing: -0.02em;">Joki Tugas <span class="text-primary">Jogja</span></span>
-                        <span class="text-gradient d-block highlight-reveal" style="font-size: 0.85em; margin-top: -0.2rem;">Solusi Cerdas Bimbingan Akademik</span>
+                    <h1 class="display-2 fw-bold mb-4 lh-tight hero-title main-reveal" style="font-weight: 900 !important;">
+                        <span class="d-block word-reveal overflow-visible" style="letter-spacing: -0.04em;">
+                            <span class="text-premium-dark">Joki Tugas</span>
+                            <span class="position-relative d-inline-block ms-1">
+                                <span class="text-primary text-glow-soft">Jogja</span>
+                                <svg class="position-absolute start-0 bottom-0 w-100 h-25" viewBox="0 0 100 20" preserveAspectRatio="none" style="margin-bottom: -5px; z-index: -1;">
+                                    <path d="M0 15 Q 50 5, 100 15" stroke="var(--primary-accent)" stroke-width="4" fill="none" stroke-linecap="round" class="scribble-path" style="stroke-dasharray: 100; stroke-dashoffset: 100;"></path>
+                                </svg>
+                            </span>
+                        </span>
+                        <span class="text-gradient d-block highlight-reveal mt-3" style="font-size: 0.5em; letter-spacing: 0.1em; text-transform: uppercase;">
+                            <i class="bi bi-shield-check-fill me-2"></i>Partner Akademik Profesional & Terpercaya
+                        </span>
                     </h1>
 
                     <p class="lead text-muted mb-5 pe-lg-5 para-reveal opacity-0">
@@ -521,6 +534,7 @@
                     y: 50,
                     opacity: 0,
                     duration: 1.5,
+                    stagger: 0.2,
                     delay: 0.2
                 })
                 .from(".highlight-reveal", {
@@ -528,6 +542,11 @@
                     opacity: 0,
                     duration: 1.2
                 }, "-=1")
+                .to(".scribble-path", {
+                    strokeDashoffset: 0,
+                    duration: 1.5,
+                    ease: "power2.out"
+                }, "-=1.5")
                 .to(".para-reveal", {
                     opacity: 1,
                     y: 0,
@@ -565,6 +584,17 @@
     <style>
         .animate-glow {
             animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .scribble-path {
+            opacity: 0.6;
+            filter: drop-shadow(0 0 5px var(--primary-accent));
         }
 
         @keyframes glow {

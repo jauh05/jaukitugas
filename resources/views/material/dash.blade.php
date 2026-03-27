@@ -200,6 +200,19 @@
             animation: shine 5s linear infinite;
         }
 
+        .text-premium-dark {
+            background: linear-gradient(to right, #2d3436, #4834d4, #686de0, #4834d4, #2d3436);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 5s linear infinite;
+            font-weight: 800;
+        }
+
+        .text-glow-soft {
+            text-shadow: 0 0 15px rgba(72, 52, 212, 0.3);
+        }
+
         @keyframes shine {
             to {
                 background-position: 200% center;
@@ -302,7 +315,7 @@
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
                 <img src="{{ asset("asset/jlogo.svg") }}" alt="Logo" height="40" class="me-2">
-                <span class="fw-bold fs-3">Jauki<span class="text-primary">Tugas</span></span>
+                <span class="fw-bold fs-3 text-premium-dark">Jauki<span class="text-primary text-glow-soft">Tugas</span></span>
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
