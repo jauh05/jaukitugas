@@ -3,15 +3,15 @@
 @section('temp')
     <!-- Hero Section -->
     <!-- Hero Section -->
-    <header class="container py-5 mt-3 position-relative overflow-hidden">
+    <header class="container py-4 mt-3 position-relative overflow-hidden">
         <!-- Decorative Shapes for Premium Feel -->
         <div class="position-absolute d-none d-lg-block" style="top: -10%; right: -5%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(72, 52, 212, 0.1) 0%, transparent 70%); border-radius: 50%; filter: blur(40px); z-index: -1;"></div>
         <div class="position-absolute d-none d-lg-block" style="bottom: 0; left: -5%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(162, 155, 254, 0.1) 0%, transparent 70%); border-radius: 50%; filter: blur(40px); z-index: -1;"></div>
         
-        <div class="row align-items-center flex-column-reverse flex-lg-row g-5 py-lg-5 py-3">
+        <div class="row align-items-center flex-column-reverse flex-lg-row g-lg-5 g-4 py-lg-4 py-2">
             <div class="col-lg-6 text-center-sm">
                 <div class="hero-content">
-                    <div class="d-inline-flex align-items-center mb-3 mb-lg-4 word-reveal overflow-visible">
+                    <div class="d-inline-flex align-items-center mb-2 mb-lg-3 word-reveal overflow-visible">
                         <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold animate-glow"
                             style="letter-spacing: 0.1rem; font-size: 0.75rem;">
                             <i class="bi bi-stars me-2"></i>SAHABAT SETIA MAHASISWA #1 DI INDONESIA
@@ -19,7 +19,7 @@
                         <span class="ms-2 badge bg-warning text-dark px-2 py-1 rounded-pill small fw-bold d-none d-sm-inline-block" style="font-size: 0.6rem; animation: pulse 2s infinite;">HOT</span>
                     </div>
 
-                    <h1 class="display-2 fw-bold mb-3 lh-tight hero-title main-reveal" style="font-weight: 900 !important;">
+                    <h1 class="display-2 fw-bold mb-1 lh-tight hero-title main-reveal" style="font-weight: 900 !important;">
                         <span class="d-block word-reveal overflow-visible" style="letter-spacing: -0.04em;">
                             <span class="text-premium-dark">Joki Tugas</span>
                             <span class="position-relative d-inline-block ms-1">
@@ -29,12 +29,12 @@
                                 </svg>
                             </span>
                         </span>
-                        <span class="text-gradient d-block highlight-reveal mt-2" style="font-size: 0.5em; letter-spacing: 0.1em; text-transform: uppercase;">
+                        <span class="text-gradient d-block highlight-reveal mt-0" style="font-size: 0.5em; letter-spacing: 0.1em; text-transform: uppercase;">
                             <i class="bi bi-shield-check-fill me-2"></i>Partner Akademik Profesional & Terpercaya
                         </span>
                     </h1>
 
-                    <p class="lead text-muted mb-4 pe-lg-5 para-reveal opacity-0">
+                    <p class="lead text-muted mb-2 pe-lg-5 para-reveal opacity-0">
                         Raih nilai puncak tanpa harus begadang. Serahkan tugasmu kepada tim profesional kami. Dari makalah,
                         presentasi, hingga skripsi — kami siap membantu Anda lulus tepat waktu dengan hasil terbaik.
                     </p>
@@ -51,7 +51,7 @@
                     </div>
                 </div>
 
-                <div class="mt-3 d-flex align-items-center gap-4 justify-content-center-sm">
+                <div class="mt-0 d-flex align-items-center gap-4 justify-content-center-sm">
                     <div class="d-flex border-end pe-4 align-items-center">
                         <i class="bi bi-people-fill fs-2 text-primary me-3"></i>
                         <div>
