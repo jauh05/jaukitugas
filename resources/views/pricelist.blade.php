@@ -1,7 +1,7 @@
 @extends('material.dash')
 
 @section('temp')
-    <div class="container py-5 mt-5">
+    <div class="container py-5 mt-2">
         <div class="text-center mb-5">
             <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill mb-3 fw-bold">
                 <i class="bi bi-tag-fill me-2"></i>Transparan & Terjangkau

@@ -142,8 +142,8 @@
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
             border-top: 1px solid white;
-            padding: 5rem 0 2rem;
-            margin-top: 5rem;
+            padding: 3.5rem 0 2rem;
+            margin-top: 2.5rem;
         }
 
         /* Buttons */

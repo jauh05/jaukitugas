@@ -3,7 +3,7 @@
 @section('temp')
     <!-- Hero Section -->
     <!-- Hero Section -->
-    <header class="container py-4 mt-3 position-relative overflow-hidden">
+    <header class="container py-4 mt-2 position-relative overflow-hidden">
         <!-- Decorative Shapes for Premium Feel -->
         <div class="position-absolute d-none d-lg-block" style="top: -10%; right: -5%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(72, 52, 212, 0.1) 0%, transparent 70%); border-radius: 50%; filter: blur(40px); z-index: -1;"></div>
         <div class="position-absolute d-none d-lg-block" style="bottom: 0; left: -5%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(162, 155, 254, 0.1) 0%, transparent 70%); border-radius: 50%; filter: blur(40px); z-index: -1;"></div>
@@ -200,7 +200,7 @@
     </section>
 
     <!-- How It Works Section -->
-    <section id="process" class="py-5 my-5 bg-white bg-opacity-50">
+    <section id="process" class="py-5 bg-white bg-opacity-50">
         <div class="container py-4">
             <div class="text-center mb-5">
                 <span class="text-primary fw-bold text-uppercase tracking-wider small">Proses Mudah</span>
@@ -301,7 +301,7 @@
     </section>
 
     <!-- Testimonials & Form -->
-    <section id="testimonials" class="container py-5 mt-5">
+    <section id="testimonials" class="container py-5">
         <div class="row g-5 align-items-center">
             <div class="col-lg-7 order-2 order-lg-1">
                 <div class="text-start mb-4">
@@ -398,7 +398,7 @@
     </section>
 
     <!-- FAQ Section (New) -->
-    <section id="faq" class="container py-5 my-5">
+    <section id="faq" class="container py-5">
         <div class="text-center mb-5">
             <span class="text-primary fw-bold text-uppercase tracking-wider small">FAQ</span>
             <h2 class="fw-bold mt-2">Pertanyaan Sering Diajukan</h2>
@@ -497,7 +497,7 @@
     </section>
 
     <!-- Closing Quote -->
-    <section class="container py-5 text-center mb-5">
+    <section class="container py-5 text-center">
         <div class="py-5">
             <i class="bi bi-quote fs-1 text-primary opacity-25"></i>
             <h3 class="display-6 fst-italic my-4 mx-auto fw-normal" style="max-width: 800px;">
