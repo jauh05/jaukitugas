@@ -161,5 +161,19 @@ class CostomerController extends Controller
 
     return redirect('/costomer/' . $id_costomer . '/nota')->with('pesan_berhasil', 'Diskon berhasil diperbarui');
   }
+
+  function bulkUpdateStatus(Request $request): RedirectResponse
+  {
+    $request->validate([
+      'ids' => ['required', 'array'],
+      'status' => ['required', 'string'],
+    ]);
+
+    Costomer::whereIn('id_costomer', $request->ids)->update([
+      'selesaikan' => $request->status
+    ]);
+
+    return redirect('dashboard/costomer')->with('pesan_berhasil', 'Status multiple customer berhasil diperbarui!');
+  }
 }
 

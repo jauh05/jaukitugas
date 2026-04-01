@@ -14,11 +14,32 @@
             </div>
         </div>
 
-        <!-- Custom Search Bar -->
-        <div class="mb-4 position-relative">
-            <input type="text" id="customSearch" class="form-control border-0 bg-white py-3 ps-5 shadow-sm rounded-4"
-                placeholder="Cari data pending..." style="border: 1px solid rgba(220, 53, 69, 0.2) !important;">
-            <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted fs-5"></i>
+        <!-- Custom Search Bar & Bulk Actions -->
+        <div class="row mb-4 g-3 align-items-center">
+            <div class="col-md">
+                <div class="position-relative">
+                    <input type="text" id="customSearch" class="form-control border-0 bg-white py-3 ps-5 shadow-sm rounded-4"
+                        placeholder="Cari data pending..." style="border: 1px solid rgba(220, 53, 69, 0.2) !important;">
+                    <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted fs-5"></i>
+                </div>
+            </div>
+            <div class="col-md-auto" id="bulkActionContainer" style="display: none;">
+                <div class="glass-card p-2 bg-white d-flex align-items-center gap-3 shadow-sm" style="border-radius: 15px;">
+                    <span class="small fw-bold text-danger ps-2"><span id="selectedCount">0</span> Terpilih</span>
+                    <form action="{{ route('costomer.bulkUpdate') }}" method="POST" id="bulkUpdateForm" class="d-flex gap-2 align-items-center">
+                        @csrf
+                        <div id="selectedIdsContainer"></div>
+                        <select name="status" class="form-select form-select-sm border-0 bg-light rounded-pill fw-bold" style="min-width: 120px;" required>
+                            <option value="">Update Status...</option>
+                            <option value="sudah">✅ Selesai</option>
+                            <option value="pembayaran">💰 Bayar</option>
+                            <option value="proses">⏳ Proses</option>
+                            <option value="belum">⛔ Belum</option>
+                        </select>
+                        <button type="submit" class="btn btn-danger btn-sm rounded-pill px-3 fw-bold">Update</button>
+                    </form>
+                </div>
+            </div>
         </div>
 
         <!-- Glass Table -->
@@ -26,7 +47,12 @@
             <table class="table table-borderless align-middle mb-0" id="glassTable">
                 <thead class="bg-light border-bottom">
                     <tr class="text-secondary text-uppercase fs-7 fw-bold">
-                        <th class="ps-4 py-3">No</th>
+                        <th class="ps-4 py-3" style="width: 50px;">
+                            <div class="form-check">
+                                <input class="form-check-input select-all-checkbox" type="checkbox" id="selectAll">
+                            </div>
+                        </th>
+                        <th class="py-3">No</th>
                         <th class="py-3">Info Customer</th>
                         <th class="py-3">Waktu</th>
                         <th class="py-3">Metode</th>
@@ -38,7 +64,12 @@
                 <tbody class="text-dark fw-medium">
                     @foreach ($costomer as $key => $value)
                                 <tr class="searchable-row border-bottom h-hover transition-all">
-                                    <td class="ps-4 text-muted">{{ $key + 1 }}</td>
+                                    <td class="ps-4 text-muted">
+                                        <div class="form-check">
+                                            <input class="form-check-input customer-checkbox" type="checkbox" value="{{ $value['id_costomer'] }}">
+                                        </div>
+                                    </td>
+                                    <td class="text-muted">{{ $key + 1 }}</td>
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="avatar-circle me-3" style="background: {{ 
@@ -238,6 +269,54 @@
                         this.closest('.deleteForm').submit();
                     }
                 })
+            });
+        });
+
+        // Bulk Selection Logic
+        const selectAll = document.getElementById('selectAll');
+        const checkboxes = document.querySelectorAll('.customer-checkbox');
+        const bulkActionContainer = document.getElementById('bulkActionContainer');
+        const selectedCountLabel = document.getElementById('selectedCount');
+        const selectedIdsContainer = document.getElementById('selectedIdsContainer');
+
+        function updateBulkUI() {
+            const checkedCheckboxes = document.querySelectorAll('.customer-checkbox:checked');
+            const count = checkedCheckboxes.length;
+            
+            selectedCountLabel.innerText = count;
+            
+            if (count > 0) {
+                bulkActionContainer.style.display = 'block';
+                // Clear and repopulate hidden inputs for the form
+                selectedIdsContainer.innerHTML = '';
+                checkedCheckboxes.forEach(cb => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'ids[]';
+                    input.value = cb.value;
+                    selectedIdsContainer.appendChild(input);
+                });
+            } else {
+                bulkActionContainer.style.display = 'none';
+            }
+        }
+
+        selectAll.addEventListener('change', function() {
+            checkboxes.forEach(cb => {
+                cb.checked = this.checked;
+            });
+            updateBulkUI();
+        });
+
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', function() {
+                const total = checkboxes.length;
+                const checked = document.querySelectorAll('.customer-checkbox:checked').length;
+                
+                selectAll.checked = total === checked;
+                selectAll.indeterminate = checked > 0 && checked < total;
+                
+                updateBulkUI();
             });
         });
     </script>

@@ -45,6 +45,7 @@ Route::put('/update/data/{id_costomer}', [CostomerController::class, 'updatedata
 Route::delete('/hapus/{id_costomer}', [CostomerController::class, 'delete'])->middleware('cekuser');
 Route::post('/tambah/harga/{id_costomer}', [CostomerController::class, 'tambah_nota'])->middleware('cekuser');
 Route::post('/update/diskon/{id_costomer}', [CostomerController::class, 'update_diskon'])->middleware('cekuser')->name('update.diskon');
+Route::post('/dashboard/costomer/bulk-update', [CostomerController::class, 'bulkUpdateStatus'])->middleware('cekuser')->name('costomer.bulkUpdate');
 
 Route::delete('costomer/{id_costomer}/hapus/harga/{id_nota}', [CostomerController::class, 'hapus_harga'])->middleware('cekuser');
 
