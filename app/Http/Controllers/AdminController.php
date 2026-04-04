@@ -18,63 +18,51 @@ class AdminController extends Controller
 {
     function index()
     {
-        $bulanSekarang = date('m');
-        $tahunSekarang = date('Y');
+        Carbon::setLocale('id'); // Set locale to Indonesian
+        $now = Carbon::now();
+        $bulanSekarang = $now->month;
+        $tahunSekarang = $now->year;
 
-        $dataBulan = range(1, 12);
         $data['tahunSekarang'] = $tahunSekarang;
+        $data['namaBulanSekarang'] = $now->translatedFormat('F Y');
 
-
+        // Records for the past two years
         $data['tahun_1'] = Costomer::whereYear('tanggal', $tahunSekarang - 1)->sum('total');
         $data['tahun_2'] = Costomer::whereYear('tanggal', $tahunSekarang - 2)->sum('total');
 
-
+        $dataBulan = range(1, 12);
+        
+        // Detailed monthly records for last year (tahun_1)
         $total_perbulan = [];
         $total_costomer = [];
         foreach ($dataBulan as $bulan) {
             $total_perbulan[$bulan] = Costomer::whereYear('tanggal', $tahunSekarang - 1)->whereMonth('tanggal', $bulan)->sum('total');
             $total_costomer[$bulan] = Costomer::whereYear('tanggal', $tahunSekarang - 1)->whereMonth('tanggal', $bulan)->count();
         }
-        ;
-
         $data['bulanLalu'] = $total_perbulan;
         $data['costomerLalu'] = $total_costomer;
 
-
+        // Detailed monthly records for two years ago (tahun_2)
         $total_perbulan2 = [];
         $total_costomer2 = [];
         foreach ($dataBulan as $bulan) {
             $total_perbulan2[$bulan] = Costomer::whereYear('tanggal', $tahunSekarang - 2)->whereMonth('tanggal', $bulan)->sum('total');
             $total_costomer2[$bulan] = Costomer::whereYear('tanggal', $tahunSekarang - 2)->whereMonth('tanggal', $bulan)->count();
         }
-        ;
-
         $data['bulanLalu2'] = $total_perbulan2;
         $data['costomerLalu2'] = $total_costomer2;
 
-        // dd($data['bulanLalu']);
-
+        // General Stats
         $data['komentar'] = Komentar::all();
-        $data['jumlah_komentar'] = Komentar::all()->count();
+        $data['jumlah_komentar'] = $data['komentar']->count();
         $data['jumlah_costomer_sudah'] = Costomer::where('selesaikan', 'sudah')->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->count();
         $data['jumlah_costomer_belum'] = Costomer::where('selesaikan', 'belum')->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->count();
         $data['jumlah_talent'] = TalentRegistration::where('status', 'pending')->count();
         $data['total_pendapatan'] = Costomer::whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->sum('total');
 
-        $data['metode'] = MetodePembayaran::all();
-        $data['metode_id1'] = Costomer::where('id_metode', 1)->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->count();
-        $data['total_id1'] = Costomer::where('id_metode', 1)->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->sum('total');
-        $data['metode_id2'] = Costomer::where('id_metode', 2)->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->count();
-        $data['total_id2'] = Costomer::where('id_metode', 2)->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->sum('total');
-        $data['metode_id3'] = Costomer::where('id_metode', 3)->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->count();
-        $data['total_id3'] = Costomer::where('id_metode', 3)->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->sum('total');
-        $data['metode_id4'] = Costomer::where('id_metode', 4)->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->count();
-        $data['total_id4'] = Costomer::where('id_metode', 4)->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->sum('total');
-
         // NEW: Daily Recap
-        $hariSekarang = date('d');
-        $data['rekap_harian_count'] = Costomer::whereDay('tanggal', $hariSekarang)->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->count();
-        $data['rekap_harian_sum'] = Costomer::whereDay('tanggal', $hariSekarang)->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->sum('total');
+        $data['rekap_harian_count'] = Costomer::whereDay('tanggal', $now->day)->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->count();
+        $data['rekap_harian_sum'] = Costomer::whereDay('tanggal', $now->day)->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->sum('total');
 
         // NEW: Overall Recap
         $data['rekap_total_count'] = Costomer::count();
@@ -82,11 +70,12 @@ class AdminController extends Controller
 
         // NEW: Last Month Recap
         $lastMonth = Carbon::now()->subMonth();
+        $data['rekap_bulan_lalu_nama'] = $lastMonth->translatedFormat('F Y');
         $data['rekap_bulan_lalu_count'] = Costomer::whereMonth('tanggal', $lastMonth->month)->whereYear('tanggal', $lastMonth->year)->count();
         $data['rekap_bulan_lalu_sum'] = Costomer::whereMonth('tanggal', $lastMonth->month)->whereYear('tanggal', $lastMonth->year)->sum('total');
 
-        // NEW: Daily Chart Data (Income & Count per day for current month)
-        $daysInMonth = Carbon::now()->daysInMonth;
+        // NEW: Daily Chart Data
+        $daysInMonth = $now->daysInMonth;
         $dailyIncome = [];
         $dailyCount = [];
         $dailyDays = [];
@@ -100,32 +89,12 @@ class AdminController extends Controller
         $data['chart_daily_data'] = json_encode($dailyIncome);
         $data['chart_daily_count'] = json_encode($dailyCount);
 
-        $jumlahmetode = MetodePembayaran::count();
-        $nama = MetodePembayaran::pluck('metode.nama_metode')
-            ->toArray();
-
-        $total = Costomer::join('metode', 'metode.id_metode', '=', 'costomer.id_metode')
-            ->whereIn('metode.nama_metode', $nama)
-            ->selectRaw('metode.nama_metode, COUNT(*) as jumlah')
-            ->groupBy('metode.nama_metode')
-            ->get();
-
-        $nama1 = MetodePembayaran::join('costomer', 'costomer.id_metode', '=', 'metode.id_metode')
-            ->select('metode.nama_metode', DB::raw('COUNT(costomer.id_metode) as jumlah_pembayaran ,SUM(costomer.total) as total_harga'))
-            ->whereIn('metode.nama_metode', $nama)
-            ->whereMonth('tanggal', $bulanSekarang)
-            ->whereYear('tanggal', $tahunSekarang) // Menggunakan whereIn untuk banyak nama
-            ->groupBy('metode.nama_metode')
-            ->get();
-
-
-        // NEW: Top Customers (Loyal Customers) - Fetching Top 20 for modal support
+        // Top Customers
         $data['top_customers'] = Costomer::select('nama', DB::raw('count(*) as total_order'), DB::raw('sum(total) as total_spend'))
             ->groupBy('nama')
             ->orderByDesc('total_spend')
             ->take(20)
             ->get();
-        // Removed Payment Method and Status Chart Logic as requested
 
         $data['chart'] = RekapCharts::buildChart();
         $data['chartCos'] = CostomerCharts::buildChart();

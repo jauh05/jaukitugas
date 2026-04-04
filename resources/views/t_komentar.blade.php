@@ -40,7 +40,7 @@
                 <div class="position-absolute top-0 end-0 opacity-25 p-3">
                     <i class="bi bi-calendar-event fs-1"></i>
                 </div>
-                <h4 class="fw-bold mb-1">Rekapitulasi: {{ strftime('%B %Y', strtotime(date('Y-m-d'))) }}</h4>
+                <h4 class="fw-bold mb-1">Rekapitulasi: {{ $namaBulanSekarang }}</h4>
                 <p class="mb-0 text-white-50">Pantau performa harian dan bulanan Anda secara real-time.</p>
             </div>
         </div>
@@ -361,7 +361,7 @@
         <div class="col-md-8">
             <div class="glass-card border-0 shadow-lg p-0 overflow-hidden bg-white">
                 <div class="bg-dark text-white p-3 fw-bold">
-                    <i class="bi bi-calendar-minus me-2"></i>Rekap Bulan Lalu ({{ strftime('%B %Y', strtotime(date('Y-m-d') . ' -1 month')) }})
+                    <i class="bi bi-calendar-minus me-2"></i>Rekap Bulan Lalu ({{ $rekap_bulan_lalu_nama }})
                 </div>
                 <div class="card-body text-center p-5">
                     <h5 class="text-muted text-uppercase ls-1 mb-3">Total Pendapatan</h5>
@@ -401,18 +401,19 @@
                                                     class="bi bi-cash-stack"></i></h3>
                                         </div>
                                     </div>
+                                    @php
+                                        $indoMonths = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                                    @endphp
                                     @foreach ($bulanLalu as $key => $bulan)
                                         <ol class="list-group mb-1">
-                                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <li class="list-group-item d-flex justify-content-between align-items-start border-0 border-bottom">
                                                 <div class="">
-                                                    <div class="fw-bold">Bulan <?php    $i = $key - 1 ?> {{ $i + 1 }} </div>
-                                                    <!-- Menampilkan bulan dalam angka -->
+                                                    <div class="fw-bold text-primary">{{ $indoMonths[$key-1] }}</div>
                                                     <span class="fs-6">Rp {{ number_format($bulan) }},- </span>
                                                 </div>
                                                 <div>
-                                                    <!-- Menampilkan jumlah customer per bulan -->
-                                                    <span class="badge text-bg-success rounded-pill fs-6">
-                                                        <i class="bi bi-person-check"></i> {{ $costomerLalu[$key] }} Costomer
+                                                    <span class="badge text-bg-success rounded-pill fs-7">
+                                                        <i class="bi bi-person-check"></i> {{ $costomerLalu[$key] }} Customer
                                                     </span>
                                                 </div>
                                             </li>
@@ -433,16 +434,14 @@
                                     </div>
                                     @foreach ($bulanLalu2 as $key => $bulan)
                                         <ol class="list-group mb-1">
-                                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <li class="list-group-item d-flex justify-content-between align-items-start border-0 border-bottom">
                                                 <div class="">
-                                                    <div class="fw-bold">Bulan <?php    $i = $key - 1 ?> {{ $i + 1 }} </div>
-                                                    <!-- Menampilkan bulan dalam angka -->
-                                                    <span class="fs-6">Rp {{ number_format($bulan) }} ,- </span>
+                                                    <div class="fw-bold text-primary">{{ $indoMonths[$key-1] }}</div>
+                                                    <span class="fs-6">Rp {{ number_format($bulan) }},- </span>
                                                 </div>
                                                 <div>
-                                                    <!-- Menampilkan jumlah customer per bulan -->
-                                                    <span class="badge text-bg-success rounded-pill fs-6">
-                                                        <i class="bi bi-person-check"></i> {{ $costomerLalu2[$key] }} Costomer
+                                                    <span class="badge text-bg-success rounded-pill fs-7">
+                                                        <i class="bi bi-person-check"></i> {{ $costomerLalu2[$key] }} Customer
                                                     </span>
                                                 </div>
                                             </li>
