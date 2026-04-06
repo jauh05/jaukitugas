@@ -522,6 +522,37 @@
                 });
             }
         });
+
+        // Prevent double form submission
+        document.addEventListener('submit', function (e) {
+            const form = e.target;
+            const submitButton = form.querySelector('button[type="submit"], button:not([type])');
+            
+            if (submitButton && !submitButton.disabled) {
+                // If it's already submitting, prevent second submission
+                if (form.getAttribute('data-submitting') === 'true') {
+                    e.preventDefault();
+                    return;
+                }
+
+                // Native HTML5 validation check
+                if (form.checkValidity && !form.checkValidity()) {
+                    return;
+                }
+
+                form.setAttribute('data-submitting', 'true');
+
+                // Using setTimeout ensures the browser processes the submit event (including native validation) 
+                // before actually disabling the button and changing its HTML.
+                setTimeout(() => {
+                    submitButton.disabled = true;
+                    if (!submitButton.querySelector('.spinner-border')) {
+                        const originalText = submitButton.innerHTML;
+                        submitButton.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>${originalText}`;
+                    }
+                }, 0);
+            }
+        });
     </script>
 </body>
 

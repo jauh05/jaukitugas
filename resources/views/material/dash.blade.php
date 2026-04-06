@@ -499,6 +499,37 @@
                 console.error('Could not copy text: ', err);
             });
         }
+
+        // Prevent double form submission
+        document.addEventListener('submit', function (e) {
+            const form = e.target;
+            const submitButton = form.querySelector('button[type="submit"], button:not([type])');
+            
+            if (submitButton && !submitButton.disabled) {
+                // If native HTML5 validation exists, check it
+                if (form.checkValidity && !form.checkValidity()) {
+                    return;
+                }
+
+                // If already submitting, prevent second submission
+                if (form.getAttribute('data-submitting') === 'true') {
+                    e.preventDefault();
+                    return;
+                }
+                
+                form.setAttribute('data-submitting', 'true');
+
+                // Using setTimeout ensures the browser processes the submit event
+                // before actually disabling the button.
+                setTimeout(() => {
+                    submitButton.disabled = true;
+                    if (!submitButton.querySelector('.spinner-border')) {
+                        const originalText = submitButton.innerHTML;
+                        submitButton.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>${originalText}`;
+                    }
+                }, 0);
+            }
+        });
     </script>
 </body>
 
