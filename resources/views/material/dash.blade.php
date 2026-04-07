@@ -299,56 +299,8 @@
                 padding-bottom: 3rem !important;
             }
         }
-            /* Floating WhatsApp Button */
-            .btn-floating-wa {
-                position: fixed;
-                bottom: 30px;
-                right: 30px;
-                z-index: 1050;
-                width: 65px;
-                height: 65px;
-                background: #25D366;
-                color: white;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 32px;
-                box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
-                transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                text-decoration: none;
-            }
-
-            .btn-floating-wa:hover {
-                transform: scale(1.1) translateY(-5px);
-                color: white;
-                box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
-            }
-
-            .wa-pulse {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                background: #25D366;
-                border-radius: 50%;
-                z-index: -1;
-                animation: wa-pulse 2s infinite;
-            }
-
-            @keyframes wa-pulse {
-                0% { transform: scale(1); opacity: 0.6; }
-                100% { transform: scale(1.6); opacity: 0; }
-            }
-
-            @media (max-width: 768px) {
-                .btn-floating-wa {
-                    bottom: 20px;
-                    right: 20px;
-                    width: 55px;
-                    height: 55px;
-                    font-size: 28px;
-                }
-    </head>
+    </style>
+</head>
 
 <body>
     <!-- Animated BG -->
@@ -381,9 +333,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/#testimonials') }}">Testimoni</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/#pricing') }}">Daftar Harga</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link fw-bold text-primary" href="{{ url('/payment') }}">
@@ -538,13 +487,7 @@
         </div>
     </div>
 
-    <a href="https://wa.me/6285184771744?text=Halo%20Jauki%20Tugas%2C%20saya%20ingin%20konsultasi" class="btn-floating-wa" target="_blank">
-        <div class="wa-pulse"></div>
-        <i class="bi bi-whatsapp"></i>
-    </a>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ url('asset/animation.js') }}"></script>
     <script>
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(function () {
@@ -587,6 +530,61 @@
             }
         });
     </script>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/6285184771744?text=Halo%20Jauki%20Tugas%2C%20saya%20ingin%20konsultasi" 
+       class="btn-whatsapp-floating shadow-lg" 
+       target="_blank" 
+       aria-label="Chat with us on WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+        <span>Chat CS</span>
+    </a>
+
+    <style>
+        .btn-whatsapp-floating {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            z-index: 1000;
+            font-weight: 700;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-whatsapp-floating i {
+            font-size: 1.5rem;
+            margin-right: 8px;
+        }
+
+        .btn-whatsapp-floating:hover {
+            transform: translateY(-5px) scale(1.05);
+            color: white;
+            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
+            background: linear-gradient(135deg, #25d366 0%, #075e54 100%);
+        }
+
+        @media (max-width: 768px) {
+            .btn-whatsapp-floating {
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 15px;
+            }
+            .btn-whatsapp-floating span {
+                display: none;
+            }
+            .btn-whatsapp-floating i {
+                margin-right: 0;
+            }
+        }
+    </style>
 </body>
 
 </html>

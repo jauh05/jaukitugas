@@ -11,16 +11,12 @@
         <div class="row align-items-center flex-column-reverse flex-lg-row g-lg-5 g-4 py-lg-4 py-2">
             <div class="col-lg-6 text-center-sm">
                 <div class="hero-content">
-                    <div class="d-inline-flex align-items-center mb-2 mb-lg-3 word-reveal overflow-visible flex-wrap gap-2">
+                    <div class="d-inline-flex align-items-center mb-2 mb-lg-3 word-reveal overflow-visible">
                         <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold animate-glow"
                             style="letter-spacing: 0.1rem; font-size: 0.75rem;">
                             <i class="bi bi-stars me-2"></i>SAHABAT SETIA MAHASISWA #1 DI INDONESIA
                         </span>
-                        <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-bold"
-                            style="letter-spacing: 0.1rem; font-size: 0.75rem;">
-                            <i class="bi bi-tag-fill me-2"></i>HARGA MULAI RP 5.000
-                        </span>
-                        <span class="badge bg-warning text-dark px-2 py-1 rounded-pill small fw-bold d-none d-sm-inline-block" style="font-size: 0.6rem; animation: pulse 2s infinite;">HOT</span>
+                        <span class="ms-2 badge bg-warning text-dark px-2 py-1 rounded-pill small fw-bold d-none d-sm-inline-block" style="font-size: 0.6rem; animation: pulse 2s infinite;">HOT</span>
                     </div>
 
                     <h1 class="display-2 fw-bold mb-1 lh-tight hero-title main-reveal" style="font-weight: 900 !important;">
@@ -38,19 +34,19 @@
                         </span>
                     </h1>
 
-                    <p class="lead text-muted mb-2 pe-lg-5 para-reveal opacity-0">
+                    <p class="lead text-muted mb-2 pe-lg-5 para-reveal">
                         Raih nilai puncak tanpa harus begadang. Serahkan tugasmu kepada tim profesional kami. Dari makalah,
                         presentasi, hingga skripsi — kami siap membantu Anda lulus tepat waktu dengan hasil terbaik.
                     </p>
 
-                    <div class="d-flex flex-row gap-3 justify-content-center-sm btn-reveal opacity-0">
+                    <div class="d-flex flex-row gap-3 justify-content-center-sm btn-reveal">
                         <a href="https://wa.me/6285184771744?text=Halo%20Jauki%20Tugas%2C%20saya%20ingin%20konsultasi"
-                            class="btn btn-premium shadow-lg px-4 py-3 rounded-4 d-flex align-items-center">
+                            class="btn btn-premium shadow-lg px-4 py-3 rounded-4 d-flex align-items-center bg-success border-0">
                             <i class="bi bi-whatsapp me-2 fs-5"></i> Hubungi Konsultan
                         </a>
                         <a href="{{ url('/pricelist') }}"
                             class="btn btn-glass-outline px-4 py-3 rounded-4 d-flex align-items-center">
-                            <i class="bi bi-tag me-2 fs-5 text-primary"></i> Cek Katalog
+                            <i class="bi bi-tag me-2 fs-5 text-primary"></i> Cek Harga
                         </a>
                     </div>
                 </div>
@@ -108,128 +104,42 @@
         </div>
 
         <div class="row g-4 pt-3">
-            <!-- Service Card 1 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="glass-card h-100 p-4 p-xl-5 position-relative overflow-hidden">
-                    <div class="d-flex justify-content-between align-items-start mb-4">
-                        <div class="icon-box bg-info text-white shadow-lg p-3 rounded-4">
-                            <i class="bi bi-file-earmark-text-fill fs-3"></i>
-                        </div>
-                        <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-2 fw-bold">Mulai Rp 5k</span>
-                    </div>
-                    <h3 class="fw-bold mb-3">Tugas Harian</h3>
-                    <p class="text-muted mb-4">Makalah, Essay, Resume, hingga PPT. Dikerjakan dengan format rapi dan referensi terpercaya.</p>
-                    <div class="mb-4 rounded-4 overflow-hidden bg-light" style="height: 180px;">
-                        <img src="{{ asset('asset/writing.png') }}" class="w-100 h-100 object-fit-cover" alt="Tugas Harian">
-                    </div>
-                    <a href="https://wa.me/6285184771744?text=Halo%20Jauki%20Tugas%2C%20saya%20ingin%20konsultasi%20tugas%20harian"
-                        class="stretched-link fw-bold text-decoration-none text-primary">Konsultasi Tugas <i
-                            class="bi bi-arrow-right ms-2"></i></a>
-                </div>
-            </div>
-
             <!-- Service Card 2 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="glass-card h-100 p-4 p-xl-5 position-relative overflow-hidden border-primary border-opacity-25">
+            <div class="col-lg-6 col-md-6">
+                <div class="glass-card h-100 p-4 p-xl-5 position-relative overflow-hidden border-primary">
                     <div class="d-flex justify-content-between align-items-start mb-4">
                         <div class="icon-box bg-primary text-white shadow-lg p-3 rounded-4">
                             <i class="bi bi-mortarboard-fill fs-3"></i>
                         </div>
-                        <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2 fw-bold">Mulai Rp 500k</span>
                     </div>
                     <h3 class="fw-bold mb-3">Joki Skripsi</h3>
                     <p class="text-muted mb-4">Macet di Bab 2? Atau bingung olah data? Kami bantu dari judul sampai wisuda
                         dengan garansi bimbingan.</p>
-                    <div class="mb-4 rounded-4 overflow-hidden bg-light" style="height: 180px;">
-                        <img src="{{ asset('asset/talent.png') }}" class="w-100 h-100 object-fit-cover" alt="Skripsi">
+                    <div class="mb-4 rounded-4 overflow-hidden bg-light" style="height: 220px;">
+                        <img src="{{ asset('asset/writing.png') }}" class="w-100 h-100 object-fit-cover" alt="Skripsi">
                     </div>
-                    <a href="https://wa.me/6285184771744?text=Halo%20Jauki%20Tugas%2C%20saya%20ingin%20konsultasi%20skripsi"
+                    <a href="https://wa.me/6285184771744?text=Halo%20Jauki%20Tugas%2C%20saya%20ingin%20konsultasi"
                         class="stretched-link fw-bold text-decoration-none text-primary">Konsultasi Gratis <i
                             class="bi bi-arrow-right ms-2"></i></a>
                 </div>
             </div>
 
             <!-- Service Card 3 -->
-            <div class="col-lg-4 col-md-6">
+            <div class="col-lg-6 col-md-6">
                 <div class="glass-card h-100 p-4 p-xl-5 position-relative overflow-hidden">
                     <div class="d-flex justify-content-between align-items-start mb-4">
-                        <div class="icon-box bg-warning text-white shadow-lg p-3 rounded-4">
-                            <i class="bi bi-tags-fill fs-3"></i>
+                        <div class="icon-box bg-white shadow-sm p-3 rounded-4">
+                            <i class="bi bi-tags-fill fs-3 text-warning"></i>
                         </div>
                     </div>
                     <h3 class="fw-bold mb-3">Cek Harga</h3>
                     <p class="text-muted mb-4">Transparansi adalah kunci. Unduh daftar harga lengkap layanan kami. Mulai
                         dari tugas harian hingga paket skripsi.</p>
-                    <div class="mb-4 rounded-4 overflow-hidden bg-light" style="height: 180px;">
+                    <div class="mb-4 rounded-4 overflow-hidden bg-light" style="height: 220px;">
                         <img src="{{ asset('asset/pricing.png') }}" class="w-100 h-100 object-fit-cover" alt="Pricing">
                     </div>
-                    <a href="{{ url('/pricelist') }}" class="stretched-link fw-bold text-decoration-none text-primary">Lihat
-                        Pricelist List <i class="bi bi-arrow-right ms-2"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section id="pricing" class="container py-5">
-        <div class="text-center mb-5 mw-md mx-auto" style="max-width: 700px;">
-            <span class="text-primary fw-bold text-uppercase tracking-wider small">Investasi Terbaik</span>
-            <h2 class="display-5 fw-bold mt-2">Pilih Paket Terbaikmu</h2>
-            <p class="text-muted mt-3">Raih hasil maksimal dengan biaya minimal. Kami menyediakan paket yang fleksibel sesuai kantong mahasiswa.</p>
-        </div>
-
-        <div class="row g-4 justify-content-center">
-            <!-- Card 1 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="glass-card p-4 p-xl-5 text-center h-100 border-0 shadow-sm">
-                    <h4 class="fw-bold mb-3">Hemat</h4>
-                    <div class="mb-4">
-                        <span class="display-4 fw-bold text-primary">Rp 5k</span>
-                        <span class="text-muted">/hal</span>
-                    </div>
-                    <ul class="list-unstyled mb-5 text-start">
-                        <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> Pengerjaan 3-5 Hari</li>
-                        <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> Format Standar Kampus</li>
-                        <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> 1x Revisi Gratis</li>
-                    </ul>
-                    <a href="https://wa.me/6285184771744?text=Halo%20Jauki%20Tugas%2C%20saya%20ingin%20pesan%20paket%20Hemat" class="btn btn-glass-outline w-100 py-3 rounded-4 fw-bold">Pilih Paket</a>
-                </div>
-            </div>
-
-            <!-- Card 2 (Highlight) -->
-            <div class="col-lg-4 col-md-6">
-                <div class="glass-card p-4 p-xl-5 text-center h-100 border-primary shadow-xl position-relative" style="transform: scale(1.05); z-index: 2; background: white;">
-                    <div class="position-absolute top-0 start-50 translate-middle">
-                        <span class="badge bg-warning text-dark px-4 py-2 rounded-pill fw-bold shadow-sm">REKOMENDASI</span>
-                    </div>
-                    <h4 class="fw-bold mb-3">Standar</h4>
-                    <div class="mb-4">
-                        <span class="display-4 fw-bold text-primary">Rp 7k</span>
-                        <span class="text-muted">/hal</span>
-                    </div>
-                    <ul class="list-unstyled mb-5 text-start">
-                        <li class="mb-3"><i class="bi bi-check-circle-fill text-primary me-2"></i> Pengerjaan 1-2 Hari</li>
-                        <li class="mb-3"><i class="bi bi-check-circle-fill text-primary me-2"></i> Referensi Jurnal</li>
-                        <li class="mb-3"><i class="bi bi-check-circle-fill text-primary me-2"></i> Unlimited Revisi</li>
-                    </ul>
-                    <a href="https://wa.me/6285184771744?text=Halo%20Jauki%20Tugas%2C%20saya%20ingin%20pesan%20paket%20Standar" class="btn btn-premium w-100 py-3 rounded-4 fw-bold shadow-lg">Pilih Paket</a>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="glass-card p-4 p-xl-5 text-center h-100 border-0 shadow-sm">
-                    <h4 class="fw-bold mb-3">Kilat</h4>
-                    <div class="mb-4">
-                        <span class="display-4 fw-bold text-primary">Rp 10k</span>
-                        <span class="text-muted">/hal</span>
-                    </div>
-                    <ul class="list-unstyled mb-5 text-start">
-                        <li class="mb-3"><i class="bi bi-check-circle-fill text-danger me-2"></i> Selesai < 24 Jam</li>
-                        <li class="bi bi-check-circle-fill text-danger me-2"></i> Prioritas Utama</li>
-                        <li class="mb-3"><i class="bi bi-check-circle-fill text-danger me-2"></i> Respon VIP 24/7</li>
-                    </ul>
-                    <a href="https://wa.me/6285184771744?text=Halo%20Jauki%20Tugas%2C%20saya%20ingin%20pesan%20paket%20Kilat" class="btn btn-glass-outline w-100 py-3 rounded-4 fw-bold">Pilih Paket</a>
+                    <a href="{{ url('/pricelist') }}" class="stretched-link fw-bold text-decoration-none text-primary">Cek Harga Lengkap <i
+                            class="bi bi-arrow-right ms-2"></i></a>
                 </div>
             </div>
         </div>
@@ -637,21 +547,15 @@
                     duration: 1.5,
                     ease: "power2.out"
                 }, "-=1.5")
-                .to(".para-reveal", {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1.2,
-                    startAt: {
-                        y: 20
-                    }
+                .from(".para-reveal", {
+                    opacity: 0,
+                    y: 20,
+                    duration: 1.2
                 }, "-=0.8")
-                .to(".btn-reveal", {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1.2,
-                    startAt: {
-                        y: 20
-                    }
+                .from(".btn-reveal", {
+                    opacity: 0,
+                    y: 20,
+                    duration: 1.2
                 }, "-=1")
                 .from(".hero-img", {
                     scale: 0.8,
@@ -667,19 +571,6 @@
                 repeat: -1,
                 yoyo: true,
                 ease: "sine.inOut"
-            });
-
-            // Scroll animations for cards
-            gsap.from("#pricing .glass-card", {
-                scrollTrigger: {
-                    trigger: "#pricing",
-                    start: "top 80%",
-                },
-                y: 30,
-                opacity: 0,
-                duration: 1,
-                stagger: 0.2,
-                ease: "power2.out"
             });
         });
     </script>
@@ -746,4 +637,3 @@
         }
     </style>
 @endsection
-on
