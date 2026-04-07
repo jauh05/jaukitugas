@@ -19,9 +19,9 @@
                         <span class="ms-2 badge bg-warning text-dark px-2 py-1 rounded-pill small fw-bold d-none d-sm-inline-block" style="font-size: 0.6rem; animation: pulse 2s infinite;">HOT</span>
                     </div>
 
-                    <h1 class="display-2 fw-bold mb-1 lh-tight hero-title main-reveal" style="font-weight: 900 !important;">
+                    <h1 class="display-3 fw-bold mb-2 lh-tight hero-title main-reveal" style="font-weight: 900 !important;">
                         <span class="d-block word-reveal overflow-visible" style="letter-spacing: -0.04em;">
-                            <span class="text-premium-dark">Joki Tugas</span>
+                            <span class="text-premium-dark">Jauki Tugas</span>
                             <span class="position-relative d-inline-block ms-1">
                                 <span class="text-primary text-glow-soft">Jogja</span>
                                 <svg class="position-absolute start-0 bottom-0 w-100 h-25" viewBox="0 0 100 20" preserveAspectRatio="none" style="margin-bottom: -5px; z-index: -1;">
@@ -29,7 +29,7 @@
                                 </svg>
                             </span>
                         </span>
-                        <span class="text-gradient d-block highlight-reveal mt-0" style="font-size: 0.5em; letter-spacing: 0.1em; text-transform: uppercase;">
+                        <span class="text-gradient d-block highlight-reveal mt-2" style="font-size: 0.45em; letter-spacing: 0.08em; text-transform: uppercase;">
                             <i class="bi bi-shield-check-fill me-2"></i>Partner Akademik Profesional & Terpercaya
                         </span>
                     </h1>
@@ -39,14 +39,22 @@
                         presentasi, hingga skripsi — kami siap membantu Anda lulus tepat waktu dengan hasil terbaik.
                     </p>
 
-                    <div class="d-flex flex-row gap-4 justify-content-center-sm btn-reveal mb-5">
+                    <div class="d-flex flex-column flex-sm-row gap-3 gap-lg-4 justify-content-center-sm btn-reveal mb-5">
                         <a href="https://wa.me/6285184771744?text=Halo%20Jauki%20Tugas%2C%20saya%20ingin%20konsultasi"
-                            class="btn btn-premium btn-whatsapp bg-whatsapp shadow-lg px-4 py-3 rounded-4 d-flex align-items-center border-0">
-                            <i class="bi bi-whatsapp me-2 fs-5"></i> Hubungi Konsultan
+                            class="btn btn-premium btn-whatsapp-shine shadow-lg px-4 py-3 rounded-4 d-flex align-items-center justify-content-center border-0">
+                            <i class="bi bi-whatsapp me-2 fs-4"></i> 
+                            <div class="text-start">
+                                <small class="d-block opacity-75 fw-normal" style="font-size: 0.65rem; line-height: 1;">Respon Cepat</small>
+                                <span class="fw-bold"> Hubungi Kami (WA)</span>
+                            </div>
                         </a>
                         <a href="{{ url('/pricelist') }}"
-                            class="btn btn-glass-outline px-4 py-3 rounded-4 d-flex align-items-center">
-                            <i class="bi bi-tag me-2 fs-5 text-primary"></i> Cek Harga
+                            class="btn btn-glass-outline-premium px-4 py-3 rounded-4 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-tag-fill me-2 fs-5 text-primary"></i> 
+                            <div class="text-start">
+                                <small class="d-block opacity-75 fw-normal" style="font-size: 0.65rem; line-height: 1;">Mulai Rp 5.000</small>
+                                <span class="fw-bold text-dark">Cek Harga & Layanan</span>
+                            </div>
                         </a>
                     </div>
                 </div>
@@ -626,14 +634,52 @@
             border-color: rgba(0, 0, 0, .125);
         }
 
-        /* Group Hover Effects */
-        .group-hover:hover .icon-box {
-            background-color: var(--primary-accent) !important;
-            color: white !important;
+        /* Custom Premium Enhancements */
+        .btn-whatsapp-shine {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%) !important;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
         }
 
-        .group-hover .icon-box {
+        .btn-whatsapp-shine::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine-btn 4s infinite linear;
+        }
+
+        @keyframes shine-btn {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            20%, 100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .btn-glass-outline-premium {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid #e2e8f0;
+            backdrop-filter: blur(10px);
             transition: all 0.3s ease;
+        }
+
+        .btn-glass-outline-premium:hover {
+            background: white;
+            border-color: var(--primary-accent);
+            box-shadow: 0 10px 25px rgba(72, 52, 212, 0.1);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 576px) {
+            .display-3 {
+                font-size: 2.5rem !important;
+            }
+            .hero-title {
+                margin-top: 1rem;
+            }
         }
     </style>
 @endsection
