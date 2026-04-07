@@ -35,18 +35,21 @@ Route::get('/dashboard/{id_komentar}/edit', [AdminController::class, 'edit'])->m
 Route::put('/dashboard/{id_komentar}', [AdminController::class, 'update'])->middleware('cekuser');
 Route::delete('/komentar/{id_komentar}', [AdminController::class, 'delete'])->middleware('cekuser');
 
-Route::get('/dashboard/costomer', [CostomerController::class, 'index'])->middleware('cekuser');
+// Customer Management Routes
+Route::middleware('cekuser')->prefix('dashboard/costomer')->group(function () {
+    Route::get('/', [CostomerController::class, 'index'])->name('costomer.index');
+    Route::get('/tambah', [CostomerController::class, 'tambah'])->name('costomer.tambah');
+    Route::post('/tambah/data', [CostomerController::class, 'store'])->name('costomer.store');
+    Route::post('/bulk-update', [CostomerController::class, 'bulkUpdateStatus'])->name('costomer.bulkUpdate');
+    Route::post('/diskon/{id_costomer}', [CostomerController::class, 'update_diskon'])->name('costomer.diskon');
+});
+
 Route::put('selesaikan/{id_costomer}', [CostomerController::class, 'update'])->middleware('cekuser');
-Route::get('dashboard/costomer/tambah', [CostomerController::class, 'tambah'])->middleware('cekuser');
-Route::post('dashboard/costomer/tambah/data', [CostomerController::class, 'store'])->middleware('cekuser');
 Route::get('/costomer/{id_costomer}/edit', [CostomerController::class, 'edit'])->middleware('cekuser');
 Route::get('/costomer/{id_costomer}/nota', [CostomerController::class, 'nota'])->middleware('cekuser');
 Route::put('/update/data/{id_costomer}', [CostomerController::class, 'updatedata'])->middleware('cekuser');
 Route::delete('/hapus/{id_costomer}', [CostomerController::class, 'delete'])->middleware('cekuser');
 Route::post('/tambah/harga/{id_costomer}', [CostomerController::class, 'tambah_nota'])->middleware('cekuser');
-Route::post('/update/diskon/{id_costomer}', [CostomerController::class, 'update_diskon'])->middleware('cekuser')->name('update.diskon');
-Route::post('/dashboard/costomer/bulk-update', [CostomerController::class, 'bulkUpdateStatus'])->middleware('cekuser')->name('costomer.bulkUpdate');
-
 Route::delete('costomer/{id_costomer}/hapus/harga/{id_nota}', [CostomerController::class, 'hapus_harga'])->middleware('cekuser');
 
 

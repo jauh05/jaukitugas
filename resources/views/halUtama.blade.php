@@ -680,6 +680,10 @@
             .hero-title {
                 margin-top: 1rem;
             }
+            .para-reveal {
+                font-size: 0.85rem !important;
+                line-height: 1.6;
+            }
         }
     </style>
 @endsection
