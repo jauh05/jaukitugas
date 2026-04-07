@@ -299,8 +299,56 @@
                 padding-bottom: 3rem !important;
             }
         }
-    </style>
-</head>
+            /* Floating WhatsApp Button */
+            .btn-floating-wa {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                z-index: 1050;
+                width: 65px;
+                height: 65px;
+                background: #25D366;
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 32px;
+                box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+                transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                text-decoration: none;
+            }
+
+            .btn-floating-wa:hover {
+                transform: scale(1.1) translateY(-5px);
+                color: white;
+                box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
+            }
+
+            .wa-pulse {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background: #25D366;
+                border-radius: 50%;
+                z-index: -1;
+                animation: wa-pulse 2s infinite;
+            }
+
+            @keyframes wa-pulse {
+                0% { transform: scale(1); opacity: 0.6; }
+                100% { transform: scale(1.6); opacity: 0; }
+            }
+
+            @media (max-width: 768px) {
+                .btn-floating-wa {
+                    bottom: 20px;
+                    right: 20px;
+                    width: 55px;
+                    height: 55px;
+                    font-size: 28px;
+                }
+    </head>
 
 <body>
     <!-- Animated BG -->
@@ -333,6 +381,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/#testimonials') }}">Testimoni</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/#pricing') }}">Daftar Harga</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link fw-bold text-primary" href="{{ url('/payment') }}">
@@ -486,6 +537,11 @@
             </div>
         </div>
     </div>
+
+    <a href="https://wa.me/6285184771744?text=Halo%20Jauki%20Tugas%2C%20saya%20ingin%20konsultasi" class="btn-floating-wa" target="_blank">
+        <div class="wa-pulse"></div>
+        <i class="bi bi-whatsapp"></i>
+    </a>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url('asset/animation.js') }}"></script>
