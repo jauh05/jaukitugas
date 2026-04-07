@@ -34,14 +34,14 @@
                         </span>
                     </h1>
 
-                    <p class="lead text-muted mb-2 pe-lg-5 para-reveal">
+                    <p class="lead text-muted mb-4 pe-lg-5 para-reveal">
                         Raih nilai puncak tanpa harus begadang. Serahkan tugasmu kepada tim profesional kami. Dari makalah,
                         presentasi, hingga skripsi — kami siap membantu Anda lulus tepat waktu dengan hasil terbaik.
                     </p>
 
-                    <div class="d-flex flex-row gap-3 justify-content-center-sm btn-reveal">
+                    <div class="d-flex flex-row gap-4 justify-content-center-sm btn-reveal mb-5">
                         <a href="https://wa.me/6285184771744?text=Halo%20Jauki%20Tugas%2C%20saya%20ingin%20konsultasi"
-                            class="btn btn-premium shadow-lg px-4 py-3 rounded-4 d-flex align-items-center bg-success border-0">
+                            class="btn btn-premium btn-whatsapp bg-whatsapp shadow-lg px-4 py-3 rounded-4 d-flex align-items-center border-0">
                             <i class="bi bi-whatsapp me-2 fs-5"></i> Hubungi Konsultan
                         </a>
                         <a href="{{ url('/pricelist') }}"
@@ -51,7 +51,7 @@
                     </div>
                 </div>
 
-                <div class="mt-0 d-flex align-items-center gap-4 justify-content-center-sm">
+                <div class="mt-5 d-flex align-items-center gap-4 justify-content-center-sm">
                     <div class="d-flex border-end pe-4 align-items-center">
                         <i class="bi bi-people-fill fs-2 text-primary me-3"></i>
                         <div>

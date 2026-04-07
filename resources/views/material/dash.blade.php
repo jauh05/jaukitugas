@@ -137,6 +137,18 @@
             border-color: var(--secondary-accent);
         }
 
+        .bg-whatsapp {
+            background-color: #25D366 !important;
+            color: white !important;
+        }
+
+        .bg-whatsapp:hover {
+            background-color: #128C7E !important;
+            color: white !important;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.25) !important;
+        }
+
         .glass-footer {
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: var(--glass-blur);
