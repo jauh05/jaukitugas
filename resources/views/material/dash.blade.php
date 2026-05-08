@@ -442,8 +442,8 @@
                                 <!-- DANA -->
                                 <div class="bg-white p-3 rounded-4 shadow-sm border-start border-4 border-primary">
                                     <div class="d-flex align-items-center mb-2">
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/1200px-Logo_dana_blue.svg.png"
-                                            alt="DANA" height="20" class="me-2">
+                                        <img src="https://i.ibb.co.com/6JHX7yF/dana.png"
+                                            alt="DANA" height="18" class="me-2">
                                         <span class="fw-bold text-dark">DANA</span>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-end">
@@ -460,8 +460,8 @@
                                 <!-- SHOPEEPAY -->
                                 <div class="bg-white p-3 rounded-4 shadow-sm border-start border-4 border-warning">
                                     <div class="d-flex align-items-center mb-2">
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Shopee.svg/2560px-Shopee.svg.png"
-                                            alt="ShopeePay" height="25" class="me-2">
+                                        <img src="https://i.ibb.co.com/8B6p6xV/shopeepay.png"
+                                            alt="ShopeePay" height="18" class="me-2">
                                         <span class="fw-bold text-dark">SHOPEEPAY</span>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-end">
@@ -471,6 +471,24 @@
                                                     class="bi bi-copy fs-6 text-muted ms-1"></i></h5>
                                             <small class="text-muted text-uppercase" style="font-size: 0.75rem;">A.N
                                                 JAU.ID</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- GOPAY -->
+                                <div class="bg-white p-3 rounded-4 shadow-sm border-start border-4 border-success">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <img src="https://i.ibb.co.com/M6VzGzW/gopay.png"
+                                            alt="Gopay" height="18" class="me-2">
+                                        <span class="fw-bold text-dark">GOPAY</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-end">
+                                        <div>
+                                            <h5 class="fw-bold mb-0 font-monospace text-dark copy-text" role="button"
+                                                onclick="copyToClipboard('0895291054230')">0895291054230 <i
+                                                    class="bi bi-copy fs-6 text-muted ms-1"></i></h5>
+                                            <small class="text-muted text-uppercase" style="font-size: 0.75rem;">A.N
+                                                JAUHAR FAUZI ULUL ALBAB</small>
                                         </div>
                                     </div>
                                 </div>

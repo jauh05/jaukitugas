@@ -21,9 +21,9 @@
                         class="btn w-100 text-start p-3 d-flex align-items-center justify-content-between border-0 rounded-0 bg-transparent"
                         type="button" data-bs-toggle="collapse" data-bs-target="#qrisContent" aria-expanded="false">
                         <div class="d-flex align-items-center">
-                            <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center me-3"
+                            <div class="bg-white rounded-circle d-flex align-items-center justify-content-center me-3 shadow-sm border"
                                 style="width: 40px; height: 40px;">
-                                <i class="bi bi-qr-code-scan"></i>
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_QRIS.svg" alt="QRIS" height="15">
                             </div>
                             <div>
                                 <h5 class="fw-bold mb-0 text-dark">Scan QRIS</h5>
@@ -55,8 +55,8 @@
                             class="btn w-100 text-start p-3 d-flex align-items-center justify-content-between border-0 rounded-0 bg-transparent"
                             type="button" data-bs-toggle="collapse" data-bs-target="#danaContent" aria-expanded="false">
                             <div class="d-flex align-items-center">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/1200px-Logo_dana_blue.svg.png"
-                                    alt="DANA" height="25" class="me-3">
+                                <img src="https://i.ibb.co.com/6JHX7yF/dana.png"
+                                    alt="DANA" height="22" class="me-3">
                                 <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill">E-Wallet</span>
                             </div>
                             <i class="bi bi-chevron-down d-md-none text-muted"></i>
@@ -85,8 +85,8 @@
                             class="btn w-100 text-start p-3 d-flex align-items-center justify-content-between border-0 rounded-0 bg-transparent"
                             type="button" data-bs-toggle="collapse" data-bs-target="#shopeeContent" aria-expanded="false">
                             <div class="d-flex align-items-center">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Shopee.svg/2560px-Shopee.svg.png"
-                                    alt="ShopeePay" height="30" class="me-3">
+                                <img src="https://i.ibb.co.com/8B6p6xV/shopeepay.png"
+                                    alt="ShopeePay" height="22" class="me-3">
                                 <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill">E-Wallet</span>
                             </div>
                             <i class="bi bi-chevron-down d-md-none text-muted"></i>
@@ -113,8 +113,8 @@
                             class="btn w-100 text-start p-3 d-flex align-items-center justify-content-between border-0 rounded-0 bg-transparent"
                             type="button" data-bs-toggle="collapse" data-bs-target="#gopayContent" aria-expanded="false">
                             <div class="d-flex align-items-center">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gopay_logo.svg/2560px-Gopay_logo.svg.png"
-                                    alt="Gopay" height="25" class="me-3">
+                                <img src="https://i.ibb.co.com/M6VzGzW/gopay.png"
+                                    alt="Gopay" height="22" class="me-3">
                                 <span class="badge bg-success bg-opacity-10 text-success rounded-pill">E-Wallet</span>
                             </div>
                             <i class="bi bi-chevron-down d-md-none text-muted"></i>
