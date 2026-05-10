@@ -190,6 +190,10 @@
                             <span class="fw-bold text-dark">SINTA 5</span>
                             <span class="badge bg-primary rounded-pill px-3 py-2 fs-6">Rp 500.000</span>
                         </div>
+                        <div class="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light">
+                            <span class="fw-bold text-dark">SINTA 4</span>
+                            <span class="badge bg-primary rounded-pill px-3 py-2 fs-6">Rp 900rb - 1.2jt</span>
+                        </div>
                     </div>
                 </div>
             </div>
