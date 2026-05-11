@@ -442,7 +442,7 @@
                                 <!-- DANA -->
                                 <div class="bg-white p-3 rounded-4 shadow-sm border-start border-4 border-primary">
                                     <div class="d-flex align-items-center mb-2">
-                                        <img src="https://i.ibb.co.com/6JHX7yF/dana.png"
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg"
                                             alt="DANA" height="18" class="me-2">
                                         <span class="fw-bold text-dark">DANA</span>
                                     </div>
@@ -460,7 +460,7 @@
                                 <!-- SHOPEEPAY -->
                                 <div class="bg-white p-3 rounded-4 shadow-sm border-start border-4 border-warning">
                                     <div class="d-flex align-items-center mb-2">
-                                        <img src="https://i.ibb.co.com/8B6p6xV/shopeepay.png"
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/ShopeePay_logo.svg"
                                             alt="ShopeePay" height="18" class="me-2">
                                         <span class="fw-bold text-dark">SHOPEEPAY</span>
                                     </div>
@@ -478,7 +478,7 @@
                                 <!-- GOPAY -->
                                 <div class="bg-white p-3 rounded-4 shadow-sm border-start border-4 border-success">
                                     <div class="d-flex align-items-center mb-2">
-                                        <img src="https://i.ibb.co.com/M6VzGzW/gopay.png"
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg"
                                             alt="Gopay" height="18" class="me-2">
                                         <span class="fw-bold text-dark">GOPAY</span>
                                     </div>

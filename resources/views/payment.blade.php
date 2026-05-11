@@ -55,7 +55,7 @@
                             class="btn w-100 text-start p-3 d-flex align-items-center justify-content-between border-0 rounded-0 bg-transparent"
                             type="button" data-bs-toggle="collapse" data-bs-target="#danaContent" aria-expanded="false">
                             <div class="d-flex align-items-center">
-                                <img src="https://i.ibb.co.com/6JHX7yF/dana.png"
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg"
                                     alt="DANA" height="22" class="me-3">
                                 <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill">E-Wallet</span>
                             </div>
@@ -85,7 +85,7 @@
                             class="btn w-100 text-start p-3 d-flex align-items-center justify-content-between border-0 rounded-0 bg-transparent"
                             type="button" data-bs-toggle="collapse" data-bs-target="#shopeeContent" aria-expanded="false">
                             <div class="d-flex align-items-center">
-                                <img src="https://i.ibb.co.com/8B6p6xV/shopeepay.png"
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/ShopeePay_logo.svg"
                                     alt="ShopeePay" height="22" class="me-3">
                                 <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill">E-Wallet</span>
                             </div>
@@ -113,7 +113,7 @@
                             class="btn w-100 text-start p-3 d-flex align-items-center justify-content-between border-0 rounded-0 bg-transparent"
                             type="button" data-bs-toggle="collapse" data-bs-target="#gopayContent" aria-expanded="false">
                             <div class="d-flex align-items-center">
-                                <img src="https://i.ibb.co.com/M6VzGzW/gopay.png"
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg"
                                     alt="Gopay" height="22" class="me-3">
                                 <span class="badge bg-success bg-opacity-10 text-success rounded-pill">E-Wallet</span>
                             </div>
