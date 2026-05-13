@@ -3,166 +3,356 @@
 @section('temp')
     <div class="container py-5 mt-2">
         <div class="text-center mb-5">
-            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill mb-3 fw-bold">
+            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill mb-3 fw-bold animate-fade-in">
                 <i class="bi bi-tag-fill me-2"></i>Transparan & Terjangkau
             </span>
-            <h1 class="display-4 fw-bold mb-3">Daftar Harga Layanan</h1>
-            <p class="lead text-muted mx-auto" style="max-width: 700px;">
+            <h1 class="display-4 fw-bold mb-3 hero-title">Daftar Harga Layanan</h1>
+            <p class="lead text-muted mx-auto mb-4" style="max-width: 700px;">
                 Pilih paket yang sesuai dengan kebutuhan dan deadline Anda. Kami menjamin kualitas terbaik dengan harga yang
-                bersahabat bagi mahasiswa. Perlu diketahui, harga dapat menyesuaikan dengan waktu pengerjaan dan kondisi
-                antrean yang sedang berjalan.
+                bersahabat bagi mahasiswa.
             </p>
+            
+            <!-- Search Bar -->
+            <div class="search-container mx-auto" style="max-width: 500px;">
+                <div class="input-group glass-card p-1 shadow-sm border-0">
+                    <span class="input-group-text bg-transparent border-0 ps-3">
+                        <i class="bi bi-search text-primary"></i>
+                    </span>
+                    <input type="text" id="serviceSearch" class="form-control bg-transparent border-0 py-3 shadow-none" 
+                           placeholder="Cari jenis tugas (ex: Makalah, PPT, Skripsi)...">
+                </div>
+            </div>
         </div>
 
-        <div class="glass-card p-0 overflow-hidden bg-white mb-5">
-            <div class="table-responsive">
-                <table class="table table-borderless mb-0 align-middle">
-                    <thead class="bg-light border-bottom">
-                        <tr class="text-center text-uppercase fs-7 fw-bold text-secondary">
-                            <th class="py-4 ps-4 text-start">Kode</th>
-                            <th class="py-4 text-start">Jenis Tugas</th>
-                            <th class="py-4">Normal</th>
-                            <th class="py-4 text-danger">&lt; 2 Hari</th>
-                            <th class="py-4 text-danger">&lt; 1 Hari</th>
-                            <th class="py-4 text-danger fw-bolder">Langsung</th>
-                        </tr>
-                    </thead>
-                    <tbody class="fw-medium text-dark">
-                        <!-- WORLD 1 -->
-                        <tr class="bg-light bg-opacity-50">
-                            <td colspan="6" class="py-3 ps-4 fw-bold text-primary"><i class="bi bi-file-text me-2"></i>WORLD
-                                1 (Per Halaman)</td>
-                        </tr>
-                        @php
-                            $world1 = [
-                                ['code' => 'W0001', 'name' => 'MAKALAH', 'p1' => 5000, 'p2' => 6000, 'p3' => 7000, 'p4' => 10000],
-                                ['code' => 'W0002', 'name' => 'PROPOSAL', 'p1' => 5000, 'p2' => 6000, 'p3' => 7000, 'p4' => 10000],
-                                ['code' => 'W0003', 'name' => 'ESSAY', 'p1' => 5000, 'p2' => 6000, 'p3' => 7000, 'p4' => 10000],
-                                ['code' => 'W0004', 'name' => 'LAPORAN', 'p1' => 5000, 'p2' => 6000, 'p3' => 7000, 'p4' => 10000],
-                                ['code' => 'W0005', 'name' => 'RESUME', 'p1' => 5000, 'p2' => 6000, 'p3' => 7000, 'p4' => 10000],
-                                ['code' => 'W0006', 'name' => 'CERPEN', 'p1' => 5000, 'p2' => 6000, 'p3' => 7000, 'p4' => 10000],
-                                ['code' => 'W0007', 'name' => 'KARANGAN', 'p1' => 5000, 'p2' => 6000, 'p3' => 7000, 'p4' => 10000],
-                                ['code' => 'W0008', 'name' => 'SOAL ESSAY', 'p1' => 5000, 'p2' => 6000, 'p3' => 7000, 'p4' => 10000],
-                            ];
-                        @endphp
-                        @foreach($world1 as $item)
-                            <tr class="searchable-row border-bottom transition-all hover-bg">
-                                <td class="ps-4 text-muted font-monospace">{{ $item['code'] }}</td>
-                                <td class="fw-bold">{{ $item['name'] }}</td>
-                                <td class="text-center">Rp {{ number_format($item['p1'], 0, ',', '.') }}</td>
-                                <td class="text-center text-danger">Rp {{ number_format($item['p2'], 0, ',', '.') }}</td>
-                                <td class="text-center text-danger">Rp {{ number_format($item['p3'], 0, ',', '.') }}</td>
-                                <td class="text-center text-danger fw-bold">Rp {{ number_format($item['p4'], 0, ',', '.') }}
+        <div class="main-pricelist-container mb-5">
+            <!-- Desktop Table View -->
+            <div class="d-none d-lg-block glass-card p-0 overflow-hidden bg-white shadow-sm border-0">
+                <div class="table-responsive">
+                    <table class="table table-borderless mb-0 align-middle">
+                        <thead class="bg-light border-bottom">
+                            <tr class="text-center text-uppercase fs-7 fw-bold text-secondary">
+                                <th class="py-4 ps-4 text-start">Kode</th>
+                                <th class="py-4 text-start">Jenis Tugas</th>
+                                <th class="py-4">Normal</th>
+                                <th class="py-4 text-danger">&lt; 2 Hari</th>
+                                <th class="py-4 text-danger">&lt; 1 Hari</th>
+                                <th class="py-4 text-danger fw-bolder">Langsung</th>
+                            </tr>
+                        </thead>
+                        <tbody class="fw-medium text-dark">
+                            <!-- WORLD 1 -->
+                            <tr class="bg-light bg-opacity-50">
+                                <td colspan="6" class="py-3 ps-4 fw-bold text-primary border-top border-bottom">
+                                    <i class="bi bi-file-text me-2"></i>WORLD 1 (Per Halaman)
                                 </td>
                             </tr>
-                        @endforeach
+                            @php
+                                $world1 = [
+                                    ['code' => 'W0001', 'name' => 'MAKALAH', 'p1' => 5000, 'p2' => 6000, 'p3' => 7000, 'p4' => 10000],
+                                    ['code' => 'W0002', 'name' => 'PROPOSAL', 'p1' => 5000, 'p2' => 6000, 'p3' => 7000, 'p4' => 10000],
+                                    ['code' => 'W0003', 'name' => 'ESSAY', 'p1' => 5000, 'p2' => 6000, 'p3' => 7000, 'p4' => 10000],
+                                    ['code' => 'W0004', 'name' => 'LAPORAN', 'p1' => 5000, 'p2' => 6000, 'p3' => 7000, 'p4' => 10000],
+                                    ['code' => 'W0005', 'name' => 'RESUME', 'p1' => 5000, 'p2' => 6000, 'p3' => 7000, 'p4' => 10000],
+                                    ['code' => 'W0006', 'name' => 'CERPEN', 'p1' => 5000, 'p2' => 6000, 'p3' => 7000, 'p4' => 10000],
+                                    ['code' => 'W0007', 'name' => 'KARANGAN', 'p1' => 5000, 'p2' => 6000, 'p3' => 7000, 'p4' => 10000],
+                                    ['code' => 'W0008', 'name' => 'SOAL ESSAY', 'p1' => 5000, 'p2' => 6000, 'p3' => 7000, 'p4' => 10000],
+                                ];
+                            @endphp
+                            @foreach($world1 as $item)
+                                <tr class="searchable-row border-bottom transition-all hover-bg">
+                                    <td class="ps-4 text-muted font-monospace">{{ $item['code'] }}</td>
+                                    <td class="fw-bold">{{ $item['name'] }}</td>
+                                    <td class="text-center">Rp {{ number_format($item['p1'], 0, ',', '.') }}</td>
+                                    <td class="text-center text-danger">Rp {{ number_format($item['p2'], 0, ',', '.') }}</td>
+                                    <td class="text-center text-danger">Rp {{ number_format($item['p3'], 0, ',', '.') }}</td>
+                                    <td class="text-center text-danger fw-bold">Rp {{ number_format($item['p4'], 0, ',', '.') }}</td>
+                                </tr>
+                            @endforeach
 
-                        <!-- WORLD 2 -->
-                        <tr class="bg-light bg-opacity-50">
-                            <td colspan="6" class="py-3 ps-4 fw-bold text-primary"><i
-                                    class="bi bi-journal-text me-2"></i>WORLD 2 (Karya Ilmiah)</td>
-                        </tr>
-                        @php
-                            $world2 = [
-                                ['code' => 'W1001', 'name' => 'KARYA ILMIAH', 'p1' => 7000, 'p2' => 8000, 'p3' => 9000],
-                                ['code' => 'W1002', 'name' => 'KARYA ILMIAH (JAMINAN TURNITIN)', 'p1' => 7000, 'p2' => 8000, 'p3' => 9000],
-                                ['code' => 'W1003', 'name' => 'JURNAL', 'p1' => 7000, 'p2' => 8000, 'p3' => 9000],
-                                ['code' => 'W1004', 'name' => 'JURNAL (JAMINAN TURNITIN)', 'p1' => 7000, 'p2' => 8000, 'p3' => 9000],
-                            ];
-                        @endphp
-                        @foreach($world2 as $item)
-                            <tr class="searchable-row border-bottom transition-all hover-bg">
-                                <td class="ps-4 text-muted font-monospace">{{ $item['code'] }}</td>
-                                <td class="fw-bold">{{ $item['name'] }}</td>
-                                <td class="text-center">Rp {{ number_format($item['p1'], 0, ',', '.') }}</td>
-                                <td class="text-center text-danger">Rp {{ number_format($item['p2'], 0, ',', '.') }}</td>
-                                <td class="text-center text-danger">Rp {{ number_format($item['p3'], 0, ',', '.') }}</td>
-                                <td class="text-center"><span
-                                        class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">CHAT ADMIN</span>
+                            <!-- WORLD 2 -->
+                            <tr class="bg-light bg-opacity-50">
+                                <td colspan="6" class="py-3 ps-4 fw-bold text-primary border-top border-bottom">
+                                    <i class="bi bi-journal-text me-2"></i>WORLD 2 (Karya Ilmiah)
                                 </td>
                             </tr>
-                        @endforeach
+                            @php
+                                $world2 = [
+                                    ['code' => 'W1001', 'name' => 'KARYA ILMIAH', 'p1' => 7000, 'p2' => 8000, 'p3' => 9000],
+                                    ['code' => 'W1002', 'name' => 'KARYA ILMIAH (JAMINAN TURNITIN)', 'p1' => 7000, 'p2' => 8000, 'p3' => 9000],
+                                    ['code' => 'W1003', 'name' => 'JURNAL', 'p1' => 7000, 'p2' => 8000, 'p3' => 9000],
+                                    ['code' => 'W1004', 'name' => 'JURNAL (JAMINAN TURNITIN)', 'p1' => 7000, 'p2' => 8000, 'p3' => 9000],
+                                ];
+                            @endphp
+                            @foreach($world2 as $item)
+                                <tr class="searchable-row border-bottom transition-all hover-bg">
+                                    <td class="ps-4 text-muted font-monospace">{{ $item['code'] }}</td>
+                                    <td class="fw-bold">{{ $item['name'] }}</td>
+                                    <td class="text-center">Rp {{ number_format($item['p1'], 0, ',', '.') }}</td>
+                                    <td class="text-center text-danger">Rp {{ number_format($item['p2'], 0, ',', '.') }}</td>
+                                    <td class="text-center text-danger">Rp {{ number_format($item['p3'], 0, ',', '.') }}</td>
+                                    <td class="text-center">
+                                        <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">CHAT ADMIN</span>
+                                    </td>
+                                </tr>
+                            @endforeach
 
-                        <!-- PPT -->
-                        <tr class="bg-light bg-opacity-50">
-                            <td colspan="6" class="py-3 ps-4 fw-bold text-primary"><i
-                                    class="bi bi-easel me-2"></i>PRESENTASI (Per Slide)</td>
-                        </tr>
-                        @php
-                            $ppt = [
-                                ['code' => 'P0001', 'name' => 'PPT (MATERI SUDAH ADA)', 'p1' => 3000, 'p2' => 3000, 'p3' => 4000, 'p4' => 5000],
-                                ['code' => 'P0002', 'name' => 'PPT (TANPA MATERI)', 'p1' => 4000, 'p2' => 4000, 'p3' => 5000, 'p4' => 6000],
-                                ['code' => 'P0003', 'name' => 'PPT ANIMASI', 'p1' => 5000, 'p2' => 5000, 'p3' => 6000, 'p4' => 7000],
-                            ];
-                        @endphp
-                        @foreach($ppt as $item)
-                            <tr class="searchable-row border-bottom transition-all hover-bg">
-                                <td class="ps-4 text-muted font-monospace">{{ $item['code'] }}</td>
-                                <td class="fw-bold">{{ $item['name'] }}</td>
-                                <td class="text-center">Rp {{ number_format($item['p1'], 0, ',', '.') }}</td>
-                                <td class="text-center text-danger">Rp {{ number_format($item['p2'], 0, ',', '.') }}</td>
-                                <td class="text-center text-danger">Rp {{ number_format($item['p3'], 0, ',', '.') }}</td>
-                                <td class="text-center text-danger fw-bold">Rp {{ number_format($item['p4'], 0, ',', '.') }}
+                            <!-- PPT -->
+                            <tr class="bg-light bg-opacity-50">
+                                <td colspan="6" class="py-3 ps-4 fw-bold text-primary border-top border-bottom">
+                                    <i class="bi bi-easel me-2"></i>PRESENTASI (Per Slide)
                                 </td>
                             </tr>
-                        @endforeach
+                            @php
+                                $ppt = [
+                                    ['code' => 'P0001', 'name' => 'PPT (MATERI SUDAH ADA)', 'p1' => 3000, 'p2' => 3000, 'p3' => 4000, 'p4' => 5000],
+                                    ['code' => 'P0002', 'name' => 'PPT (TANPA MATERI)', 'p1' => 4000, 'p2' => 4000, 'p3' => 5000, 'p4' => 6000],
+                                    ['code' => 'P0003', 'name' => 'PPT ANIMASI', 'p1' => 5000, 'p2' => 5000, 'p3' => 6000, 'p4' => 7000],
+                                ];
+                            @endphp
+                            @foreach($ppt as $item)
+                                <tr class="searchable-row border-bottom transition-all hover-bg">
+                                    <td class="ps-4 text-muted font-monospace">{{ $item['code'] }}</td>
+                                    <td class="fw-bold">{{ $item['name'] }}</td>
+                                    <td class="text-center">Rp {{ number_format($item['p1'], 0, ',', '.') }}</td>
+                                    <td class="text-center text-danger">Rp {{ number_format($item['p2'], 0, ',', '.') }}</td>
+                                    <td class="text-center text-danger">Rp {{ number_format($item['p3'], 0, ',', '.') }}</td>
+                                    <td class="text-center text-danger fw-bold">Rp {{ number_format($item['p4'], 0, ',', '.') }}</td>
+                                </tr>
+                            @endforeach
 
-                        <!-- TULIS -->
-                        <tr class="bg-light bg-opacity-50">
-                            <td colspan="6" class="py-3 ps-4 fw-bold text-primary"><i class="bi bi-pen me-2"></i>TULIS
-                                TANGAN (Khusus Yogyakarta)</td>
-                        </tr>
-                        @php
-                            $tulis = [
-                                ['code' => 'T0001', 'name' => 'KERTAS BUKU (TINGGAL SALIN)', 'p1' => 5000, 'p2' => 6000, 'p3' => 7000],
-                                ['code' => 'T0002', 'name' => 'KERTAS BUKU', 'p1' => 10000, 'p2' => 11000, 'p3' => 12000],
-                                ['code' => 'T0003', 'name' => 'KERTAS FOLIO (TINGGAL SALIN)', 'p1' => 8000, 'p2' => 9000, 'p3' => 10000],
-                                ['code' => 'T0004', 'name' => 'KERTAS FOLIO', 'p1' => 13000, 'p2' => 14000, 'p3' => 15000],
-                            ];
-                        @endphp
-                        @foreach($tulis as $item)
-                            <tr class="searchable-row border-bottom transition-all hover-bg">
-                                <td class="ps-4 text-muted font-monospace">{{ $item['code'] }}</td>
-                                <td class="fw-bold">{{ $item['name'] }}</td>
-                                <td class="text-center">Rp {{ number_format($item['p1'], 0, ',', '.') }}</td>
-                                <td class="text-center text-danger">Rp {{ number_format($item['p2'], 0, ',', '.') }}</td>
-                                <td class="text-center text-danger">Rp {{ number_format($item['p3'], 0, ',', '.') }}</td>
-                                <td class="text-center text-muted">-</td>
-                            </tr>
-                        @endforeach
-                        <tr class="searchable-row border-bottom transition-all hover-bg">
-                            <td class="ps-4 text-muted font-monospace">T0005</td>
-                            <td class="fw-bold">GAMBAR</td>
-                            <td colspan="4" class="text-center"><span
-                                    class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">CHAT ADMIN</span>
-                            </td>
-                        </tr>
-
-                        <!-- LAINNYA -->
-                        <tr class="bg-light bg-opacity-50">
-                            <td colspan="6" class="py-3 ps-4 fw-bold text-primary"><i
-                                    class="bi bi-infinity me-2"></i>LAINNYA</td>
-                        </tr>
-                        @php
-                            $lainnya = [
-                                ['code' => 'L0001', 'name' => 'AKUNTANSI'],
-                                ['code' => 'L0002', 'name' => 'STATISTIKA'],
-                                ['code' => 'L0003', 'name' => 'MATEMATIKA'],
-                                ['code' => 'L0004', 'name' => 'SOAL OPTION / PILGAN'],
-                            ];
-                        @endphp
-                        @foreach($lainnya as $item)
-                            <tr class="searchable-row border-bottom transition-all hover-bg">
-                                <td class="ps-4 text-muted font-monospace">{{ $item['code'] }}</td>
-                                <td class="fw-bold">{{ $item['name'] }}</td>
-                                <td colspan="4" class="text-center"><span
-                                        class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">CHAT ADMIN</span>
+                            <!-- TULIS -->
+                            <tr class="bg-light bg-opacity-50">
+                                <td colspan="6" class="py-3 ps-4 fw-bold text-primary border-top border-bottom">
+                                    <i class="bi bi-pen me-2"></i>TULIS TANGAN (Khusus Yogyakarta)
                                 </td>
                             </tr>
-                        @endforeach
+                            @php
+                                $tulis = [
+                                    ['code' => 'T0001', 'name' => 'KERTAS BUKU (TINGGAL SALIN)', 'p1' => 5000, 'p2' => 6000, 'p3' => 7000],
+                                    ['code' => 'T0002', 'name' => 'KERTAS BUKU', 'p1' => 10000, 'p2' => 11000, 'p3' => 12000],
+                                    ['code' => 'T0003', 'name' => 'KERTAS FOLIO (TINGGAL SALIN)', 'p1' => 8000, 'p2' => 9000, 'p3' => 10000],
+                                    ['code' => 'T0004', 'name' => 'KERTAS FOLIO', 'p1' => 13000, 'p2' => 14000, 'p3' => 15000],
+                                ];
+                            @endphp
+                            @foreach($tulis as $item)
+                                <tr class="searchable-row border-bottom transition-all hover-bg">
+                                    <td class="ps-4 text-muted font-monospace">{{ $item['code'] }}</td>
+                                    <td class="fw-bold">{{ $item['name'] }}</td>
+                                    <td class="text-center">Rp {{ number_format($item['p1'], 0, ',', '.') }}</td>
+                                    <td class="text-center text-danger">Rp {{ number_format($item['p2'], 0, ',', '.') }}</td>
+                                    <td class="text-center text-danger">Rp {{ number_format($item['p3'], 0, ',', '.') }}</td>
+                                    <td class="text-center text-muted">-</td>
+                                </tr>
+                            @endforeach
+                            <tr class="searchable-row border-bottom transition-all hover-bg">
+                                <td class="ps-4 text-muted font-monospace">T0005</td>
+                                <td class="fw-bold">GAMBAR</td>
+                                <td colspan="4" class="text-center">
+                                    <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">CHAT ADMIN</span>
+                                </td>
+                            </tr>
 
-                    </tbody>
-                </table>
+                            <!-- LAINNYA -->
+                            <tr class="bg-light bg-opacity-50">
+                                <td colspan="6" class="py-3 ps-4 fw-bold text-primary border-top border-bottom">
+                                    <i class="bi bi-infinity me-2"></i>LAINNYA
+                                </td>
+                            </tr>
+                            @php
+                                $lainnya = [
+                                    ['code' => 'L0001', 'name' => 'AKUNTANSI'],
+                                    ['code' => 'L0002', 'name' => 'STATISTIKA'],
+                                    ['code' => 'L0003', 'name' => 'MATEMATIKA'],
+                                    ['code' => 'L0004', 'name' => 'SOAL OPTION / PILGAN'],
+                                ];
+                            @endphp
+                            @foreach($lainnya as $item)
+                                <tr class="searchable-row border-bottom transition-all hover-bg">
+                                    <td class="ps-4 text-muted font-monospace">{{ $item['code'] }}</td>
+                                    <td class="fw-bold">{{ $item['name'] }}</td>
+                                    <td colspan="4" class="text-center">
+                                        <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">CHAT ADMIN</span>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Mobile Card View -->
+            <div class="d-lg-none">
+                <!-- Group WORLD 1 -->
+                <div class="category-header-mobile mb-3">
+                    <h5 class="fw-bold text-primary"><i class="bi bi-file-text me-2"></i>WORLD 1</h5>
+                </div>
+                <div class="mobile-grid">
+                    @foreach($world1 as $item)
+                    <div class="glass-card mobile-price-card mb-3 p-3 border-0 searchable-row">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h6 class="fw-bold mb-0 text-dark">{{ $item['name'] }}</h6>
+                                <small class="text-muted font-monospace">{{ $item['code'] }}</small>
+                            </div>
+                            <span class="badge bg-primary bg-opacity-10 text-primary">Per Halaman</span>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="p-2 rounded bg-light">
+                                    <small class="text-muted d-block ls-1">NORMAL</small>
+                                    <span class="fw-bold">Rp {{ number_format($item['p1'], 0, ',', '.') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-2 rounded bg-danger bg-opacity-10 text-danger">
+                                    <small class="d-block ls-1">&lt; 2 HARI</small>
+                                    <span class="fw-bold">Rp {{ number_format($item['p2'], 0, ',', '.') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-2 rounded bg-danger bg-opacity-10 text-danger">
+                                    <small class="d-block ls-1">&lt; 1 HARI</small>
+                                    <span class="fw-bold">Rp {{ number_format($item['p3'], 0, ',', '.') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-2 rounded bg-danger text-white">
+                                    <small class="d-block ls-1">LANGSUNG</small>
+                                    <span class="fw-bold">Rp {{ number_format($item['p4'], 0, ',', '.') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+
+                <!-- Group WORLD 2 -->
+                <div class="category-header-mobile mt-4 mb-3">
+                    <h5 class="fw-bold text-primary"><i class="bi bi-journal-text me-2"></i>WORLD 2</h5>
+                </div>
+                @foreach($world2 as $item)
+                <div class="glass-card mobile-price-card mb-3 p-3 border-0 searchable-row">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h6 class="fw-bold mb-0 text-dark">{{ $item['name'] }}</h6>
+                            <small class="text-muted font-monospace">{{ $item['code'] }}</small>
+                        </div>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-4">
+                            <div class="p-2 rounded bg-light">
+                                <small class="text-muted d-block ls-1">NORMAL</small>
+                                <span class="fw-bold">Rp {{ number_format($item['p1'], 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 rounded bg-danger bg-opacity-10 text-danger">
+                                <small class="d-block ls-1">&lt; 2 H</small>
+                                <span class="fw-bold">Rp {{ number_format($item['p2'], 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 rounded bg-danger bg-opacity-10 text-danger">
+                                <small class="d-block ls-1">&lt; 1 H</small>
+                                <span class="fw-bold">Rp {{ number_format($item['p3'], 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+
+                <!-- Group PPT -->
+                <div class="category-header-mobile mt-4 mb-3">
+                    <h5 class="fw-bold text-primary"><i class="bi bi-easel me-2"></i>PRESENTASI</h5>
+                </div>
+                @foreach($ppt as $item)
+                <div class="glass-card mobile-price-card mb-3 p-3 border-0 searchable-row">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h6 class="fw-bold mb-0 text-dark">{{ $item['name'] }}</h6>
+                            <small class="text-muted font-monospace">{{ $item['code'] }}</small>
+                        </div>
+                        <span class="badge bg-primary bg-opacity-10 text-primary">Per Slide</span>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <div class="p-2 rounded bg-light">
+                                <small class="text-muted d-block ls-1">NORMAL</small>
+                                <span class="fw-bold">Rp {{ number_format($item['p1'], 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-2 rounded bg-danger bg-opacity-10 text-danger">
+                                <small class="d-block ls-1">&lt; 2 HARI</small>
+                                <span class="fw-bold">Rp {{ number_format($item['p2'], 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-2 rounded bg-danger bg-opacity-10 text-danger">
+                                <small class="d-block ls-1">&lt; 1 HARI</small>
+                                <span class="fw-bold">Rp {{ number_format($item['p3'], 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-2 rounded bg-danger text-white">
+                                <small class="d-block ls-1">LANGSUNG</small>
+                                <span class="fw-bold">Rp {{ number_format($item['p4'], 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+
+                <!-- Group TULIS -->
+                <div class="category-header-mobile mt-4 mb-3">
+                    <h5 class="fw-bold text-primary"><i class="bi bi-pen me-2"></i>TULIS TANGAN</h5>
+                </div>
+                @foreach($tulis as $item)
+                <div class="glass-card mobile-price-card mb-3 p-3 border-0 searchable-row">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h6 class="fw-bold mb-0 text-dark">{{ $item['name'] }}</h6>
+                            <small class="text-muted font-monospace">{{ $item['code'] }}</small>
+                        </div>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-4">
+                            <div class="p-2 rounded bg-light">
+                                <small class="text-muted d-block ls-1">NORMAL</small>
+                                <span class="fw-bold">Rp {{ number_format($item['p1'], 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 rounded bg-danger bg-opacity-10 text-danger">
+                                <small class="d-block ls-1">&lt; 2 H</small>
+                                <span class="fw-bold">Rp {{ number_format($item['p2'], 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 rounded bg-danger bg-opacity-10 text-danger">
+                                <small class="d-block ls-1">&lt; 1 H</small>
+                                <span class="fw-bold">Rp {{ number_format($item['p3'], 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+                
+                <!-- Others/Lainnya on Mobile -->
+                <div class="category-header-mobile mt-4 mb-3">
+                    <h5 class="fw-bold text-primary"><i class="bi bi-infinity me-2"></i>LAINNYA</h5>
+                </div>
+                @foreach($lainnya as $item)
+                <div class="glass-card mobile-price-card mb-2 p-3 border-0 searchable-row">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="fw-bold mb-0 text-dark">{{ $item['name'] }}</h6>
+                            <small class="text-muted font-monospace">{{ $item['code'] }}</small>
+                        </div>
+                        <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">CHAT ADMIN</span>
+                    </div>
+                </div>
+                @endforeach
             </div>
         </div>
 
@@ -253,7 +443,7 @@
                         class="btn btn-light rounded-pill px-4 fw-bold text-primary"><i class="bi bi-instagram me-2"></i>Cek
                         Instagram</a>
                     <a href="https://wa.me/6285184771744?text=Halo%20Admin%2C%20mau%20tanya%20paket%20Skripsi"
-                        class="btn btn-outline-light rounded-pill px-4 fw-bold"><i class="bi bi-whatsapp me-2"></i>Tanya
+                        class="btn btn-outline-light rounded-pill px-4 fw-bold hover-scale"><i class="bi bi-whatsapp me-2"></i>Tanya
                         Admin</a>
                 </div>
             </div>
@@ -265,13 +455,107 @@
         </div>
     </div>
 
+    <script>
+        document.getElementById('serviceSearch').addEventListener('keyup', function() {
+            let value = this.value.toLowerCase();
+            let rows = document.querySelectorAll('.searchable-row');
+            
+            rows.forEach(row => {
+                let text = row.textContent.toLowerCase();
+                if (text.includes(value)) {
+                    row.classList.remove('d-none');
+                    // If it's a table row, it might need display: table-row
+                    if(row.tagName === 'TR') row.style.display = '';
+                } else {
+                    row.classList.add('d-none');
+                    if(row.tagName === 'TR') row.style.display = 'none';
+                }
+            });
+            
+            // Hide category headers if no items match in that category
+            // This is a bit complex for mobile cards, so we just hide the cards
+        });
+    </script>
+
     <style>
         .hover-bg:hover {
-            background-color: rgba(72, 52, 212, 0.03) !important;
+            background-color: rgba(72, 52, 212, 0.04) !important;
         }
 
         .bg-gradient-primary {
             background: linear-gradient(135deg, #4834d4, #686de0) !important;
+        }
+
+        .ls-1 {
+            letter-spacing: 1px;
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+
+        .mobile-price-card {
+            border-radius: 16px !important;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-price-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05) !important;
+        }
+
+        .category-header-mobile {
+            border-left: 4px solid var(--primary-accent);
+            padding-left: 12px;
+            background: rgba(72, 52, 212, 0.05);
+            padding-top: 8px;
+            padding-bottom: 8px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .search-container .input-group {
+            border-radius: 50px !important;
+            background: white !important;
+            border: 1px solid rgba(0,0,0,0.05) !important;
+        }
+
+        @media (max-width: 991px) {
+            .display-4 {
+                font-size: 2.2rem;
+            }
+            .lead {
+                font-size: 1rem;
+            }
+            .glass-card {
+                padding: 1.25rem !important;
+            }
+        }
+
+        .hover-scale {
+            transition: transform 0.2s ease;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+
+        .mobile-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 576px) and (max-width: 991px) {
+            .mobile-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
     </style>
 @endsection
