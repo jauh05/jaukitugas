@@ -45,20 +45,18 @@
                                 @endphp
                                 <div class="board-card" draggable="true" data-id="{{ $value['id_costomer'] }}"
                                     data-status="{{ $value['selesaikan'] }}" data-nama="{{ $value['nama'] }}"
-                                    data-tanggal="{{ $value['tanggal'] }}" data-waktu="{{ $value['waktu'] }}">
+                                    data-tanggal="{{ $value['tanggal'] }}" data-waktu="{{ $value['waktu'] }}"
+                                    data-nota-url="{{ url('costomer/' . $value['id_costomer'] . '/nota') }}">
                                     <div class="d-flex justify-content-between align-items-start mb-2">
                                         <div>
-                                            <div class="fw-bold text-dark board-nama">{{ $value['nama'] }}</div>
+                                            <button type="button"
+                                                class="fw-bold text-dark board-nama board-name-trigger btn btn-link p-0 text-start text-decoration-none"
+                                                title="{{ $value['nama'] }}">
+                                                {{ $value['nama'] }}
+                                            </button>
                                             <small class="text-muted">#{{ $value['id_costomer'] }}</small>
                                         </div>
                                         <div class="d-flex gap-1">
-                                            <button type="button"
-                                                class="btn btn-sm btn-light border rounded-pill px-2 py-0 add-nota-btn"
-                                                data-id="{{ $value['id_costomer'] }}"
-                                                data-nama="{{ $value['nama'] }}"
-                                                title="Tambah Nota">
-                                                <i class="bi bi-receipt-cutoff text-success"></i>
-                                            </button>
                                             <button type="button"
                                                 class="btn btn-sm btn-light border rounded-pill px-2 py-0 edit-schedule-btn"
                                                 data-id="{{ $value['id_costomer'] }}">
@@ -209,6 +207,38 @@
         </div>
     </div>
 
+    <div class="modal fade" id="cardActionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg border-0">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title fw-bold text-primary">Aksi Customer Jadwal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body pt-3">
+                    <div class="mb-3 small text-muted" id="cardActionInfo"></div>
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-outline-warning rounded-pill" id="actionPrintNotaBtn">
+                            <i class="bi bi-printer-fill me-2"></i>Cetak Nota
+                        </button>
+                        <button type="button" class="btn btn-outline-success rounded-pill" id="actionAddNotaBtn">
+                            <i class="bi bi-receipt-cutoff me-2"></i>Tambah Nota
+                        </button>
+                        <button type="button" class="btn btn-outline-primary rounded-pill" id="actionEditJadwalBtn">
+                            <i class="bi bi-pencil-square me-2"></i>Edit Jadwal
+                        </button>
+                        <button type="button" class="btn btn-outline-danger rounded-pill" id="actionDeleteBtn">
+                            <i class="bi bi-trash-fill me-2"></i>Hapus Customer
+                        </button>
+                    </div>
+                    <form id="deleteCustomerForm" method="POST" class="d-none">
+                        @csrf
+                        @method('DELETE')
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <style>
         .btn-premium {
             background: linear-gradient(135deg, #4834d4, #686de0);
@@ -256,6 +286,14 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
             padding: 0.75rem;
             cursor: grab;
+        }
+
+        .board-nama {
+            display: inline-block;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .board-card.dragging {
@@ -472,13 +510,124 @@
         });
 
         const addNotaModal = new bootstrap.Modal(document.getElementById('addNotaModal'));
-        document.querySelectorAll('.add-nota-btn').forEach(button => {
+        const cardActionModal = new bootstrap.Modal(document.getElementById('cardActionModal'));
+        const cardActionInfo = document.getElementById('cardActionInfo');
+        const actionPrintNotaBtn = document.getElementById('actionPrintNotaBtn');
+        const actionAddNotaBtn = document.getElementById('actionAddNotaBtn');
+        const actionEditJadwalBtn = document.getElementById('actionEditJadwalBtn');
+        const actionDeleteBtn = document.getElementById('actionDeleteBtn');
+        const deleteCustomerForm = document.getElementById('deleteCustomerForm');
+        let selectedCard = null;
+
+        function openAddNotaForCard(card) {
+            const id = card.getAttribute('data-id');
+            const nama = card.getAttribute('data-nama');
+            document.getElementById('addNotaCustomerInfo').textContent = `Customer: ${nama} (#${id})`;
+            document.getElementById('addNotaForm').action = `{{ url('dashboard/jadwal') }}/${id}/nota`;
+            addNotaModal.show();
+        }
+
+        async function openEditScheduleForCard(card) {
+            const id = card.getAttribute('data-id');
+            const status = card.getAttribute('data-status');
+            const nama = card.getAttribute('data-nama');
+            const tanggal = card.getAttribute('data-tanggal');
+            const waktu = card.getAttribute('data-waktu');
+
+            const { value: formValues } = await Swal.fire({
+                title: 'Edit Nama / Hari / Jam',
+                html: `
+                    <input id="swalNama" class="swal2-input" placeholder="Nama" value="${nama || ''}">
+                    <input id="swalTanggal" type="date" class="swal2-input" value="${tanggal || ''}">
+                    <input id="swalWaktu" type="time" class="swal2-input" value="${waktu || ''}">
+                `,
+                focusConfirm: false,
+                showCancelButton: true,
+                confirmButtonText: 'Simpan',
+                cancelButtonText: 'Batal',
+                preConfirm: () => {
+                    const namaValue = document.getElementById('swalNama').value.trim();
+                    const tanggalValue = document.getElementById('swalTanggal').value;
+                    const waktuValue = document.getElementById('swalWaktu').value;
+
+                    if (!namaValue || !tanggalValue || !waktuValue) {
+                        Swal.showValidationMessage('Nama, tanggal, dan jam wajib diisi');
+                        return false;
+                    }
+
+                    return {
+                        nama_costomer: namaValue,
+                        tanggal_costomer: tanggalValue,
+                        waktu_costomer: waktuValue
+                    };
+                }
+            });
+
+            if (!formValues) return;
+
+            try {
+                await updateBoardData(id, {
+                    selesaikan: status,
+                    ...formValues
+                });
+                card.setAttribute('data-nama', formValues.nama_costomer);
+                card.setAttribute('data-tanggal', formValues.tanggal_costomer);
+                card.setAttribute('data-waktu', formValues.waktu_costomer);
+                location.reload();
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: 'Nama, tanggal, atau jam tidak berhasil diupdate.'
+                });
+            }
+        }
+
+        document.querySelectorAll('.board-name-trigger').forEach(button => {
             button.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-                const nama = this.getAttribute('data-nama');
-                document.getElementById('addNotaCustomerInfo').textContent = `Customer: ${nama} (#${id})`;
-                document.getElementById('addNotaForm').action = `{{ url('dashboard/jadwal') }}/${id}/nota`;
-                addNotaModal.show();
+                selectedCard = this.closest('.board-card');
+                const id = selectedCard.getAttribute('data-id');
+                const nama = selectedCard.getAttribute('data-nama');
+                cardActionInfo.textContent = `#${id} - ${nama}`;
+                cardActionModal.show();
+            });
+        });
+
+        actionPrintNotaBtn.addEventListener('click', function() {
+            if (!selectedCard) return;
+            const notaUrl = selectedCard.getAttribute('data-nota-url');
+            window.location.href = notaUrl;
+        });
+
+        actionAddNotaBtn.addEventListener('click', function() {
+            if (!selectedCard) return;
+            cardActionModal.hide();
+            openAddNotaForCard(selectedCard);
+        });
+
+        actionEditJadwalBtn.addEventListener('click', function() {
+            if (!selectedCard) return;
+            cardActionModal.hide();
+            openEditScheduleForCard(selectedCard);
+        });
+
+        actionDeleteBtn.addEventListener('click', function() {
+            if (!selectedCard) return;
+            const id = selectedCard.getAttribute('data-id');
+            deleteCustomerForm.action = `{{ url('hapus') }}/${id}`;
+            Swal.fire({
+                title: "Yakin Hapus?",
+                text: "Data customer akan dihapus permanen.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Ya, Hapus!",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    deleteCustomerForm.submit();
+                }
             });
         });
 
