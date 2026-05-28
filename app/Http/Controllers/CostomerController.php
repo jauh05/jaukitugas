@@ -8,6 +8,7 @@ use App\Models\Costomer;
 use App\Models\Nota;
 use App\Models\MetodePembayaran;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 
 class CostomerController extends Controller
@@ -48,10 +49,12 @@ class CostomerController extends Controller
 
   function store(Request $request): RedirectResponse
   {
+    $hasLabelColumn = Schema::hasColumn('costomer', 'label_custom');
+
     $validatedData = $request->validate([
       'nama_costomer' => ['required'],
       'metode' => ['required'],
-      'label_custom' => ['nullable', 'string', 'max:50'],
+      'label_custom' => $hasLabelColumn ? ['nullable', 'string', 'max:50'] : ['nullable'],
       'tanggal_costomer' => ['nullable', 'date'],
       'waktu_costomer' => ['nullable', 'date_format:H:i'],
     ]);
@@ -64,7 +67,9 @@ class CostomerController extends Controller
     // Default total 0, nanti ditambah lewat nota
     $masuk['total'] = 0;
     $masuk['selesaikan'] = 'belum'; // Default status
-    $masuk['label_custom'] = $request->label_custom;
+    if ($hasLabelColumn) {
+      $masuk['label_custom'] = $request->label_custom;
+    }
     $masuk['id_metode'] = $request->metode;
 
     Costomer::create($masuk);
@@ -83,13 +88,15 @@ class CostomerController extends Controller
 
   function updatedata(Request $request, $id_costomer): RedirectResponse
   {
+    $hasLabelColumn = Schema::hasColumn('costomer', 'label_custom');
+
     $validatedData = $request->validate([
       'nama_costomer' => ['required'],
       'waktu_costomer' => ['required'],
       'tanggal_costomer' => ['required'],
       'metode' => ['required'],
       'selesaikan' => ['required', 'in:sudah,pembayaran,proses,belum'],
-      'label_custom' => ['nullable', 'string', 'max:50'],
+      'label_custom' => $hasLabelColumn ? ['nullable', 'string', 'max:50'] : ['nullable'],
     ]);
 
     $masuk['nama'] = $request->nama_costomer;
@@ -97,7 +104,9 @@ class CostomerController extends Controller
     $masuk['tanggal'] = $request->tanggal_costomer;
     $masuk['id_metode'] = $request->metode;
     $masuk['selesaikan'] = $request->selesaikan;
-    $masuk['label_custom'] = $request->label_custom;
+    if ($hasLabelColumn) {
+      $masuk['label_custom'] = $request->label_custom;
+    }
 
 
     Costomer::find($id_costomer)->update($masuk);
@@ -204,16 +213,34 @@ class CostomerController extends Controller
 
   function updateBoard(Request $request, $id_costomer)
   {
+    $hasLabelColumn = Schema::hasColumn('costomer', 'label_custom');
+
     $validated = $request->validate([
-      'selesaikan' => ['required', 'in:sudah,pembayaran,proses,belum'],
-      'label_custom' => ['nullable', 'string', 'max:50'],
+      'selesaikan' => ['nullable', 'in:sudah,pembayaran,proses,belum'],
+      'label_custom' => $hasLabelColumn ? ['nullable', 'string', 'max:50'] : ['nullable'],
+      'nama_costomer' => ['nullable', 'string', 'max:100'],
+      'tanggal_costomer' => ['nullable', 'date'],
+      'waktu_costomer' => ['nullable', 'date_format:H:i'],
     ]);
 
     $costomer = Costomer::findOrFail($id_costomer);
-    $costomer->selesaikan = $validated['selesaikan'];
-    if ($request->has('label_custom')) {
+
+    if ($request->has('selesaikan')) {
+      $costomer->selesaikan = $validated['selesaikan'];
+    }
+    if ($hasLabelColumn && $request->has('label_custom')) {
       $costomer->label_custom = $validated['label_custom'];
     }
+    if ($request->has('nama_costomer')) {
+      $costomer->nama = $validated['nama_costomer'];
+    }
+    if ($request->has('tanggal_costomer')) {
+      $costomer->tanggal = $validated['tanggal_costomer'];
+    }
+    if ($request->has('waktu_costomer')) {
+      $costomer->waktu = $validated['waktu_costomer'];
+    }
+
     $costomer->save();
 
     return response()->json([

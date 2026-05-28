@@ -23,6 +23,14 @@
 
         <div class="row g-3" id="trelloBoard">
             @foreach ($statusBoards as $statusKey => $statusInfo)
+                @php
+                    $boardItems = $costomer->where('selesaikan', $statusKey);
+                    if ($statusKey === 'belum') {
+                        $boardItems = $boardItems->sortBy(function ($item) {
+                            return $item['tanggal'] . ' ' . $item['waktu'];
+                        });
+                    }
+                @endphp
                 <div class="col-lg-3 col-md-6">
                     <div class="board-column h-100" data-status="{{ $statusKey }}">
                         <div class="board-header bg-{{ $statusInfo['class'] }} bg-opacity-10 text-{{ $statusInfo['class'] }}">
@@ -30,41 +38,65 @@
                             <span class="badge rounded-pill bg-light text-dark board-count" data-count-for="{{ $statusKey }}">0</span>
                         </div>
                         <div class="board-dropzone" data-status="{{ $statusKey }}">
-                            @foreach ($costomer->where('selesaikan', $statusKey) as $value)
+                            @foreach ($boardItems as $value)
                                 @php
                                     $tanggalWaktu = \Carbon\Carbon::parse($value['tanggal'] . ' ' . $value['waktu']);
                                     $sisaHari = \Carbon\Carbon::today()->diffInDays(\Carbon\Carbon::parse($value['tanggal']), false);
                                 @endphp
                                 <div class="board-card" draggable="true" data-id="{{ $value['id_costomer'] }}"
-                                    data-status="{{ $value['selesaikan'] }}">
+                                    data-status="{{ $value['selesaikan'] }}" data-nama="{{ $value['nama'] }}"
+                                    data-tanggal="{{ $value['tanggal'] }}" data-waktu="{{ $value['waktu'] }}">
                                     <div class="d-flex justify-content-between align-items-start mb-2">
                                         <div>
-                                            <div class="fw-bold text-dark">{{ $value['nama'] }}</div>
+                                            <div class="fw-bold text-dark board-nama">{{ $value['nama'] }}</div>
                                             <small class="text-muted">#{{ $value['id_costomer'] }}</small>
                                         </div>
-                                        <button type="button"
-                                            class="btn btn-sm btn-light border rounded-pill px-2 py-0 edit-label-btn"
-                                            data-id="{{ $value['id_costomer'] }}"
-                                            data-label="{{ $value['label_custom'] ?? '' }}">
-                                            <i class="bi bi-tag-fill text-warning"></i>
-                                        </button>
+                                        <div class="d-flex gap-1">
+                                            <button type="button"
+                                                class="btn btn-sm btn-light border rounded-pill px-2 py-0 edit-schedule-btn"
+                                                data-id="{{ $value['id_costomer'] }}">
+                                                <i class="bi bi-pencil-fill text-primary"></i>
+                                            </button>
+                                            <button type="button"
+                                                class="btn btn-sm btn-light border rounded-pill px-2 py-0 edit-label-btn"
+                                                data-id="{{ $value['id_costomer'] }}"
+                                                data-label="{{ $value['label_custom'] ?? '' }}">
+                                                <i class="bi bi-tag-fill text-warning"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="small text-muted mb-1">
+                                    <div class="small text-muted mb-1 board-tanggal-text">
                                         <i class="bi bi-calendar3 me-1"></i>{{ $tanggalWaktu->translatedFormat('l, d M Y') }}
                                     </div>
-                                    <div class="small text-muted mb-2">
+                                    <div class="small text-muted mb-2 board-waktu-text">
                                         <i class="bi bi-clock me-1"></i>{{ $tanggalWaktu->format('H:i') }}
                                     </div>
                                     <div class="small text-dark mb-2">
                                         <i class="bi bi-credit-card me-1"></i>{{ $value['nama_metode'] }}
                                     </div>
                                     <div class="mb-2">
-                                        @if ($sisaHari > 0)
-                                            <span class="badge rounded-pill text-bg-primary">⏰ {{ $sisaHari }} hari lagi</span>
+                                        @if ($statusKey === 'sudah')
+                                            @if ($sisaHari < 0)
+                                                <span class="badge rounded-pill text-bg-success board-deadline-text">✅ Sudah clear {{ abs($sisaHari) }} hari lalu</span>
+                                            @elseif ($sisaHari === 0)
+                                                <span class="badge rounded-pill text-bg-success board-deadline-text">✅ Sudah clear hari ini</span>
+                                            @else
+                                                <span class="badge rounded-pill text-bg-success board-deadline-text">✅ Sudah clear lebih awal {{ $sisaHari }} hari</span>
+                                            @endif
+                                        @elseif ($statusKey === 'pembayaran')
+                                            @if ($sisaHari < 0)
+                                                <span class="badge rounded-pill text-bg-danger board-deadline-text">💸 Utang {{ abs($sisaHari) }} hari lalu</span>
+                                            @elseif ($sisaHari === 0)
+                                                <span class="badge rounded-pill text-bg-danger board-deadline-text">💸 Utang hari ini</span>
+                                            @else
+                                                <span class="badge rounded-pill text-bg-warning board-deadline-text">💸 Jatuh tempo {{ $sisaHari }} hari lagi</span>
+                                            @endif
                                         @elseif ($sisaHari === 0)
-                                            <span class="badge rounded-pill text-bg-success">✅ Hari ini</span>
+                                            <span class="badge rounded-pill text-bg-warning board-deadline-text">🔥 Kerjakan hari ini</span>
+                                        @elseif ($sisaHari > 0)
+                                            <span class="badge rounded-pill text-bg-primary board-deadline-text">⏰ {{ $sisaHari }} hari lagi</span>
                                         @else
-                                            <span class="badge rounded-pill text-bg-danger">⚠️ Lewat {{ abs($sisaHari) }} hari</span>
+                                            <span class="badge rounded-pill text-bg-danger board-deadline-text">⚠️ Lewat {{ abs($sisaHari) }} hari</span>
                                         @endif
                                     </div>
                                     @if (!empty($value['label_custom']))
@@ -314,6 +346,65 @@
                         icon: 'error',
                         title: 'Gagal',
                         text: 'Label tidak berhasil diupdate.'
+                    });
+                }
+            });
+        });
+
+        document.querySelectorAll('.edit-schedule-btn').forEach(button => {
+            button.addEventListener('click', async function() {
+                const parentCard = this.closest('.board-card');
+                const id = parentCard.getAttribute('data-id');
+                const status = parentCard.getAttribute('data-status');
+                const nama = parentCard.getAttribute('data-nama');
+                const tanggal = parentCard.getAttribute('data-tanggal');
+                const waktu = parentCard.getAttribute('data-waktu');
+
+                const { value: formValues } = await Swal.fire({
+                    title: 'Edit Nama / Hari / Jam',
+                    html: `
+                        <input id="swalNama" class="swal2-input" placeholder="Nama" value="${nama || ''}">
+                        <input id="swalTanggal" type="date" class="swal2-input" value="${tanggal || ''}">
+                        <input id="swalWaktu" type="time" class="swal2-input" value="${waktu || ''}">
+                    `,
+                    focusConfirm: false,
+                    showCancelButton: true,
+                    confirmButtonText: 'Simpan',
+                    cancelButtonText: 'Batal',
+                    preConfirm: () => {
+                        const namaValue = document.getElementById('swalNama').value.trim();
+                        const tanggalValue = document.getElementById('swalTanggal').value;
+                        const waktuValue = document.getElementById('swalWaktu').value;
+
+                        if (!namaValue || !tanggalValue || !waktuValue) {
+                            Swal.showValidationMessage('Nama, tanggal, dan jam wajib diisi');
+                            return false;
+                        }
+
+                        return {
+                            nama_costomer: namaValue,
+                            tanggal_costomer: tanggalValue,
+                            waktu_costomer: waktuValue
+                        };
+                    }
+                });
+
+                if (!formValues) return;
+
+                try {
+                    await updateBoardData(id, {
+                        selesaikan: status,
+                        ...formValues
+                    });
+                    parentCard.setAttribute('data-nama', formValues.nama_costomer);
+                    parentCard.setAttribute('data-tanggal', formValues.tanggal_costomer);
+                    parentCard.setAttribute('data-waktu', formValues.waktu_costomer);
+                    location.reload();
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Nama, tanggal, atau jam tidak berhasil diupdate.'
                     });
                 }
             });
