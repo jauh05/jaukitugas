@@ -30,6 +30,15 @@ class CostomerController extends Controller
     return view('costomer_belum', $data);
   }
 
+  function jadwal()
+  {
+    $data['costomer'] = Costomer::join('metode', 'costomer.id_metode', '=', 'metode.id_metode')
+      ->select('costomer.*', 'metode.nama_metode')
+      ->orderBy('id_costomer', 'desc')
+      ->get();
+    return view('jadwal', $data);
+  }
+
   function tambah()
   {
     $data['costomer'] = MetodePembayaran::all();

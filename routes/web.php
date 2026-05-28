@@ -39,6 +39,7 @@ Route::delete('/komentar/{id_komentar}', [AdminController::class, 'delete'])->mi
 Route::middleware('cekuser')->prefix('dashboard')->group(function () {
     Route::get('/costomer', [CostomerController::class, 'index'])->name('costomer.index');
     Route::get('/costomer/tambah', [CostomerController::class, 'tambah'])->name('costomer.tambah');
+    Route::get('/jadwal', [CostomerController::class, 'jadwal'])->name('costomer.jadwal');
 });
 
 Route::put('selesaikan/{id_costomer}', [CostomerController::class, 'update'])->middleware('cekuser');

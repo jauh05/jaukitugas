@@ -398,6 +398,11 @@
                 <i class="bi bi-people-fill"></i> Data Customer
             </a>
 
+            <a class="nav-link {{ Request::is('dashboard/jadwal*') ? 'active' : '' }}"
+                href="{{ route('costomer.jadwal') }}">
+                <i class="bi bi-kanban-fill"></i> Jadwal
+            </a>
+
             <a class="nav-link {{ Request::is('dashboard/talent*') ? 'active' : '' }}"
                 href="{{ route('admin.talent.index') }}">
                 <i class="bi bi-person-badge-fill"></i> Data Talent
