@@ -92,9 +92,9 @@
                                                 <span class="badge rounded-pill text-bg-warning board-deadline-text">💸 Jatuh tempo {{ $sisaHari }} hari lagi</span>
                                             @endif
                                         @elseif ($sisaHari === 0)
-                                            <span class="badge rounded-pill text-bg-warning board-deadline-text">🔥 Kerjakan hari ini</span>
+                                            <span class="badge rounded-pill text-bg-primary board-deadline-text">🔥 Kerjakan hari ini</span>
                                         @elseif ($sisaHari > 0)
-                                            <span class="badge rounded-pill text-bg-primary board-deadline-text">⏰ {{ $sisaHari }} hari lagi</span>
+                                            <span class="badge rounded-pill text-bg-warning board-deadline-text">⏰ {{ $sisaHari }} hari lagi</span>
                                         @else
                                             <span class="badge rounded-pill text-bg-danger board-deadline-text">⚠️ Lewat {{ abs($sisaHari) }} hari</span>
                                         @endif
@@ -240,6 +240,20 @@
             });
         }
 
+        function sortDropzoneBySchedule(dropzone) {
+            const status = dropzone.getAttribute('data-status');
+            if (status !== 'belum' && status !== 'proses') return;
+
+            const cards = Array.from(dropzone.querySelectorAll('.board-card'));
+            cards.sort((a, b) => {
+                const dateA = `${a.getAttribute('data-tanggal')} ${a.getAttribute('data-waktu')}`;
+                const dateB = `${b.getAttribute('data-tanggal')} ${b.getAttribute('data-waktu')}`;
+                return new Date(dateA) - new Date(dateB);
+            });
+
+            cards.forEach(card => dropzone.appendChild(card));
+        }
+
         async function updateBoardData(id, payload) {
             const response = await fetch(`{{ url('dashboard/costomer') }}/${id}/board`, {
                 method: 'POST',
@@ -293,6 +307,7 @@
 
                 this.appendChild(draggedCard);
                 draggedCard.setAttribute('data-status', targetStatus);
+                sortDropzoneBySchedule(this);
                 updateBoardCounts();
 
                 try {
@@ -306,6 +321,10 @@
                     location.reload();
                 }
             });
+        });
+
+        document.querySelectorAll('.board-dropzone').forEach(zone => {
+            sortDropzoneBySchedule(zone);
         });
 
         document.querySelectorAll('.edit-label-btn').forEach(button => {
