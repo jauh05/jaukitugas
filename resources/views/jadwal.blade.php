@@ -58,7 +58,7 @@
                                         <div class="d-flex gap-1">
                                             <button type="button"
                                                 class="btn btn-sm btn-light border rounded-pill px-2 py-0 board-action-trigger"
-                                                title="Aksi">
+                                                title="Aksi" draggable="false">
                                                 <i class="bi bi-three-dots text-secondary"></i>
                                             </button>
                                         </div>
@@ -513,13 +513,26 @@
             }
         }
 
+        function openActionModalFromButton(button) {
+            selectedCard = button.closest('.board-card');
+            if (!selectedCard) return;
+            const id = selectedCard.getAttribute('data-id');
+            const nama = selectedCard.getAttribute('data-nama');
+            cardActionInfo.textContent = `#${id} - ${nama}`;
+            cardActionModal.show();
+        }
+
         document.querySelectorAll('.board-action-trigger').forEach(button => {
-            button.addEventListener('click', function() {
-                selectedCard = this.closest('.board-card');
-                const id = selectedCard.getAttribute('data-id');
-                const nama = selectedCard.getAttribute('data-nama');
-                cardActionInfo.textContent = `#${id} - ${nama}`;
-                cardActionModal.show();
+            button.addEventListener('mousedown', function(e) {
+                e.stopPropagation();
+            });
+            button.addEventListener('touchstart', function(e) {
+                e.stopPropagation();
+            });
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                openActionModalFromButton(this);
             });
         });
 
