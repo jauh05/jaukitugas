@@ -365,135 +365,102 @@
     <script src="{{ $chart->cdn() }}"></script>
     {!! $chart->script() !!}
 
-    <script>
-        $(document).ready(function () {
-            $('#btn_rekap').click(function (e) {
-                e.preventDefault();
-                $('#rekap').toggle(500);
-            });
-            $('#btn_rekap_bulan').click(function (e) {
-                e.preventDefault();
-                $('#rekapBulan').toggle(500);
-            });
-        })
-    </script>
-    {{-- Recaps Buttons --}}
-    <div class="p-3 mb-5 d-flex justify-content-center gap-3">
-        <button type="button" class="btn btn-outline-dark" id="btn_rekap_bulan"><i class="bi bi-calendar-minus me-2"></i>Tampilkan Rekap Bulan Lalu</button>
-        <button type="button" class="btn btn-outline-primary" id="btn_rekap"><i class="bi bi-calendar-check me-2"></i>Tampilkan Rekap Tahun Sebelumnya</button>
-    </div>
-
-    {{-- Rekap Bulan Lalu (Hidden) --}}
-    <div class="row justify-content-center mb-4" style="display: none" id="rekapBulan">
-        <div class="col-md-8">
-            <div class="glass-card border-0 shadow-lg p-0 overflow-hidden bg-white">
-                <div class="bg-dark text-white p-3 fw-bold">
-                    <i class="bi bi-calendar-minus me-2"></i>Rekap Bulan Lalu ({{ $rekap_bulan_lalu_nama }})
-                </div>
-                <div class="card-body text-center p-5">
-                    <h5 class="text-muted text-uppercase ls-1 mb-3">Total Pendapatan</h5>
-                    <h2 class="display-3 fw-bold text-primary mb-4">Rp {{ number_format($rekap_bulan_lalu_sum) }}</h2>
-                    
-                    <div class="row justify-content-center g-4">
-                        <div class="col-6 border-end">
-                            <h6 class="text-muted small fw-bold">TOTAL ORDER</h6>
-                            <h3 class="mb-0">{{ $rekap_bulan_lalu_count }}</h3>
-                        </div>
-                        <div class="col-6">
-                            <h6 class="text-muted small fw-bold">RATA-RATA / ORDER</h6>
-                            <h3 class="mb-0 fs-4">Rp {{ $rekap_bulan_lalu_count > 0 ? number_format($rekap_bulan_lalu_sum / $rekap_bulan_lalu_count) : 0 }}</h3>
-                        </div>
-                    </div>
-                    <div class="mt-4 border-top pt-3">
-                        <h6 class="text-muted small fw-bold">TOTAL PENGELUARAN</h6>
-                        <h4 class="mb-0 text-danger">Rp {{ number_format($rekap_bulan_lalu_pengeluaran) }}</h4>
-                    </div>
-                </div>
+    <div class="glass-card p-4 mb-5 bg-white shadow-sm border-0">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+            <h5 class="fw-bold m-0 text-dark"><i class="bi bi-sliders me-2"></i>Filter Rekap Interaktif</h5>
+            <div class="d-flex gap-2">
+                <select class="form-select form-select-sm" id="rekapTahunSelect" style="min-width: 120px;">
+                    @foreach ($rekap_tahun_pilihan as $tahun)
+                        <option value="{{ $tahun }}" @selected($tahun == $tahunSekarang)>{{ $tahun }}</option>
+                    @endforeach
+                </select>
+                <select class="form-select form-select-sm" id="rekapBulanSelect" style="min-width: 150px;">
+                    @php
+                        $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                    @endphp
+                    @foreach ($months as $idx => $monthName)
+                        <option value="{{ $idx + 1 }}" @selected($idx + 1 == now()->month)>{{ $monthName }}</option>
+                    @endforeach
+                </select>
+                <button class="btn btn-primary btn-sm" id="btnShowRekapDynamic">Tampilkan</button>
             </div>
         </div>
-    </div>
-    {{-- rekap tahunan --}}
-    <div class="row" style="display: none" id="rekap">
-        <div class="col-xl-12">
-            <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-chart-bar"></i>
-                    Rekap tahunan
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6 shadow-sm border-0 p-3">
-                            <div class="">
-                                <div class="card-body">
-                                    <div class="card bg-dark text-white mb-4">
-                                        <div class="card-header text-center">Rekap <b>{{ $tahunSekarang - 1  }}</b></div>
-                                        <div class="card-body">
-                                            <h3 class="text-center">Rp. {{ number_format($tahun_1) }},- <i
-                                                    class="bi bi-cash-stack"></i></h3>
-                                        </div>
-                                    </div>
-                                    @php
-                                        $indoMonths = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-                                    @endphp
-                                    @foreach ($bulanLalu as $key => $bulan)
-                                        <ol class="list-group mb-1">
-                                            <li class="list-group-item d-flex justify-content-between align-items-start border-0 border-bottom">
-                                                <div class="">
-                                                    <div class="fw-bold text-primary">{{ $indoMonths[$key-1] }}</div>
-                                                    <span class="fs-6">Rp {{ number_format($bulan) }},- </span>
-                                                </div>
-                                                <div>
-                                                    <span class="badge text-bg-success rounded-pill fs-7">
-                                                        <i class="bi bi-person-check"></i> {{ $costomerLalu[$key] }} Customer
-                                                    </span>
-                                                </div>
-                                            </li>
-                                        </ol>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 shadow-sm border-0 p-3">
-                            <div class="">
-                                <div class="card-body">
-                                    <div class="card bg-dark text-white mb-4">
-                                        <div class="card-header text-center">Rekap <b>{{ $tahunSekarang - 2  }}</b></div>
-                                        <div class="card-body">
-                                            <h3 class="text-center">Rp. {{ number_format($tahun_2) }},- <i
-                                                    class="bi bi-cash-stack"></i></h3>
-                                        </div>
-                                    </div>
-                                    @foreach ($bulanLalu2 as $key => $bulan)
-                                        <ol class="list-group mb-1">
-                                            <li class="list-group-item d-flex justify-content-between align-items-start border-0 border-bottom">
-                                                <div class="">
-                                                    <div class="fw-bold text-primary">{{ $indoMonths[$key-1] }}</div>
-                                                    <span class="fs-6">Rp {{ number_format($bulan) }},- </span>
-                                                </div>
-                                                <div>
-                                                    <span class="badge text-bg-success rounded-pill fs-7">
-                                                        <i class="bi bi-person-check"></i> {{ $costomerLalu2[$key] }} Customer
-                                                    </span>
-                                                </div>
-                                            </li>
-                                        </ol>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-3"><div class="p-3 bg-light rounded-4"><small class="text-muted">Pendapatan Tahun</small><div class="fw-bold text-primary" id="yearIncomeText">-</div></div></div>
+            <div class="col-md-3"><div class="p-3 bg-light rounded-4"><small class="text-muted">Pengeluaran Tahun</small><div class="fw-bold text-danger" id="yearExpenseText">-</div></div></div>
+            <div class="col-md-3"><div class="p-3 bg-light rounded-4"><small class="text-muted">Pendapatan Bulan Dipilih</small><div class="fw-bold text-primary" id="monthIncomeText">-</div></div></div>
+            <div class="col-md-3"><div class="p-3 bg-light rounded-4"><small class="text-muted">Keterangan</small><div class="fw-bold text-success" id="monthInfoText">-</div></div></div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-8">
+                <h6 class="fw-bold text-secondary mb-3">Grafik Bulanan (Tahun Dipilih)</h6>
+                <canvas id="yearDynamicChart" height="100"></canvas>
+            </div>
+            <div class="col-md-4">
+                <h6 class="fw-bold text-secondary mb-3">Perbandingan Bulan Dipilih</h6>
+                <canvas id="monthDynamicChart" height="220"></canvas>
             </div>
         </div>
     </div>
 
     <script>
-        $(document).ready(function () {
-            $('#btn_rekap').click(function (e) {
-                e.preventDefault();
-                $('#rekap').toggle(500);
-            })
-        })
+        const rekapPerTahun = {!! $rekap_per_tahun_json !!};
+        const rekapPerBulan = {!! $rekap_per_bulan_json !!};
+        const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        const yearSelect = document.getElementById('rekapTahunSelect');
+        const monthSelect = document.getElementById('rekapBulanSelect');
+
+        const yearCtx = document.getElementById('yearDynamicChart').getContext('2d');
+        const monthCtx = document.getElementById('monthDynamicChart').getContext('2d');
+        const yearChart = new Chart(yearCtx, {
+            type: 'line',
+            data: { labels: monthNames, datasets: [] },
+            options: { responsive: true, scales: { y: { beginAtZero: true } } }
+        });
+        const monthChart = new Chart(monthCtx, {
+            type: 'bar',
+            data: { labels: ['Pendapatan', 'Pengeluaran', 'Bersih'], datasets: [{ data: [0, 0, 0], backgroundColor: ['#0d6efd', '#dc3545', '#20c997'] }] },
+            options: { responsive: true, plugins: { legend: { display: false } } }
+        });
+
+        function formatRupiah(val) {
+            return 'Rp ' + Number(val || 0).toLocaleString('id-ID');
+        }
+
+        function renderDynamicRekap() {
+            const year = yearSelect.value;
+            const month = monthSelect.value;
+            const yearData = rekapPerTahun[year];
+            if (!yearData) return;
+
+            const monthlyIncome = [];
+            const monthlyExpense = [];
+            for (let i = 1; i <= 12; i++) {
+                const item = yearData.bulanan[i] || { pendapatan: 0, pengeluaran: 0 };
+                monthlyIncome.push(item.pendapatan || 0);
+                monthlyExpense.push(item.pengeluaran || 0);
+            }
+
+            yearChart.data.datasets = [
+                { label: 'Pendapatan', data: monthlyIncome, borderColor: '#0d6efd', backgroundColor: 'rgba(13,110,253,0.1)', fill: true, tension: 0.3 },
+                { label: 'Pengeluaran', data: monthlyExpense, borderColor: '#dc3545', backgroundColor: 'rgba(220,53,69,0.08)', fill: true, tension: 0.3 }
+            ];
+            yearChart.update();
+
+            const monthData = yearData.bulanan[month] || { pendapatan: 0, pengeluaran: 0, bersih: 0, order: 0 };
+            monthChart.data.datasets[0].data = [monthData.pendapatan || 0, monthData.pengeluaran || 0, monthData.bersih || 0];
+            monthChart.update();
+
+            document.getElementById('yearIncomeText').textContent = formatRupiah(yearData.pendapatan);
+            document.getElementById('yearExpenseText').textContent = formatRupiah(yearData.pengeluaran);
+            document.getElementById('monthIncomeText').textContent = formatRupiah(monthData.pendapatan);
+            document.getElementById('monthInfoText').textContent = `${monthNames[month - 1]} ${year} • ${monthData.order || 0} order`;
+        }
+
+        document.getElementById('btnShowRekapDynamic').addEventListener('click', renderDynamicRekap);
+        renderDynamicRekap();
     </script>
 
 @endsection

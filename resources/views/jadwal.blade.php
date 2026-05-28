@@ -25,11 +25,9 @@
             @foreach ($statusBoards as $statusKey => $statusInfo)
                 @php
                     $boardItems = $costomer->where('selesaikan', $statusKey);
-                    if ($statusKey === 'belum') {
-                        $boardItems = $boardItems->sortBy(function ($item) {
-                            return $item['tanggal'] . ' ' . $item['waktu'];
-                        });
-                    }
+                    $boardItems = $boardItems->sortBy(function ($item) {
+                        return $item['tanggal'] . ' ' . $item['waktu'];
+                    });
                 @endphp
                 <div class="col-lg-3 col-md-6">
                     <div class="board-column h-100" data-status="{{ $statusKey }}">
@@ -209,18 +207,22 @@
                 </div>
                 <div class="modal-body pt-3">
                     <div class="mb-3 small text-muted" id="cardActionInfo"></div>
-                    <div class="d-grid gap-2">
-                        <button type="button" class="btn btn-outline-primary rounded-pill" id="actionEditJadwalBtn">
-                            <i class="bi bi-pencil-square me-2"></i>Edit
+                    <div class="action-grid">
+                        <button type="button" class="action-box" id="actionEditJadwalBtn">
+                            <i class="bi bi-pencil-square"></i>
+                            <span>Edit</span>
                         </button>
-                        <button type="button" class="btn btn-outline-warning rounded-pill" id="actionEditLabelBtn">
-                            <i class="bi bi-tag-fill me-2"></i>Label
+                        <button type="button" class="action-box" id="actionEditLabelBtn">
+                            <i class="bi bi-tag-fill"></i>
+                            <span>Label</span>
                         </button>
-                        <button type="button" class="btn btn-outline-danger rounded-pill" id="actionDeleteBtn">
-                            <i class="bi bi-trash-fill me-2"></i>Hapus
+                        <button type="button" class="action-box action-danger" id="actionDeleteBtn">
+                            <i class="bi bi-trash-fill"></i>
+                            <span>Hapus</span>
                         </button>
-                        <button type="button" class="btn btn-outline-success rounded-pill" id="actionPrintNotaBtn">
-                            <i class="bi bi-printer-fill me-2"></i>Nota
+                        <button type="button" class="action-box" id="actionPrintNotaBtn">
+                            <i class="bi bi-printer-fill"></i>
+                            <span>Nota</span>
                         </button>
                     </div>
                     <form id="deleteCustomerForm" method="POST" class="d-none">
@@ -298,6 +300,50 @@
             background: rgba(72, 52, 212, 0.08);
             border-radius: 12px;
         }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
+        }
+
+        .action-box {
+            border: 1px solid rgba(72, 52, 212, 0.15);
+            background: #fff;
+            border-radius: 12px;
+            height: 82px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            color: #4834d4;
+            transition: all 0.2s ease;
+        }
+
+        .action-box i {
+            font-size: 1.15rem;
+        }
+
+        .action-box span {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .action-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(72, 52, 212, 0.15);
+            background: #f7f5ff;
+        }
+
+        .action-danger {
+            color: #dc3545;
+            border-color: rgba(220, 53, 69, 0.25);
+        }
+
+        .action-danger:hover {
+            background: #fff5f5;
+        }
     </style>
 
     <script>
@@ -315,9 +361,6 @@
         }
 
         function sortDropzoneBySchedule(dropzone) {
-            const status = dropzone.getAttribute('data-status');
-            if (status !== 'belum' && status !== 'proses') return;
-
             const cards = Array.from(dropzone.querySelectorAll('.board-card'));
             cards.sort((a, b) => {
                 const dateA = `${a.getAttribute('data-tanggal')} ${a.getAttribute('data-waktu')}`;

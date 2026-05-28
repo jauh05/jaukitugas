@@ -79,6 +79,42 @@ class AdminController extends Controller
         $data['rekap_bulan_lalu_sum'] = Costomer::whereMonth('tanggal', $lastMonth->month)->whereYear('tanggal', $lastMonth->year)->sum('total');
         $data['rekap_bulan_lalu_pengeluaran'] = Pengeluaran::whereMonth('tanggal', $lastMonth->month)->whereYear('tanggal', $lastMonth->year)->sum('nominal');
 
+        // Dynamic recap selector data (5 tahun terakhir)
+        $tahunPilihan = range($tahunSekarang - 4, $tahunSekarang);
+        $rekapPerTahun = [];
+        $rekapPerBulan = [];
+        foreach ($tahunPilihan as $tahun) {
+            $rekapPerTahun[$tahun] = [
+                'pendapatan' => (float) Costomer::whereYear('tanggal', $tahun)->sum('total'),
+                'order' => (int) Costomer::whereYear('tanggal', $tahun)->count(),
+                'pengeluaran' => (float) Pengeluaran::whereYear('tanggal', $tahun)->sum('nominal'),
+                'bulanan' => [],
+            ];
+
+            foreach ($dataBulan as $bulan) {
+                $pendapatanBulan = (float) Costomer::whereYear('tanggal', $tahun)->whereMonth('tanggal', $bulan)->sum('total');
+                $orderBulan = (int) Costomer::whereYear('tanggal', $tahun)->whereMonth('tanggal', $bulan)->count();
+                $pengeluaranBulan = (float) Pengeluaran::whereYear('tanggal', $tahun)->whereMonth('tanggal', $bulan)->sum('nominal');
+
+                $rekapPerTahun[$tahun]['bulanan'][$bulan] = [
+                    'pendapatan' => $pendapatanBulan,
+                    'order' => $orderBulan,
+                    'pengeluaran' => $pengeluaranBulan,
+                    'bersih' => $pendapatanBulan - $pengeluaranBulan,
+                ];
+
+                $rekapPerBulan[$bulan][$tahun] = [
+                    'pendapatan' => $pendapatanBulan,
+                    'order' => $orderBulan,
+                    'pengeluaran' => $pengeluaranBulan,
+                    'bersih' => $pendapatanBulan - $pengeluaranBulan,
+                ];
+            }
+        }
+        $data['rekap_tahun_pilihan'] = $tahunPilihan;
+        $data['rekap_per_tahun_json'] = json_encode($rekapPerTahun);
+        $data['rekap_per_bulan_json'] = json_encode($rekapPerBulan);
+
         // NEW: Daily Chart Data
         $daysInMonth = $now->daysInMonth;
         $dailyIncome = [];
