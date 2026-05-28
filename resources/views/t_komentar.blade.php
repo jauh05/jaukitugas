@@ -194,7 +194,15 @@
     <div class="row g-4 mb-4">
         <div class="col-md-8">
             <div class="glass-card p-4 bg-white h-100 shadow-sm border-0">
-                <h5 class="fw-bold mb-4 text-primary"><i class="bi bi-graph-up me-2"></i>Tren Pendapatan Harian</h5>
+                <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-3">
+                    <h5 class="fw-bold mb-0 text-primary"><i class="bi bi-graph-up me-2"></i>Tren Pendapatan Harian</h5>
+                    <div class="d-flex align-items-center gap-2">
+                        <input type="date" id="dailyFilterStart" class="form-control form-control-sm" style="min-width: 145px;">
+                        <span class="text-muted small">s/d</span>
+                        <input type="date" id="dailyFilterEnd" class="form-control form-control-sm" style="min-width: 145px;">
+                        <button class="btn btn-sm btn-outline-primary" id="applyDailyFilterBtn">Filter</button>
+                    </div>
+                </div>
                 <canvas id="dailyIncomeChart" height="100"></canvas>
             </div>
         </div>
@@ -314,24 +322,63 @@
     {{-- Yearly Revenue Chart --}}
     <div class="row mb-5">
          <div class="col-12">
-             <div class="glass-card p-4 bg-white shadow-sm border-0">
-                 <h5 class="fw-bold mb-4 text-dark"><i class="bi bi-clipboard-data me-2"></i>Pendapatan Tahunan</h5>
+             <div class="glass-card p-4 bg-white shadow-sm border-0 yearly-revenue-card">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                    <div>
+                        <h5 class="fw-bold mb-1 text-dark"><i class="bi bi-clipboard-data me-2"></i>Pendapatan Tahunan</h5>
+                        <small class="text-muted">Visualisasi performa tahunan pendapatan bisnis.</small>
+                    </div>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <span class="badge rounded-pill px-3 py-2 text-bg-light">Tahun aktif: {{ $tahunSekarang }}</span>
+                        <span class="badge rounded-pill px-3 py-2 text-bg-primary">Bulan aktif: {{ $namaBulanSekarang }}</span>
+                    </div>
+                </div>
                 {!! $chart->container() !!}
             </div>
         </div>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .yearly-revenue-card {
+            background: linear-gradient(180deg, #ffffff 0%, #f7f8ff 100%);
+            border: 1px solid rgba(72, 52, 212, 0.08);
+        }
+    </style>
     <script>
+        const currentYear = {{ $tahunSekarang }};
+        const currentMonth = {{ now()->month }};
+        const daysInCurrentMonth = {{ now()->daysInMonth }};
+        const baseDailyLabels = {!! $chart_daily_label !!};
+        const baseDailyIncome = {!! $chart_daily_data !!};
+        const baseDailyCount = {!! $chart_daily_count !!};
+
+        const startInput = document.getElementById('dailyFilterStart');
+        const endInput = document.getElementById('dailyFilterEnd');
+        const applyDailyFilterBtn = document.getElementById('applyDailyFilterBtn');
+
+        const toDateString = (day) => {
+            const monthStr = String(currentMonth).padStart(2, '0');
+            const dayStr = String(day).padStart(2, '0');
+            return `${currentYear}-${monthStr}-${dayStr}`;
+        };
+
+        startInput.min = toDateString(1);
+        startInput.max = toDateString(daysInCurrentMonth);
+        endInput.min = toDateString(1);
+        endInput.max = toDateString(daysInCurrentMonth);
+        startInput.value = toDateString(1);
+        endInput.value = toDateString(daysInCurrentMonth);
+
         // Daily Income Chart
         const ctxDaily = document.getElementById('dailyIncomeChart').getContext('2d');
-        new Chart(ctxDaily, {
+        const dailyIncomeChart = new Chart(ctxDaily, {
             type: 'line',
             data: {
-                labels: {!! $chart_daily_label !!},
+                labels: baseDailyLabels,
                 datasets: [{
                     label: 'Pendapatan (Rp)',
-                    data: {!! $chart_daily_data !!},
+                    data: baseDailyIncome,
                     borderColor: '#4834d4',
                     backgroundColor: 'rgba(72, 52, 212, 0.1)',
                     borderWidth: 2,
@@ -344,19 +391,53 @@
 
         // Daily Count Chart (Bar)
         const ctxCount = document.getElementById('dailyCountChart').getContext('2d');
-        new Chart(ctxCount, {
+        const dailyCountChart = new Chart(ctxCount, {
             type: 'bar',
             data: {
-                labels: {!! $chart_daily_label !!},
+                labels: baseDailyLabels,
                 datasets: [{
                     label: 'Jumlah Order',
-                    data: {!! $chart_daily_count !!},
+                    data: baseDailyCount,
                     backgroundColor: '#fbc531',
                     borderRadius: 4
                 }]
             },
             options: { responsive: true, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } }, x: { grid: { display: false } } } }
         });
+
+        function applyDailyFilter() {
+            const startVal = startInput.value;
+            const endVal = endInput.value;
+            if (!startVal || !endVal) return;
+
+            let startDay = Number(startVal.split('-')[2]);
+            let endDay = Number(endVal.split('-')[2]);
+            if (startDay > endDay) {
+                [startDay, endDay] = [endDay, startDay];
+            }
+
+            const filteredLabels = [];
+            const filteredIncome = [];
+            const filteredCount = [];
+            for (let i = 0; i < baseDailyLabels.length; i++) {
+                const day = Number(baseDailyLabels[i]);
+                if (day >= startDay && day <= endDay) {
+                    filteredLabels.push(day);
+                    filteredIncome.push(baseDailyIncome[i]);
+                    filteredCount.push(baseDailyCount[i]);
+                }
+            }
+
+            dailyIncomeChart.data.labels = filteredLabels;
+            dailyIncomeChart.data.datasets[0].data = filteredIncome;
+            dailyIncomeChart.update();
+
+            dailyCountChart.data.labels = filteredLabels;
+            dailyCountChart.data.datasets[0].data = filteredCount;
+            dailyCountChart.update();
+        }
+
+        applyDailyFilterBtn.addEventListener('click', applyDailyFilter);
 
         // JS for deleted charts removed
     </script>

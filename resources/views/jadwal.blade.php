@@ -25,9 +25,15 @@
             @foreach ($statusBoards as $statusKey => $statusInfo)
                 @php
                     $boardItems = $costomer->where('selesaikan', $statusKey);
-                    $boardItems = $boardItems->sortBy(function ($item) {
-                        return $item['tanggal'] . ' ' . $item['waktu'];
-                    });
+                    if (in_array($statusKey, ['pembayaran', 'sudah'])) {
+                        $boardItems = $boardItems->sortByDesc(function ($item) {
+                            return $item['tanggal'] . ' ' . $item['waktu'];
+                        });
+                    } else {
+                        $boardItems = $boardItems->sortBy(function ($item) {
+                            return $item['tanggal'] . ' ' . $item['waktu'];
+                        });
+                    }
                 @endphp
                 <div class="col-lg-3 col-md-6">
                     <div class="board-column h-100" data-status="{{ $statusKey }}">
@@ -361,10 +367,14 @@
         }
 
         function sortDropzoneBySchedule(dropzone) {
+            const status = dropzone.getAttribute('data-status');
             const cards = Array.from(dropzone.querySelectorAll('.board-card'));
             cards.sort((a, b) => {
                 const dateA = `${a.getAttribute('data-tanggal')} ${a.getAttribute('data-waktu')}`;
                 const dateB = `${b.getAttribute('data-tanggal')} ${b.getAttribute('data-waktu')}`;
+                if (status === 'pembayaran' || status === 'sudah') {
+                    return new Date(dateB) - new Date(dateA);
+                }
                 return new Date(dateA) - new Date(dateB);
             });
 
