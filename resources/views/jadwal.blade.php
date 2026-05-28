@@ -53,6 +53,13 @@
                                         </div>
                                         <div class="d-flex gap-1">
                                             <button type="button"
+                                                class="btn btn-sm btn-light border rounded-pill px-2 py-0 add-nota-btn"
+                                                data-id="{{ $value['id_costomer'] }}"
+                                                data-nama="{{ $value['nama'] }}"
+                                                title="Tambah Nota">
+                                                <i class="bi bi-receipt-cutoff text-success"></i>
+                                            </button>
+                                            <button type="button"
                                                 class="btn btn-sm btn-light border rounded-pill px-2 py-0 edit-schedule-btn"
                                                 data-id="{{ $value['id_costomer'] }}">
                                                 <i class="bi bi-pencil-fill text-primary"></i>
@@ -161,6 +168,41 @@
                         </div>
 
                         <button type="submit" class="btn btn-premium w-100 rounded-pill py-2 fw-bold">Simpan Jadwal</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addNotaModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg border-0">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title fw-bold text-primary">Tambah Nota dari Jadwal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body pt-4">
+                    <form id="addNotaForm" method="POST">
+                        @csrf
+                        <div class="alert alert-info small" id="addNotaCustomerInfo"></div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-muted text-uppercase">Nama Produk</label>
+                            <input type="text" name="nama_produk" class="form-control rounded-3 py-2 bg-light border-0"
+                                required>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <label class="form-label fw-bold small text-muted text-uppercase">Jumlah</label>
+                                <input type="number" min="1" name="jumlah"
+                                    class="form-control rounded-3 py-2 bg-light border-0" required>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label class="form-label fw-bold small text-muted text-uppercase">Harga</label>
+                                <input type="number" min="0" name="harga"
+                                    class="form-control rounded-3 py-2 bg-light border-0" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-premium w-100 rounded-pill py-2 fw-bold">Simpan Nota</button>
                     </form>
                 </div>
             </div>
@@ -426,6 +468,17 @@
                         text: 'Nama, tanggal, atau jam tidak berhasil diupdate.'
                     });
                 }
+            });
+        });
+
+        const addNotaModal = new bootstrap.Modal(document.getElementById('addNotaModal'));
+        document.querySelectorAll('.add-nota-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const nama = this.getAttribute('data-nama');
+                document.getElementById('addNotaCustomerInfo').textContent = `Customer: ${nama} (#${id})`;
+                document.getElementById('addNotaForm').action = `{{ url('dashboard/jadwal') }}/${id}/nota`;
+                addNotaModal.show();
             });
         });
 

@@ -110,7 +110,7 @@
         </div>
 
         <!-- Total Revenue -->
-        <div class="col-xl col-md-6">
+        <div class="col-xl col-md-4">
             <div class="glass-card h-100 p-4 position-relative overflow-hidden border-0"
                 style="background: linear-gradient(135deg, #0984e3, #74b9ff); color: white;">
                 <div class="d-flex justify-content-between align-items-center">
@@ -119,6 +119,32 @@
                         <h3 class="fw-bold mb-0 fs-3">Rp {{ number_format($total_pendapatan) }}</h3>
                     </div>
                     <i class="bi bi-wallet-fill opacity-25" style="font-size: 2.5rem;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl col-md-4">
+            <div class="glass-card h-100 p-4 position-relative overflow-hidden border-0"
+                style="background: linear-gradient(135deg, #e17055, #fab1a0); color: white;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="mb-0 opacity-75 fw-bold">Pengeluaran (Bln)</p>
+                        <h3 class="fw-bold mb-0 fs-3">Rp {{ number_format($total_pengeluaran) }}</h3>
+                    </div>
+                    <i class="bi bi-cash-stack opacity-25" style="font-size: 2.5rem;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl col-md-4">
+            <div class="glass-card h-100 p-4 position-relative overflow-hidden border-0"
+                style="background: linear-gradient(135deg, #00b894, #55efc4); color: white;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="mb-0 opacity-75 fw-bold">Bersih (Bln)</p>
+                        <h3 class="fw-bold mb-0 fs-3">Rp {{ number_format($total_bersih) }}</h3>
+                    </div>
+                    <i class="bi bi-graph-up-arrow opacity-25" style="font-size: 2.5rem;"></i>
                 </div>
             </div>
         </div>
@@ -153,6 +179,7 @@
                     <div>
                         <small class="text-uppercase text-muted fw-bold ls-1">Total Keseluruhan</small>
                         <h3 class="fw-bold mb-0">Rp {{ number_format($rekap_total_sum) }}</h3>
+                        <small class="d-block text-danger mt-1">Pengeluaran: Rp {{ number_format($rekap_total_pengeluaran) }}</small>
                     </div>
                     <div class="ms-auto text-end">
                         <small class="d-block text-muted">Total Order</small>
@@ -352,8 +379,8 @@
     </script>
     {{-- Recaps Buttons --}}
     <div class="p-3 mb-5 d-flex justify-content-center gap-3">
-        <a href="" class="btn btn-outline-dark" id="btn_rekap_bulan"><i class="bi bi-calendar-minus me-2"></i>Lihat Rekap Bulan Lalu</a>
-        <a href="" class="btn btn-outline-primary" id="btn_rekap"><i class="bi bi-calendar-check me-2"></i>Lihat Rekap Tahun Sebelumnya</a>
+        <button type="button" class="btn btn-outline-dark" id="btn_rekap_bulan"><i class="bi bi-calendar-minus me-2"></i>Tampilkan Rekap Bulan Lalu</button>
+        <button type="button" class="btn btn-outline-primary" id="btn_rekap"><i class="bi bi-calendar-check me-2"></i>Tampilkan Rekap Tahun Sebelumnya</button>
     </div>
 
     {{-- Rekap Bulan Lalu (Hidden) --}}
@@ -376,6 +403,10 @@
                             <h6 class="text-muted small fw-bold">RATA-RATA / ORDER</h6>
                             <h3 class="mb-0 fs-4">Rp {{ $rekap_bulan_lalu_count > 0 ? number_format($rekap_bulan_lalu_sum / $rekap_bulan_lalu_count) : 0 }}</h3>
                         </div>
+                    </div>
+                    <div class="mt-4 border-top pt-3">
+                        <h6 class="text-muted small fw-bold">TOTAL PENGELUARAN</h6>
+                        <h4 class="mb-0 text-danger">Rp {{ number_format($rekap_bulan_lalu_pengeluaran) }}</h4>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CostomerController;
 use App\Http\Controllers\MetodepembayaranController;
+use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\TalentRegistrationController;
 
 Route::get('/', [UtamaController::class, 'index']);
@@ -40,11 +41,13 @@ Route::middleware('cekuser')->prefix('dashboard')->group(function () {
     Route::get('/costomer', [CostomerController::class, 'index'])->name('costomer.index');
     Route::get('/costomer/tambah', [CostomerController::class, 'tambah'])->name('costomer.tambah');
     Route::get('/jadwal', [CostomerController::class, 'jadwal'])->name('costomer.jadwal');
+    Route::get('/pengeluaran', [PengeluaranController::class, 'index'])->name('pengeluaran.index');
 });
 
 Route::put('selesaikan/{id_costomer}', [CostomerController::class, 'update'])->middleware('cekuser');
 Route::put('dashboard/costomer/{id_costomer}/board', [CostomerController::class, 'updateBoard'])->middleware('cekuser')->name('costomer.board.update');
 Route::post('dashboard/costomer/tambah/data', [CostomerController::class, 'store'])->middleware('cekuser');
+Route::post('dashboard/jadwal/{id_costomer}/nota', [CostomerController::class, 'tambahNotaJadwal'])->middleware('cekuser')->name('jadwal.nota.store');
 Route::get('/costomer/{id_costomer}/edit', [CostomerController::class, 'edit'])->middleware('cekuser');
 Route::get('/costomer/{id_costomer}/nota', [CostomerController::class, 'nota'])->middleware('cekuser');
 Route::put('/update/data/{id_costomer}', [CostomerController::class, 'updatedata'])->middleware('cekuser');
@@ -53,6 +56,9 @@ Route::post('/tambah/harga/{id_costomer}', [CostomerController::class, 'tambah_n
 Route::post('/update/diskon/{id_costomer}', [CostomerController::class, 'update_diskon'])->middleware('cekuser')->name('update.diskon');
 
 Route::delete('costomer/{id_costomer}/hapus/harga/{id_nota}', [CostomerController::class, 'hapus_harga'])->middleware('cekuser');
+Route::post('dashboard/pengeluaran/tambah', [PengeluaranController::class, 'store'])->middleware('cekuser')->name('pengeluaran.store');
+Route::put('dashboard/pengeluaran/{id_pengeluaran}', [PengeluaranController::class, 'update'])->middleware('cekuser')->name('pengeluaran.update');
+Route::delete('dashboard/pengeluaran/{id_pengeluaran}', [PengeluaranController::class, 'delete'])->middleware('cekuser')->name('pengeluaran.delete');
 
 
 Route::get('/metodepembayaran', [MetodepembayaranController::class, 'index'])->middleware('cekuser');

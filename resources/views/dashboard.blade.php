@@ -403,6 +403,11 @@
                 <i class="bi bi-kanban-fill"></i> Jadwal
             </a>
 
+            <a class="nav-link {{ Request::is('dashboard/pengeluaran*') ? 'active' : '' }}"
+                href="{{ route('pengeluaran.index') }}">
+                <i class="bi bi-cash-coin"></i> Pengeluaran
+            </a>
+
             <a class="nav-link {{ Request::is('dashboard/talent*') ? 'active' : '' }}"
                 href="{{ route('admin.talent.index') }}">
                 <i class="bi bi-person-badge-fill"></i> Data Talent

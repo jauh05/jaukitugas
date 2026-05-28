@@ -170,6 +170,32 @@ class CostomerController extends Controller
     return redirect('/costomer/' . $id_costomer . '/nota')->with('pesan_berhasil', 'Nota berhasil ditambahkan');
   }
 
+  function tambahNotaJadwal(Request $request, $id_costomer): RedirectResponse
+  {
+    $request->validate([
+      'nama_produk' => ['required'],
+      'jumlah' => ['required', 'numeric', 'min:1'],
+      'harga' => ['required', 'numeric', 'min:0'],
+    ]);
+
+    $total_harga = $request->harga * $request->jumlah;
+    $total_sebelum = Nota::where('id_costomer', $id_costomer)->sum('total_harga');
+
+    Nota::create([
+      'nama_produk' => $request->nama_produk,
+      'harga' => $request->harga,
+      'jumlah' => $request->jumlah,
+      'total_harga' => $total_harga,
+      'id_costomer' => $id_costomer,
+    ]);
+
+    Costomer::findOrFail($id_costomer)->update([
+      'total' => $total_sebelum + $total_harga
+    ]);
+
+    return redirect('dashboard/jadwal')->with('pesan_berhasil', 'Nota dari jadwal berhasil ditambahkan');
+  }
+
   function hapus_harga($id_costomer, $id_nota)
   {
 

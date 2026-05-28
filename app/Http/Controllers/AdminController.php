@@ -8,6 +8,7 @@ use App\Models\Komentar;
 use App\Models\Costomer;
 use App\Models\Admin;
 use App\Models\MetodePembayaran;
+use App\Models\Pengeluaran;
 use App\Models\TalentRegistration;
 use App\Charts\RekapCharts;
 use App\Charts\CostomerCharts;
@@ -59,6 +60,8 @@ class AdminController extends Controller
         $data['jumlah_costomer_belum'] = Costomer::where('selesaikan', 'belum')->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->count();
         $data['jumlah_talent'] = TalentRegistration::where('status', 'pending')->count();
         $data['total_pendapatan'] = Costomer::whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->sum('total');
+        $data['total_pengeluaran'] = Pengeluaran::whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->sum('nominal');
+        $data['total_bersih'] = $data['total_pendapatan'] - $data['total_pengeluaran'];
 
         // NEW: Daily Recap
         $data['rekap_harian_count'] = Costomer::whereDay('tanggal', $now->day)->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->count();
@@ -67,12 +70,14 @@ class AdminController extends Controller
         // NEW: Overall Recap
         $data['rekap_total_count'] = Costomer::count();
         $data['rekap_total_sum'] = Costomer::sum('total');
+        $data['rekap_total_pengeluaran'] = Pengeluaran::sum('nominal');
 
         // NEW: Last Month Recap
         $lastMonth = Carbon::now()->subMonth();
         $data['rekap_bulan_lalu_nama'] = $lastMonth->translatedFormat('F Y');
         $data['rekap_bulan_lalu_count'] = Costomer::whereMonth('tanggal', $lastMonth->month)->whereYear('tanggal', $lastMonth->year)->count();
         $data['rekap_bulan_lalu_sum'] = Costomer::whereMonth('tanggal', $lastMonth->month)->whereYear('tanggal', $lastMonth->year)->sum('total');
+        $data['rekap_bulan_lalu_pengeluaran'] = Pengeluaran::whereMonth('tanggal', $lastMonth->month)->whereYear('tanggal', $lastMonth->year)->sum('nominal');
 
         // NEW: Daily Chart Data
         $daysInMonth = $now->daysInMonth;
