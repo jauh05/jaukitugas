@@ -41,6 +41,7 @@ class CostomerController extends Controller
     $validatedData = $request->validate([
       'nama_costomer' => ['required'],
       'metode' => ['required'],
+      'label_custom' => ['nullable', 'string', 'max:50'],
     ]);
 
     $masuk['nama'] = $request->nama_costomer;
@@ -51,6 +52,7 @@ class CostomerController extends Controller
     // Default total 0, nanti ditambah lewat nota
     $masuk['total'] = 0;
     $masuk['selesaikan'] = 'belum'; // Default status
+    $masuk['label_custom'] = $request->label_custom;
     $masuk['id_metode'] = $request->metode;
 
     Costomer::create($masuk);
@@ -72,11 +74,17 @@ class CostomerController extends Controller
       'nama_costomer' => ['required'],
       'waktu_costomer' => ['required'],
       'tanggal_costomer' => ['required'],
+      'metode' => ['required'],
+      'selesaikan' => ['required', 'in:sudah,pembayaran,proses,belum'],
+      'label_custom' => ['nullable', 'string', 'max:50'],
     ]);
 
     $masuk['nama'] = $request->nama_costomer;
     $masuk['waktu'] = $request->waktu_costomer;
     $masuk['tanggal'] = $request->tanggal_costomer;
+    $masuk['id_metode'] = $request->metode;
+    $masuk['selesaikan'] = $request->selesaikan;
+    $masuk['label_custom'] = $request->label_custom;
 
 
     Costomer::find($id_costomer)->update($masuk);
@@ -93,6 +101,11 @@ class CostomerController extends Controller
   }
   function update(Request $request, $id_costomer)
   {
+    $request->validate([
+      'selesaikan' => ['required', 'in:sudah,pembayaran,proses,belum'],
+      'metode' => ['required'],
+    ]);
+
     $masuk['selesaikan'] = $request->selesaikan;
     $masuk['id_metode'] = $request->metode;
 
@@ -166,7 +179,7 @@ class CostomerController extends Controller
   {
     $request->validate([
       'ids' => ['required', 'array'],
-      'status' => ['required', 'string'],
+      'status' => ['required', 'in:sudah,pembayaran,proses,belum'],
     ]);
 
     Costomer::whereIn('id_costomer', $request->ids)->update([
@@ -174,6 +187,31 @@ class CostomerController extends Controller
     ]);
 
     return redirect('dashboard/costomer')->with('pesan_berhasil', 'Status multiple customer berhasil diperbarui!');
+  }
+
+  function updateBoard(Request $request, $id_costomer)
+  {
+    $validated = $request->validate([
+      'selesaikan' => ['required', 'in:sudah,pembayaran,proses,belum'],
+      'label_custom' => ['nullable', 'string', 'max:50'],
+    ]);
+
+    $costomer = Costomer::findOrFail($id_costomer);
+    $costomer->selesaikan = $validated['selesaikan'];
+    if ($request->has('label_custom')) {
+      $costomer->label_custom = $validated['label_custom'];
+    }
+    $costomer->save();
+
+    return response()->json([
+      'message' => 'Board customer berhasil diupdate',
+      'data' => [
+        'id_costomer' => $costomer->id_costomer,
+        'selesaikan' => $costomer->selesaikan,
+        'label_custom' => $costomer->label_custom,
+        'updated_at' => optional($costomer->updated_at)->format('Y-m-d H:i:s')
+      ]
+    ]);
   }
 }
 

@@ -42,6 +42,7 @@ Route::middleware('cekuser')->prefix('dashboard')->group(function () {
 });
 
 Route::put('selesaikan/{id_costomer}', [CostomerController::class, 'update'])->middleware('cekuser');
+Route::put('dashboard/costomer/{id_costomer}/board', [CostomerController::class, 'updateBoard'])->middleware('cekuser')->name('costomer.board.update');
 Route::post('dashboard/costomer/tambah/data', [CostomerController::class, 'store'])->middleware('cekuser');
 Route::get('/costomer/{id_costomer}/edit', [CostomerController::class, 'edit'])->middleware('cekuser');
 Route::get('/costomer/{id_costomer}/nota', [CostomerController::class, 'nota'])->middleware('cekuser');
