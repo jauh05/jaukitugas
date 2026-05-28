@@ -51,7 +51,7 @@
                                     <div class="d-flex justify-content-between align-items-start mb-2">
                                         <div>
                                             <div class="fw-bold text-dark board-nama" title="{{ $value['nama'] }}">
-                                                {{ $value['nama'] }}
+                                                {{ \Illuminate\Support\Str::limit($value['nama'], 8, '...') }}
                                             </div>
                                             <small class="text-muted">#{{ $value['id_costomer'] }}</small>
                                         </div>
@@ -301,6 +301,7 @@
     </style>
 
     <script>
+        window.addEventListener('DOMContentLoaded', function() {
         const boardCards = document.querySelectorAll('.board-card');
         const dropzones = document.querySelectorAll('.board-dropzone');
         let draggedCard = null;
@@ -575,5 +576,6 @@
         });
 
         updateBoardCounts();
+        });
     </script>
 @endsection
