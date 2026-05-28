@@ -35,7 +35,8 @@
                     <div class="board-column h-100" data-status="{{ $statusKey }}">
                         <div class="board-header bg-{{ $statusInfo['class'] }} bg-opacity-10 text-{{ $statusInfo['class'] }}">
                             <span>{{ $statusInfo['title'] }}</span>
-                            <span class="badge rounded-pill bg-light text-dark board-count" data-count-for="{{ $statusKey }}">0</span>
+                            <span class="badge rounded-pill bg-light text-dark board-count"
+                                data-count-for="{{ $statusKey }}">{{ $boardItems->count() }}</span>
                         </div>
                         <div class="board-dropzone" data-status="{{ $statusKey }}">
                             @foreach ($boardItems as $value)
@@ -49,24 +50,16 @@
                                     data-nota-url="{{ url('costomer/' . $value['id_costomer'] . '/nota') }}">
                                     <div class="d-flex justify-content-between align-items-start mb-2">
                                         <div>
-                                            <button type="button"
-                                                class="fw-bold text-dark board-nama board-name-trigger btn btn-link p-0 text-start text-decoration-none"
-                                                title="{{ $value['nama'] }}">
+                                            <div class="fw-bold text-dark board-nama" title="{{ $value['nama'] }}">
                                                 {{ $value['nama'] }}
-                                            </button>
+                                            </div>
                                             <small class="text-muted">#{{ $value['id_costomer'] }}</small>
                                         </div>
                                         <div class="d-flex gap-1">
                                             <button type="button"
-                                                class="btn btn-sm btn-light border rounded-pill px-2 py-0 edit-schedule-btn"
-                                                data-id="{{ $value['id_costomer'] }}">
-                                                <i class="bi bi-pencil-fill text-primary"></i>
-                                            </button>
-                                            <button type="button"
-                                                class="btn btn-sm btn-light border rounded-pill px-2 py-0 edit-label-btn"
-                                                data-id="{{ $value['id_costomer'] }}"
-                                                data-label="{{ $value['label_custom'] ?? '' }}">
-                                                <i class="bi bi-tag-fill text-warning"></i>
+                                                class="btn btn-sm btn-light border rounded-pill px-2 py-0 board-action-trigger"
+                                                title="Aksi">
+                                                <i class="bi bi-three-dots text-secondary"></i>
                                             </button>
                                         </div>
                                     </div>
@@ -217,17 +210,17 @@
                 <div class="modal-body pt-3">
                     <div class="mb-3 small text-muted" id="cardActionInfo"></div>
                     <div class="d-grid gap-2">
-                        <button type="button" class="btn btn-outline-warning rounded-pill" id="actionPrintNotaBtn">
-                            <i class="bi bi-printer-fill me-2"></i>Cetak Nota
-                        </button>
-                        <button type="button" class="btn btn-outline-success rounded-pill" id="actionAddNotaBtn">
-                            <i class="bi bi-receipt-cutoff me-2"></i>Tambah Nota
-                        </button>
                         <button type="button" class="btn btn-outline-primary rounded-pill" id="actionEditJadwalBtn">
-                            <i class="bi bi-pencil-square me-2"></i>Edit Jadwal
+                            <i class="bi bi-pencil-square me-2"></i>Edit
+                        </button>
+                        <button type="button" class="btn btn-outline-warning rounded-pill" id="actionEditLabelBtn">
+                            <i class="bi bi-tag-fill me-2"></i>Label
                         </button>
                         <button type="button" class="btn btn-outline-danger rounded-pill" id="actionDeleteBtn">
-                            <i class="bi bi-trash-fill me-2"></i>Hapus Customer
+                            <i class="bi bi-trash-fill me-2"></i>Hapus
+                        </button>
+                        <button type="button" class="btn btn-outline-success rounded-pill" id="actionPrintNotaBtn">
+                            <i class="bi bi-printer-fill me-2"></i>Nota
                         </button>
                     </div>
                     <form id="deleteCustomerForm" method="POST" class="d-none">
@@ -407,113 +400,50 @@
             sortDropzoneBySchedule(zone);
         });
 
-        document.querySelectorAll('.edit-label-btn').forEach(button => {
-            button.addEventListener('click', async function() {
-                const id = this.getAttribute('data-id');
-                const oldLabel = this.getAttribute('data-label') || '';
-                const parentCard = this.closest('.board-card');
-                const status = parentCard.getAttribute('data-status');
+        async function openEditLabelForCard(card) {
+            const id = card.getAttribute('data-id');
+            const status = card.getAttribute('data-status');
+            const oldLabel = card.querySelector('.board-label')?.textContent === 'Tanpa label' ? '' : card.querySelector('.board-label')?.textContent || '';
 
-                const { value: labelValue } = await Swal.fire({
-                    title: 'Ubah Label Custom',
-                    input: 'text',
-                    inputValue: oldLabel,
-                    inputPlaceholder: 'Contoh: urgent, revisi',
-                    showCancelButton: true,
-                    confirmButtonText: 'Simpan',
-                    cancelButtonText: 'Batal'
-                });
-
-                if (labelValue === undefined) return;
-
-                try {
-                    await updateBoardData(id, {
-                        selesaikan: status,
-                        label_custom: labelValue
-                    });
-                    this.setAttribute('data-label', labelValue);
-                    const labelEl = parentCard.querySelector('.board-label');
-                    if (labelValue) {
-                        labelEl.className = 'badge rounded-pill bg-warning bg-opacity-25 text-dark border border-warning board-label';
-                        labelEl.textContent = labelValue;
-                    } else {
-                        labelEl.className = 'badge rounded-pill bg-light text-muted border board-label';
-                        labelEl.textContent = 'Tanpa label';
-                    }
-                } catch (error) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal',
-                        text: 'Label tidak berhasil diupdate.'
-                    });
-                }
+            const { value: labelValue } = await Swal.fire({
+                title: 'Ubah Label Custom',
+                input: 'text',
+                inputValue: oldLabel,
+                inputPlaceholder: 'Contoh: urgent, revisi',
+                showCancelButton: true,
+                confirmButtonText: 'Simpan',
+                cancelButtonText: 'Batal'
             });
-        });
 
-        document.querySelectorAll('.edit-schedule-btn').forEach(button => {
-            button.addEventListener('click', async function() {
-                const parentCard = this.closest('.board-card');
-                const id = parentCard.getAttribute('data-id');
-                const status = parentCard.getAttribute('data-status');
-                const nama = parentCard.getAttribute('data-nama');
-                const tanggal = parentCard.getAttribute('data-tanggal');
-                const waktu = parentCard.getAttribute('data-waktu');
+            if (labelValue === undefined) return;
 
-                const { value: formValues } = await Swal.fire({
-                    title: 'Edit Nama / Hari / Jam',
-                    html: `
-                        <input id="swalNama" class="swal2-input" placeholder="Nama" value="${nama || ''}">
-                        <input id="swalTanggal" type="date" class="swal2-input" value="${tanggal || ''}">
-                        <input id="swalWaktu" type="time" class="swal2-input" value="${waktu || ''}">
-                    `,
-                    focusConfirm: false,
-                    showCancelButton: true,
-                    confirmButtonText: 'Simpan',
-                    cancelButtonText: 'Batal',
-                    preConfirm: () => {
-                        const namaValue = document.getElementById('swalNama').value.trim();
-                        const tanggalValue = document.getElementById('swalTanggal').value;
-                        const waktuValue = document.getElementById('swalWaktu').value;
-
-                        if (!namaValue || !tanggalValue || !waktuValue) {
-                            Swal.showValidationMessage('Nama, tanggal, dan jam wajib diisi');
-                            return false;
-                        }
-
-                        return {
-                            nama_costomer: namaValue,
-                            tanggal_costomer: tanggalValue,
-                            waktu_costomer: waktuValue
-                        };
-                    }
+            try {
+                await updateBoardData(id, {
+                    selesaikan: status,
+                    label_custom: labelValue
                 });
-
-                if (!formValues) return;
-
-                try {
-                    await updateBoardData(id, {
-                        selesaikan: status,
-                        ...formValues
-                    });
-                    parentCard.setAttribute('data-nama', formValues.nama_costomer);
-                    parentCard.setAttribute('data-tanggal', formValues.tanggal_costomer);
-                    parentCard.setAttribute('data-waktu', formValues.waktu_costomer);
-                    location.reload();
-                } catch (error) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal',
-                        text: 'Nama, tanggal, atau jam tidak berhasil diupdate.'
-                    });
+                const labelEl = card.querySelector('.board-label');
+                if (labelValue) {
+                    labelEl.className = 'badge rounded-pill bg-warning bg-opacity-25 text-dark border border-warning board-label';
+                    labelEl.textContent = labelValue;
+                } else {
+                    labelEl.className = 'badge rounded-pill bg-light text-muted border board-label';
+                    labelEl.textContent = 'Tanpa label';
                 }
-            });
-        });
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: 'Label tidak berhasil diupdate.'
+                });
+            }
+        }
 
         const addNotaModal = new bootstrap.Modal(document.getElementById('addNotaModal'));
         const cardActionModal = new bootstrap.Modal(document.getElementById('cardActionModal'));
         const cardActionInfo = document.getElementById('cardActionInfo');
         const actionPrintNotaBtn = document.getElementById('actionPrintNotaBtn');
-        const actionAddNotaBtn = document.getElementById('actionAddNotaBtn');
+        const actionEditLabelBtn = document.getElementById('actionEditLabelBtn');
         const actionEditJadwalBtn = document.getElementById('actionEditJadwalBtn');
         const actionDeleteBtn = document.getElementById('actionDeleteBtn');
         const deleteCustomerForm = document.getElementById('deleteCustomerForm');
@@ -583,7 +513,7 @@
             }
         }
 
-        document.querySelectorAll('.board-name-trigger').forEach(button => {
+        document.querySelectorAll('.board-action-trigger').forEach(button => {
             button.addEventListener('click', function() {
                 selectedCard = this.closest('.board-card');
                 const id = selectedCard.getAttribute('data-id');
@@ -599,10 +529,10 @@
             window.location.href = notaUrl;
         });
 
-        actionAddNotaBtn.addEventListener('click', function() {
+        actionEditLabelBtn.addEventListener('click', function() {
             if (!selectedCard) return;
             cardActionModal.hide();
-            openAddNotaForCard(selectedCard);
+            openEditLabelForCard(selectedCard);
         });
 
         actionEditJadwalBtn.addEventListener('click', function() {
