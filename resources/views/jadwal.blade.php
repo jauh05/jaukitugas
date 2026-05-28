@@ -6,6 +6,10 @@
                 <h4 class="fw-bold m-0 text-primary"><i class="bi bi-kanban-fill me-2"></i>Jadwal Pengerjaan</h4>
                 <small class="text-muted">Drag & drop status customer seperti Trello</small>
             </div>
+            <button class="btn btn-premium px-4 rounded-pill shadow-sm fw-bold d-flex align-items-center gap-2"
+                data-bs-toggle="modal" data-bs-target="#addJadwalModal">
+                <i class="bi bi-plus-circle-fill"></i> Tambah Jadwal
+            </button>
         </div>
 
         @php
@@ -29,6 +33,7 @@
                             @foreach ($costomer->where('selesaikan', $statusKey) as $value)
                                 @php
                                     $tanggalWaktu = \Carbon\Carbon::parse($value['tanggal'] . ' ' . $value['waktu']);
+                                    $sisaHari = \Carbon\Carbon::today()->diffInDays(\Carbon\Carbon::parse($value['tanggal']), false);
                                 @endphp
                                 <div class="board-card" draggable="true" data-id="{{ $value['id_costomer'] }}"
                                     data-status="{{ $value['selesaikan'] }}">
@@ -53,6 +58,15 @@
                                     <div class="small text-dark mb-2">
                                         <i class="bi bi-credit-card me-1"></i>{{ $value['nama_metode'] }}
                                     </div>
+                                    <div class="mb-2">
+                                        @if ($sisaHari > 0)
+                                            <span class="badge rounded-pill text-bg-primary">⏰ {{ $sisaHari }} hari lagi</span>
+                                        @elseif ($sisaHari === 0)
+                                            <span class="badge rounded-pill text-bg-success">✅ Hari ini</span>
+                                        @else
+                                            <span class="badge rounded-pill text-bg-danger">⚠️ Lewat {{ abs($sisaHari) }} hari</span>
+                                        @endif
+                                    </div>
                                     @if (!empty($value['label_custom']))
                                         <span
                                             class="badge rounded-pill bg-warning bg-opacity-25 text-dark border border-warning board-label">{{ $value['label_custom'] }}</span>
@@ -68,7 +82,73 @@
         </div>
     </div>
 
+    <div class="modal fade" id="addJadwalModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg border-0" style="background-color: #fff;">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title fw-bold text-primary">Tambah Jadwal Customer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-4">
+                    <form action="{{ url('dashboard/costomer/tambah/data') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="redirect_to" value="jadwal">
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-muted text-uppercase">Nama Customer</label>
+                            <input type="text" name="nama_costomer" class="form-control rounded-3 py-2 bg-light border-0"
+                                placeholder="Masukkan nama..." required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-muted text-uppercase">Metode Pembayaran</label>
+                            <select name="metode" class="form-select rounded-3 py-2 bg-light border-0" required>
+                                @foreach ($metode as $m)
+                                    <option value="{{ $m['id_metode'] }}">{{ $m['nama_metode'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-7 mb-3">
+                                <label class="form-label fw-bold small text-muted text-uppercase">Tanggal Target</label>
+                                <input type="date" name="tanggal_costomer"
+                                    class="form-control rounded-3 py-2 bg-light border-0" required>
+                            </div>
+                            <div class="col-5 mb-3">
+                                <label class="form-label fw-bold small text-muted text-uppercase">Jam</label>
+                                <input type="time" name="waktu_costomer"
+                                    class="form-control rounded-3 py-2 bg-light border-0" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold small text-muted text-uppercase">Label Custom</label>
+                            <input type="text" name="label_custom" class="form-control rounded-3 py-2 bg-light border-0"
+                                placeholder="Contoh: desain urgent">
+                        </div>
+
+                        <button type="submit" class="btn btn-premium w-100 rounded-pill py-2 fw-bold">Simpan Jadwal</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <style>
+        .btn-premium {
+            background: linear-gradient(135deg, #4834d4, #686de0);
+            color: white;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-premium:hover {
+            box-shadow: 0 8px 20px rgba(72, 52, 212, 0.3);
+            transform: translateY(-2px);
+            color: white;
+        }
+
         .board-column {
             background: rgba(255, 255, 255, 0.8);
             border-radius: 16px;

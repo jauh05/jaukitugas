@@ -36,6 +36,7 @@ class CostomerController extends Controller
       ->select('costomer.*', 'metode.nama_metode')
       ->orderBy('id_costomer', 'desc')
       ->get();
+    $data['metode'] = MetodePembayaran::all();
     return view('jadwal', $data);
   }
 
@@ -51,12 +52,14 @@ class CostomerController extends Controller
       'nama_costomer' => ['required'],
       'metode' => ['required'],
       'label_custom' => ['nullable', 'string', 'max:50'],
+      'tanggal_costomer' => ['nullable', 'date'],
+      'waktu_costomer' => ['nullable', 'date_format:H:i'],
     ]);
 
     $masuk['nama'] = $request->nama_costomer;
-    // Otomatis set waktu dan tanggal saat ini
-    $masuk['waktu'] = date('H:i');
-    $masuk['tanggal'] = date('Y-m-d');
+    // Jika input jadwal diisi maka pakai jadwal itu, jika tidak pakai waktu saat ini
+    $masuk['waktu'] = $request->waktu_costomer ?? date('H:i');
+    $masuk['tanggal'] = $request->tanggal_costomer ?? date('Y-m-d');
 
     // Default total 0, nanti ditambah lewat nota
     $masuk['total'] = 0;
@@ -65,7 +68,8 @@ class CostomerController extends Controller
     $masuk['id_metode'] = $request->metode;
 
     Costomer::create($masuk);
-    return redirect('dashboard/costomer')->with('pesan_berhasil', 'Data Customer Berhasil Ditambahkan');
+    $redirectTo = $request->input('redirect_to') === 'jadwal' ? 'dashboard/jadwal' : 'dashboard/costomer';
+    return redirect($redirectTo)->with('pesan_berhasil', 'Data Customer Berhasil Ditambahkan');
     ;
   }
 
