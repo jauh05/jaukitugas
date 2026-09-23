@@ -35,7 +35,7 @@ class AdminArticleController extends Controller
         return view('admin.articles.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request, \App\Services\ArticleService $articleService)
     {
         $request->validate([
             'title' => 'required|string|max:255',
@@ -46,45 +46,11 @@ class AdminArticleController extends Controller
             'category' => 'nullable|string|max:100',
         ]);
 
-        $slug = $request->slug ? Str::slug($request->slug) : Str::slug($request->title);
-        
-        // Ensure slug is unique if generated from title
-        if (!$request->slug) {
-            $originalSlug = $slug;
-            $count = 1;
-            while (Article::where('slug', $slug)->exists()) {
-                $slug = $originalSlug . '-' . $count;
-                $count++;
-            }
-        }
-
-        $featuredImagePath = null;
-        if ($request->hasFile('featured_image')) {
-            $featuredImagePath = $request->file('featured_image')->store('articles', 'public');
-        }
-
-        // Tags parsing (comma separated to array)
-        $tags = null;
-        if ($request->tags) {
-            $tags = array_map('trim', explode(',', $request->tags));
-        }
-
-        $article = Article::create([
-            'title' => $request->title,
-            'slug' => $slug,
-            'excerpt' => $request->excerpt,
-            'content' => $request->content, // Cleaned/Sanitized via blade or model if necessary
-            'featured_image' => $featuredImagePath,
-            'category' => $request->category,
-            'tags' => $tags,
-            'author' => auth()->user()->name ?? 'Admin',
-            'status' => $request->status,
-            'source' => 'manual',
-            'seo_title' => $request->seo_title ?? $request->title,
-            'seo_description' => $request->seo_description ?? $request->excerpt,
-            'published_at' => $request->status === 'published' ? ($request->published_at ?? now()) : null,
-            'scheduled_at' => $request->status === 'scheduled' ? $request->scheduled_at : null,
-        ]);
+        $articleService->createArticle(
+            $request->except('featured_image'), 
+            $request->file('featured_image'), 
+            'manual'
+        );
 
         return redirect()->route('admin.articles.index')->with('success', 'Artikel berhasil ditambahkan.');
     }
@@ -94,7 +60,7 @@ class AdminArticleController extends Controller
         return view('admin.articles.edit', compact('article'));
     }
 
-    public function update(Request $request, Article $article)
+    public function update(Request $request, Article $article, \App\Services\ArticleService $articleService)
     {
         $request->validate([
             'title' => 'required|string|max:255',
@@ -105,43 +71,18 @@ class AdminArticleController extends Controller
             'category' => 'nullable|string|max:100',
         ]);
 
-        $featuredImagePath = $article->featured_image;
-        if ($request->hasFile('featured_image')) {
-            if ($featuredImagePath && Storage::disk('public')->exists($featuredImagePath)) {
-                Storage::disk('public')->delete($featuredImagePath);
-            }
-            $featuredImagePath = $request->file('featured_image')->store('articles', 'public');
-        }
-
-        $tags = null;
-        if ($request->tags) {
-            $tags = array_map('trim', explode(',', $request->tags));
-        }
-
-        $article->update([
-            'title' => $request->title,
-            'slug' => Str::slug($request->slug),
-            'excerpt' => $request->excerpt,
-            'content' => $request->content,
-            'featured_image' => $featuredImagePath,
-            'category' => $request->category,
-            'tags' => $tags,
-            'status' => $request->status,
-            'seo_title' => $request->seo_title ?? $request->title,
-            'seo_description' => $request->seo_description ?? $request->excerpt,
-            'published_at' => $request->status === 'published' ? ($request->published_at ?? $article->published_at ?? now()) : null,
-            'scheduled_at' => $request->status === 'scheduled' ? $request->scheduled_at : null,
-        ]);
+        $articleService->updateArticle(
+            $article,
+            $request->except('featured_image'),
+            $request->file('featured_image')
+        );
 
         return redirect()->route('admin.articles.index')->with('success', 'Artikel berhasil diperbarui.');
     }
 
-    public function destroy(Article $article)
+    public function destroy(Article $article, \App\Services\ArticleService $articleService)
     {
-        if ($article->featured_image && Storage::disk('public')->exists($article->featured_image)) {
-            Storage::disk('public')->delete($article->featured_image);
-        }
-        $article->delete();
+        $articleService->deleteArticle($article);
         
         return redirect()->route('admin.articles.index')->with('success', 'Artikel berhasil dihapus.');
     }
