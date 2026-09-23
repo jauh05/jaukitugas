@@ -335,7 +335,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ url('/') }}">Beranda</a>
+                        <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" href="{{ url('/') }}">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('artikel*') ? 'active' : '' }}" href="{{ route('artikel.index') }}">Artikel</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/#features') }}">Layanan</a>

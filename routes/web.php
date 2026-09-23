@@ -73,3 +73,21 @@ Route::get('/belum', [CostomerController::class, 'index2'])->middleware('cekuser
 
 
 
+
+// Public Article Routes
+Route::get('/artikel', [\App\Http\Controllers\PublicArticleController::class, 'index'])->name('artikel.index');
+Route::get('/artikel/{slug}', [\App\Http\Controllers\PublicArticleController::class, 'show'])->name('artikel.show');
+
+// Admin Article Routes
+Route::middleware('cekuser')->prefix('dashboard')->group(function () {
+    Route::resource('articles', \App\Http\Controllers\AdminArticleController::class)->names('admin.articles');
+});
+
+// Sitemap
+Route::get('/sitemap.xml', function () {
+    $articles = \App\Models\Article::published()->latest('updated_at')->get();
+    
+    return response()->view('sitemap', [
+        'articles' => $articles
+    ])->header('Content-Type', 'text/xml');
+});

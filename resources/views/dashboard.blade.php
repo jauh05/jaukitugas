@@ -433,6 +433,11 @@
                 </div>
             </div>
 
+            <a class="nav-link {{ Request::is('dashboard/articles*') ? 'active' : '' }}"
+                href="{{ route('admin.articles.index') }}">
+                <i class="bi bi-journal-text"></i> Artikel
+            </a>
+
             <a class="nav-link {{ Request::is('dashboard/komentar*') ? 'active' : '' }}"
                 href="{{ url('/dashboard/komentar') }}">
                 <i class="bi bi-chat-dots-fill"></i> Komentar
