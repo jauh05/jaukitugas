@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+
+    'content_bot' => [
+        'token' => env('CONTENT_BOT_TOKEN'),
+    ],
+
 ];

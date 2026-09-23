@@ -15,7 +15,7 @@ class VerifyContentBotToken
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $token = env('CONTENT_BOT_TOKEN');
+        $token = config('services.content_bot.token');
 
         if (empty($token)) {
             return response()->json([
