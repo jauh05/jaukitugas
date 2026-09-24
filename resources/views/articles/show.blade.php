@@ -4,7 +4,7 @@
 <!-- SEO Meta Tags -->
 @section('meta_title', $article->seo_title ?? $article->title)
 @section('meta_description', $article->seo_description ?? Str::limit(strip_tags($article->excerpt), 150))
-@section('meta_image', $article->featured_image ? url(Storage::url($article->featured_image)) : asset('asset/jlogo.svg'))
+@section('meta_image', $article->featured_image ? $article->featured_image_url : asset('asset/jlogo.svg'))
 
 <main class="container py-5 mt-4">
     <!-- Breadcrumb -->
@@ -53,7 +53,7 @@
             <!-- Featured Image -->
             @if($article->featured_image)
             <div class="mb-5 rounded-4 overflow-hidden shadow-sm">
-                <img src="{{ Storage::url($article->featured_image) }}" class="w-100 h-auto object-fit-cover" alt="{{ $article->title }}" style="max-height: 500px;">
+                <img src="{{ $article->featured_image_url }}" class="w-100 h-auto object-fit-cover" alt="{{ $article->title }}" style="max-height: 500px;">
             </div>
             @endif
 
@@ -97,7 +97,7 @@
                     <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden article-card transition-hover">
                         <div class="position-relative" style="height: 160px;">
                             @if($rel->featured_image)
-                                <img src="{{ Storage::url($rel->featured_image) }}" class="w-100 h-100 object-fit-cover" alt="{{ $rel->title }}">
+                                <img src="{{ $rel->featured_image_url }}" class="w-100 h-100 object-fit-cover" alt="{{ $rel->title }}">
                             @else
                                 <div class="bg-light w-100 h-100 d-flex align-items-center justify-content-center">
                                     <i class="bi bi-image text-muted"></i>

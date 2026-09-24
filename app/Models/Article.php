@@ -38,4 +38,33 @@ class Article extends Model
         return $query->where('status', 'published')
                      ->where('published_at', '<=', now());
     }
+
+    /**
+     * Get the normalized public URL for the featured image.
+     */
+    public function getFeaturedImageUrlAttribute()
+    {
+        $path = $this->featured_image;
+
+        if (empty($path)) {
+            return null;
+        }
+
+        // Jika sudah URL external lengkap
+        if (\Illuminate\Support\Str::startsWith($path, ['http://', 'https://'])) {
+            return $path;
+        }
+
+        // Jika diawali dengan /storage/, kita hapus agar aman dipass ke Storage::url atau cukup gunakan asset()
+        if (\Illuminate\Support\Str::startsWith($path, '/storage/')) {
+            $path = substr($path, 9); // hapus '/storage/'
+        }
+        
+        if (\Illuminate\Support\Str::startsWith($path, 'storage/')) {
+            $path = substr($path, 8); // hapus 'storage/'
+        }
+
+        // Return full public URL
+        return url(\Illuminate\Support\Facades\Storage::url($path));
+    }
 }

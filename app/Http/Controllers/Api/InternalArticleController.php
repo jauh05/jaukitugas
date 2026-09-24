@@ -47,7 +47,7 @@ class InternalArticleController extends Controller
             'tags' => $article->tags,
             'status' => $article->status,
             'source' => $article->source,
-            'featured_image' => $article->featured_image ? url(Storage::url($article->featured_image)) : null,
+            'featured_image' => $article->featured_image_url,
             'seo_title' => $article->seo_title,
             'seo_description' => $article->seo_description,
             'published_at' => $article->published_at ? $article->published_at->toDateTimeString() : null,

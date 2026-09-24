@@ -131,7 +131,7 @@
                         </div>
                         <div class="rounded-3 overflow-hidden bg-light d-flex align-items-center justify-content-center" style="height: 200px;" id="imagePreviewContainer">
                             @if($article->featured_image)
-                                <img id="imagePreview" src="{{ Storage::url($article->featured_image) }}" alt="Preview" class="w-100 h-100 object-fit-cover">
+                                <img id="imagePreview" src="{{ $article->featured_image_url }}" alt="Preview" class="w-100 h-100 object-fit-cover">
                                 <i class="bi bi-image text-muted fs-1" id="imageIcon" style="display: none;"></i>
                             @else
                                 <img id="imagePreview" src="#" alt="Preview" class="w-100 h-100 object-fit-cover" style="display: none;">

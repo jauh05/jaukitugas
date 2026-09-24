@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use App\Models\Komentar;
 use App\Models\Costomer;
 use App\Models\Admin;
+use App\Models\Article;
 
 class UtamaController extends Controller
 {
@@ -17,6 +18,11 @@ class UtamaController extends Controller
 
         $data['jumlah_costomer_belum'] = Costomer::where('selesaikan', 'belum')->whereMonth('tanggal', $bulanSekarang)->whereYear('tanggal', $tahunSekarang)->count();
         $data['komentar'] = Komentar::all();
+        
+        $data['latest_articles'] = Article::where('status', 'published')
+            ->latest('published_at')
+            ->take(3)
+            ->get(['id', 'title', 'slug', 'excerpt', 'featured_image', 'category', 'published_at']);
 
         return view('halUtama', $data);
     }

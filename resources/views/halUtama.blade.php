@@ -505,6 +505,58 @@
     </section>
 
     <!-- Closing Quote -->
+    <!-- Latest Articles Section -->
+    @if(isset($latest_articles) && $latest_articles->count() > 0)
+    <section id="latest-articles" class="container py-5">
+        <div class="text-center mb-5">
+            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold mb-3">Blog & Update</span>
+            <h2 class="display-5 fw-bold text-premium-dark mb-3">Artikel <span class="text-primary">Terbaru</span></h2>
+            <p class="lead text-muted mx-auto" style="max-width: 600px;">
+                Tips, insight, dan informasi untuk membantu tugas, skripsi, riset, teknologi, dan produktivitas mahasiswa.
+            </p>
+        </div>
+        
+        <div class="row g-4 justify-content-center">
+            @foreach($latest_articles as $article)
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden article-card transition-hover">
+                    <div class="position-relative" style="height: 200px;">
+                        @if($article->featured_image)
+                            <img src="{{ $article->featured_image_url }}" class="w-100 h-100 object-fit-cover" alt="{{ $article->title }}">
+                        @else
+                            <div class="bg-light w-100 h-100 d-flex align-items-center justify-content-center">
+                                <i class="bi bi-image text-muted fs-1"></i>
+                            </div>
+                        @endif
+                        <div class="position-absolute top-0 end-0 m-3">
+                            <span class="badge bg-white text-primary px-3 py-2 rounded-pill shadow-sm">{{ $article->category ?? 'Umum' }}</span>
+                        </div>
+                    </div>
+                    <div class="card-body p-4 d-flex flex-column">
+                        <div class="mb-2 text-muted small">
+                            <i class="bi bi-calendar3 me-1"></i> {{ $article->published_at ? $article->published_at->format('d M Y') : '' }}
+                        </div>
+                        <h5 class="card-title fw-bold mb-3">
+                            <a href="{{ route('artikel.show', $article->slug) }}" class="text-decoration-none text-dark">{{ Str::limit($article->title, 60) }}</a>
+                        </h5>
+                        <p class="card-text text-muted mb-4 flex-grow-1">{{ Str::limit($article->excerpt ?? strip_tags($article->content), 90) }}</p>
+                        <a href="{{ route('artikel.show', $article->slug) }}" class="text-primary fw-semibold text-decoration-none d-inline-flex align-items-center mt-auto">
+                            Baca Selengkapnya <i class="bi bi-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="{{ route('artikel.index') }}" class="btn btn-outline-primary rounded-pill px-5 py-2 fw-bold shadow-sm">
+                Lihat Semua Artikel <i class="bi bi-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </section>
+    @endif
+
     <section class="container py-5 text-center">
         <div class="py-5">
             <i class="bi bi-quote fs-1 text-primary opacity-25"></i>
