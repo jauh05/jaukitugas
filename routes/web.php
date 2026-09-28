@@ -7,8 +7,10 @@ use App\Http\Controllers\CostomerController;
 use App\Http\Controllers\MetodepembayaranController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\TalentRegistrationController;
+use App\Http\Controllers\OfficeController;
 
 Route::get('/', [UtamaController::class, 'index']);
+Route::get('/office', [OfficeController::class, 'index'])->name('office.index');
 Route::get('/login', [UtamaController::class, 'index2']);
 Route::post('/login/admin', [UtamaController::class, 'dologin']);
 Route::get('/logout', [UtamaController::class, 'logout'])->middleware('cekuser');
