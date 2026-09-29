@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\InternalArticleController;
 use App\Http\Middleware\VerifyContentBotToken;
+use App\Http\Controllers\OfficeBridgeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +24,10 @@ Route::prefix('internal')->middleware([VerifyContentBotToken::class, 'throttle:6
     Route::put('/articles/{id}', [InternalArticleController::class, 'update']);
     Route::post('/articles/{id}/publish', [InternalArticleController::class, 'publish']);
     Route::post('/articles/{id}/schedule', [InternalArticleController::class, 'schedule']);
+});
+
+Route::prefix('office')->group(function () {
+    Route::post('/events', [OfficeBridgeController::class, 'ingest']);
+    Route::post('/commands/claim', [OfficeBridgeController::class, 'claim']);
+    Route::patch('/commands/{command}', [OfficeBridgeController::class, 'updateCommand']);
 });

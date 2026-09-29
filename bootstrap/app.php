@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'cekuser' => \App\Http\Middleware\Cekuser::class,
+            'office.owner' => \App\Http\Middleware\EnsureOfficeOwner::class,
         ]);
     })
 

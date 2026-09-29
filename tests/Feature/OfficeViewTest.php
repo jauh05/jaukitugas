@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\Article;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -10,48 +10,12 @@ class OfficeViewTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_office_view_renders_all_lifecycle_sections(): void
+    public function test_office_route_renders_the_recovered_living_office_for_an_owner(): void
     {
-        Article::create([
-            'title' => 'Queued Draft',
-            'slug' => 'queued-draft',
-            'content' => 'Queued content',
-            'status' => 'draft',
-            'source' => 'ai',
-        ]);
+        $owner = User::factory()->create(['is_office_owner' => true]);
 
-        Article::create([
-            'title' => 'Running Scheduled',
-            'slug' => 'running-scheduled',
-            'content' => 'Running content',
-            'status' => 'scheduled',
-            'source' => 'telegram',
-            'scheduled_at' => now()->addHour(),
-        ]);
-
-        Article::create([
-            'title' => 'Completed Published',
-            'slug' => 'completed-published',
-            'content' => 'Completed content',
-            'status' => 'published',
-            'source' => 'manual',
-            'published_at' => now(),
-        ]);
-
-        $this->get('/office')
+        $this->actingAs($owner)->get('/office')
             ->assertOk()
-            ->assertSee('Living AI Office')
-            ->assertSee('Overview')
-            ->assertSee('Kanban')
-            ->assertSee('Agents')
-            ->assertSee('Activity')
-            ->assertSee('queued')
-            ->assertSee('claimed')
-            ->assertSee('running')
-            ->assertSee('completed')
-            ->assertSee('failed')
-            ->assertSee('Queued Draft')
-            ->assertSee('Running Scheduled')
-            ->assertSee('Completed Published');
+            ->assertSee('living-office-root');
     }
 }

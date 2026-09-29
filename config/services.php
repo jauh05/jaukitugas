@@ -40,4 +40,8 @@ return [
         'token' => env('CONTENT_BOT_TOKEN'),
     ],
 
+    'office_bridge' => [
+        'token' => env('OFFICE_BRIDGE_TOKEN'),
+    ],
+
 ];

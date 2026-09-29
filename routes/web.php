@@ -7,10 +7,31 @@ use App\Http\Controllers\CostomerController;
 use App\Http\Controllers\MetodepembayaranController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\TalentRegistrationController;
-use App\Http\Controllers\OfficeController;
+use App\Http\Controllers\OfficeAuthController;
+use App\Http\Controllers\LivingOfficeController;
 
 Route::get('/', [UtamaController::class, 'index']);
-Route::get('/office', [OfficeController::class, 'index'])->name('office.index');
+Route::get('/office/login', [OfficeAuthController::class, 'showLogin'])->name('login');
+Route::post('/office/login', [OfficeAuthController::class, 'login']);
+Route::post('/office/logout', [OfficeAuthController::class, 'logout'])->name('office.logout');
+
+Route::middleware(['auth', 'office.owner'])->prefix('office')->group(function () {
+    Route::get('/', fn () => view('living-office'))->name('office.index');
+    Route::prefix('api')->group(function () {
+        Route::get('/agents', [LivingOfficeController::class, 'getAgents']);
+        Route::get('/agents/{id}', [LivingOfficeController::class, 'getAgent']);
+        Route::get('/tasks', [LivingOfficeController::class, 'getTasks']);
+        Route::get('/activity', [LivingOfficeController::class, 'getActivity']);
+        Route::get('/content', [LivingOfficeController::class, 'getContent']);
+        Route::get('/summary', [LivingOfficeController::class, 'summary']);
+        Route::get('/notifications', [LivingOfficeController::class, 'getNotifications']);
+        Route::patch('/notifications/read-all', [LivingOfficeController::class, 'readAllNotifications']);
+        Route::patch('/notifications/{notification}/read', [LivingOfficeController::class, 'readNotification']);
+        Route::get('/commands', [LivingOfficeController::class, 'getCommands']);
+        Route::get('/system-status', [LivingOfficeController::class, 'getSystemStatus']);
+        Route::post('/agents/{id}/command', [LivingOfficeController::class, 'commandAgent']);
+    });
+});
 Route::get('/login', [UtamaController::class, 'index2']);
 Route::post('/login/admin', [UtamaController::class, 'dologin']);
 Route::get('/logout', [UtamaController::class, 'logout'])->middleware('cekuser');
