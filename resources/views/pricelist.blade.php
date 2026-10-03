@@ -24,6 +24,129 @@
             </div>
         </div>
 
+        <!-- Paket Hemat Section -->
+        @php
+            $waBase = 'https://wa.me/6285184771744?text=';
+            $paketSkripsi = [
+                [
+                    'name' => 'Paket Skripsi (SEMPRO)',
+                    'scope' => 'BAB 1 - BAB 3',
+                    'old' => 'Rp 2.000.000',
+                    'price' => 'Rp 1.200.000',
+                    'icon' => 'bi-journal-check',
+                    'featured' => false,
+                    'features' => ['Free Revisi 15x', 'Free Turnitin', 'Free Bimbingan'],
+                ],
+                [
+                    'name' => 'Paket Skripsi Full Bab',
+                    'scope' => 'Full Bab (Lengkap)',
+                    'old' => 'Rp 3.500.000',
+                    'price' => 'Rp 2.200.000',
+                    'icon' => 'bi-mortarboard-fill',
+                    'featured' => true,
+                    'features' => ['Free Revisi 25x', 'Free Turnitin', 'Free Bimbingan', 'Free Zoom / Meet'],
+                ],
+            ];
+            $paketTugas = [
+                [
+                    'name' => 'Paket Makalah',
+                    'scope' => '10 Halaman Makalah',
+                    'price' => 'Rp 50.000',
+                    'icon' => 'bi-file-earmark-text-fill',
+                    'featured' => false,
+                ],
+                [
+                    'name' => 'Paket PPT',
+                    'scope' => '10 Slide PPT',
+                    'price' => 'Rp 30.000',
+                    'icon' => 'bi-easel-fill',
+                    'featured' => false,
+                ],
+                [
+                    'name' => 'Paket Makalah + PPT',
+                    'scope' => '10 Halaman Makalah + 10 Slide PPT',
+                    'price' => 'Rp 75.000',
+                    'icon' => 'bi-collection-fill',
+                    'featured' => true,
+                ],
+            ];
+        @endphp
+        <div class="mb-5">
+            <div class="text-center mb-4">
+                <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-pill fw-bold">
+                    <i class="bi bi-fire me-1"></i>Paket Hemat
+                </span>
+                <h2 class="fw-bold mt-2 mb-0">Pilihan Paket Spesial</h2>
+            </div>
+
+            <!-- Paket Skripsi -->
+            <div class="row g-4 mb-4">
+                @foreach($paketSkripsi as $paket)
+                <div class="col-lg-6 searchable-row">
+                    <div class="glass-card package-card h-100 p-4 bg-white shadow-sm position-relative overflow-hidden {{ $paket['featured'] ? 'package-featured' : 'border-0' }}">
+                        @if($paket['featured'])
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-3 rounded-pill px-3 py-2 fw-bold">
+                                <i class="bi bi-star-fill me-1"></i>Best Value
+                            </span>
+                        @endif
+                        <div class="position-absolute top-0 end-0 p-3 opacity-10">
+                            <i class="bi {{ $paket['icon'] }} display-1 text-primary"></i>
+                        </div>
+                        <div class="{{ $paket['featured'] ? 'mt-4' : '' }}">
+                            <h3 class="fw-bold text-primary mb-1">{{ $paket['name'] }}</h3>
+                            <p class="text-muted mb-3"><i class="bi bi-bookmark-fill me-1"></i>{{ $paket['scope'] }}</p>
+
+                            <div class="d-flex align-items-end gap-2 mb-3 flex-wrap">
+                                <span class="text-muted text-decoration-line-through fs-5">{{ $paket['old'] }}</span>
+                                <span class="fw-bolder text-danger display-6 lh-1">{{ $paket['price'] }}</span>
+                            </div>
+
+                            <ul class="list-unstyled mb-4">
+                                @foreach($paket['features'] as $feature)
+                                    <li class="mb-2 fw-medium">
+                                        <i class="bi bi-check-circle-fill text-success me-2"></i>{{ $feature }}
+                                    </li>
+                                @endforeach
+                            </ul>
+
+                            <a href="{{ $waBase . rawurlencode('Halo Admin, saya mau order ' . $paket['name'] . ' (' . $paket['price'] . ')') }}"
+                                target="_blank"
+                                class="btn {{ $paket['featured'] ? 'btn-primary' : 'btn-outline-primary' }} rounded-pill px-4 fw-bold w-100">
+                                <i class="bi bi-whatsapp me-2"></i>Pesan Sekarang
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+
+            <!-- Paket Tugas -->
+            <div class="row g-4">
+                @foreach($paketTugas as $paket)
+                <div class="col-md-4 searchable-row">
+                    <div class="glass-card package-card h-100 p-4 bg-white shadow-sm text-center position-relative {{ $paket['featured'] ? 'package-featured' : 'border-0' }}">
+                        @if($paket['featured'])
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-50 translate-middle rounded-pill px-3 py-2 fw-bold">
+                                <i class="bi bi-star-fill me-1"></i>Paling Hemat
+                            </span>
+                        @endif
+                        <div class="package-icon mx-auto mb-3">
+                            <i class="bi {{ $paket['icon'] }} fs-3 text-primary"></i>
+                        </div>
+                        <h5 class="fw-bold mb-1">{{ $paket['name'] }}</h5>
+                        <p class="text-muted small mb-3">{{ $paket['scope'] }}</p>
+                        <div class="fw-bolder text-danger fs-2 mb-3">{{ $paket['price'] }}</div>
+                        <a href="{{ $waBase . rawurlencode('Halo Admin, saya mau order ' . $paket['name'] . ' (' . $paket['price'] . ')') }}"
+                            target="_blank"
+                            class="btn {{ $paket['featured'] ? 'btn-primary' : 'btn-outline-primary' }} rounded-pill px-4 fw-bold w-100">
+                            <i class="bi bi-whatsapp me-2"></i>Pesan
+                        </a>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+
         <div class="main-pricelist-container mb-5">
             <!-- Desktop Table View -->
             <div class="d-none d-lg-block glass-card p-0 overflow-hidden bg-white shadow-sm border-0">
@@ -394,20 +517,11 @@
                     <div class="position-absolute top-0 end-0 p-3 opacity-10">
                         <i class="bi bi-mortarboard-fill display-1 text-success"></i>
                     </div>
-                    <h3 class="fw-bold text-success mb-4">Skripsi & Tugas Akhir</h3>
+                    <h3 class="fw-bold text-success mb-1">Skripsi Per Bab</h3>
+                    <p class="text-muted small mb-4">Harga eceran pengerjaan per bagian skripsi</p>
 
-                    <div class="mb-4">
-                        <h6 class="text-uppercase text-muted fw-bold small ls-1">Paket Lengkap</h6>
-                        <div class="p-3 rounded-3 bg-success bg-opacity-10 border border-success border-opacity-25">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="fw-bold text-dark">Full Skripsi</span>
-                                <span class="fw-bold text-success">Rp 2.5jt - 3.0jt</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h6 class="text-uppercase text-muted fw-bold small ls-1">Harga Eceran (Per Bagian)</h6>
+                    <div class="mb-3">
+                        <h6 class="text-uppercase text-muted fw-bold small ls-1">Harga Per Bab</h6>
                         <ul class="list-group list-group-flush rounded-3">
                             <li
                                 class="list-group-item d-flex justify-content-between align-items-center bg-light border-0 mb-1 rounded">
@@ -425,6 +539,13 @@
                                 <span class="fw-bold">Rp 900k - 1.1jt</span>
                             </li>
                         </ul>
+                    </div>
+
+                    <div class="p-3 rounded-3 bg-success bg-opacity-10 border border-success border-opacity-25 small">
+                        <i class="bi bi-lightbulb-fill text-success me-1"></i>
+                        Butuh lebih hemat? Ambil <strong>Paket Skripsi (SEMPRO)</strong> mulai
+                        <strong class="text-success">Rp 1.200.000</strong> atau <strong>Paket Full Bab</strong>
+                        <strong class="text-success">Rp 2.200.000</strong> di bagian atas.
                     </div>
                 </div>
             </div>
@@ -478,6 +599,31 @@
     </script>
 
     <style>
+        .package-card {
+            border-radius: 20px !important;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .package-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(72, 52, 212, 0.12) !important;
+        }
+
+        .package-featured {
+            border: 2px solid #4834d4 !important;
+            box-shadow: 0 10px 30px rgba(72, 52, 212, 0.15) !important;
+        }
+
+        .package-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(72, 52, 212, 0.1);
+        }
+
         .hover-bg:hover {
             background-color: rgba(72, 52, 212, 0.04) !important;
         }
