@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Ilustrasi skripsi">
+  <ellipse cx="200" cy="356" rx="150" ry="14" fill="#532923" opacity="0.12"/>
+  <rect x="80" y="296" width="240" height="50" rx="10" fill="#46A375"/>
+  <rect x="98" y="296" width="8" height="50" fill="#FEF4EB" opacity="0.5"/>
+  <rect x="104" y="236" width="220" height="50" rx="10" fill="#7CB1EB"/>
+  <rect x="122" y="236" width="8" height="50" fill="#FEF4EB" opacity="0.5"/>
+  <rect x="70" y="178" width="260" height="48" rx="10" fill="#E07540"/>
+  <rect x="88" y="178" width="8" height="48" fill="#FEF4EB" opacity="0.5"/>
+  <polygon points="200,58 304,104 200,150 96,104" fill="#532923"/>
+  <path d="M152 122 V152 Q200 176 248 152 V122 L200 144 Z" fill="#532923"/>
+  <line x1="272" y1="104" x2="276" y2="142" stroke="#F3C75F" stroke-width="4" stroke-linecap="round"/>
+  <rect x="270" y="138" width="11" height="34" rx="4" fill="#F3C75F"/>
+  <circle cx="58" cy="86" r="12" fill="#F4A6B8"/>
+  <circle cx="346" cy="250" r="8" fill="#F3C75F"/>
+</svg>

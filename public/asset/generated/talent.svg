@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 420" role="img" aria-label="Ilustrasi talent">
+  <circle cx="64" cy="80" r="18" fill="#46A375"/>
+  <circle cx="404" cy="58" r="12" fill="#E07540"/>
+  <rect x="340" y="20" width="72" height="24" rx="12" fill="#7CB1EB"/>
+  <path d="M112 226 Q112 92 230 92 Q348 92 348 226" fill="none" stroke="#F3C75F" stroke-width="18" stroke-linecap="round"/>
+  <rect x="86" y="206" width="48" height="84" rx="20" fill="#F4A6B8"/>
+  <rect x="326" y="206" width="48" height="84" rx="20" fill="#F4A6B8"/>
+  <path d="M350 290 Q350 336 306 336" fill="none" stroke="#F3C75F" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="296" cy="336" r="13" fill="#F3C75F"/>
+  <rect x="146" y="212" width="168" height="114" rx="14" fill="#FEF4EB"/>
+  <rect x="160" y="226" width="140" height="86" rx="8" fill="#FFFFFF"/>
+  <rect x="176" y="242" width="92" height="20" rx="10" fill="#46A375"/>
+  <rect x="200" y="272" width="104" height="20" rx="10" fill="#E07540"/>
+  <rect x="124" y="326" width="212" height="16" rx="8" fill="#7CB1EB"/>
+</svg>

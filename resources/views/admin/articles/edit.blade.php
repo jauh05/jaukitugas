@@ -92,7 +92,7 @@
                             <input type="datetime-local" name="published_at" class="form-control py-2 rounded-3" value="{{ old('published_at', $article->published_at ? $article->published_at->format('Y-m-d\TH:i') : '') }}">
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold text-white shadow-sm" style="background: linear-gradient(45deg, #4834d4, #686de0); border: none;">
+                        <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold text-white shadow-sm" style="background: #111111; border: none;">
                             <i class="bi bi-save me-2"></i> Perbarui Artikel
                         </button>
                     </div>

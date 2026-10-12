@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Ilustrasi jurnal">
+  <ellipse cx="200" cy="332" rx="150" ry="12" fill="#532923" opacity="0.12"/>
+  <path d="M56 130 Q130 104 200 140 Q270 104 344 130 L344 312 Q270 286 200 322 Q130 286 56 312 Z" fill="#532923"/>
+  <path d="M74 146 Q132 124 194 156 L194 300 Q132 272 74 292 Z" fill="#FEF4EB"/>
+  <path d="M206 156 Q268 124 326 146 L326 292 Q268 272 206 300 Z" fill="#FFFFFF"/>
+  <g stroke="#532923" stroke-width="7" stroke-linecap="round" opacity="0.3">
+    <line x1="96" y1="186" x2="172" y2="186"/>
+    <line x1="96" y1="212" x2="172" y2="212"/>
+    <line x1="96" y1="238" x2="160" y2="238"/>
+    <line x1="228" y1="186" x2="304" y2="186"/>
+    <line x1="228" y1="212" x2="304" y2="212"/>
+    <line x1="228" y1="238" x2="282" y2="238"/>
+  </g>
+  <path d="M286 130 L306 130 L306 196 L296 186 L286 196 Z" fill="#E07540"/>
+  <path d="M60 44 L66 62 L84 68 L66 74 L60 92 L54 74 L36 68 L54 62 Z" fill="#F3C75F"/>
+  <circle cx="336" cy="72" r="12" fill="#46A375"/>
+</svg>

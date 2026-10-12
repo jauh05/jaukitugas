@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Ilustrasi harga">
+  <ellipse cx="200" cy="356" rx="150" ry="14" fill="#532923" opacity="0.12"/>
+  <path d="M96 150 L240 150 L312 222 L240 294 L96 294 Q80 294 80 278 L80 166 Q80 150 96 150 Z" fill="#E07540"/>
+  <circle cx="122" cy="222" r="14" fill="#FEF4EB"/>
+  <text x="170" y="240" font-family="Outfit, Arial, sans-serif" font-weight="800" font-size="62" fill="#FFFFFF">Rp</text>
+  <circle cx="300" cy="104" r="34" fill="#F3C75F"/>
+  <text x="300" y="116" text-anchor="middle" font-family="Outfit, Arial, sans-serif" font-weight="800" font-size="30" fill="#532923">5K</text>
+  <circle cx="304" cy="318" r="40" fill="#532923"/>
+  <circle cx="304" cy="318" r="26" fill="none" stroke="#F3C75F" stroke-width="6"/>
+  <circle cx="92" cy="92" r="12" fill="#F4A6B8"/>
+</svg>

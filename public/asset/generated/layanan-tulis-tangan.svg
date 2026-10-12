@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Ilustrasi tulis tangan">
+  <ellipse cx="200" cy="346" rx="140" ry="12" fill="#532923" opacity="0.12"/>
+  <g transform="rotate(-6 190 210)">
+    <rect x="86" y="84" width="208" height="260" rx="16" fill="#FFFFFF"/>
+    <path d="M118 140 q18 -16 36 0 t36 0 t36 0 t36 0" fill="none" stroke="#532923" stroke-width="6" stroke-linecap="round"/>
+    <path d="M118 184 q20 -14 40 0 t40 0 t40 0" fill="none" stroke="#E07540" stroke-width="6" stroke-linecap="round"/>
+    <path d="M118 228 q16 -14 32 0 t32 0 t32 0 t32 0" fill="none" stroke="#532923" stroke-width="6" stroke-linecap="round"/>
+    <path d="M118 270 q20 -14 40 0 t40 0" fill="none" stroke="#532923" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <g transform="rotate(-28 262 252)">
+    <rect x="200" y="238" width="160" height="28" rx="14" fill="#7CB1EB"/>
+    <rect x="236" y="238" width="18" height="28" fill="#532923"/>
+    <polygon points="200,238 200,266 160,252" fill="#F3C75F"/>
+  </g>
+  <circle cx="106" cy="312" r="22" fill="#F4A6B8"/>
+</svg>

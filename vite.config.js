@@ -10,4 +10,8 @@ export default defineConfig({
         }),
         react(),
     ],
+    server: {
+        // Pakai port dari env PORT (diberikan preview), fallback ke 5173
+        port: Number(process.env.PORT) || 5173,
+    },
 });

@@ -5,7 +5,7 @@
     Swal.fire({
         position: "top-center",
         icon: "success",
-        html: "<p style='color: #28a745; font-size: 18px;'>{{ session('pesan_berhasil') }}</p>",
+        html: "<p style='color: #111111; font-size: 18px;'>{{ session('pesan_berhasil') }}</p>",
         showConfirmButton: false,
         timer: 2500,
         customClass: {
@@ -19,7 +19,7 @@
     Swal.fire({
         position: "top-center",
         icon: "error",
-        html: "<p style='color: #dc3545; font-size: 18px;'>{{ session('pesan_gagal') }}</p>",
+        html: "<p style='color: #E5484D; font-size: 18px;'>{{ session('pesan_gagal') }}</p>",
         showConfirmButton: false,
         timer: 2500,
         customClass: {

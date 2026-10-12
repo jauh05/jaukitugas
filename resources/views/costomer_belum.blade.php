@@ -19,7 +19,7 @@
             <div class="col-md">
                 <div class="position-relative">
                     <input type="text" id="customSearch" class="form-control border-0 bg-white py-3 ps-5 shadow-sm rounded-4"
-                        placeholder="Cari data pending..." style="border: 1px solid rgba(220, 53, 69, 0.2) !important;">
+                        placeholder="Cari data pending..." style="border: 1px solid rgba(229, 72, 77, 0.2) !important;">
                     <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted fs-5"></i>
                 </div>
             </div>
@@ -73,10 +73,10 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="avatar-circle me-3" style="background: {{ 
-                                                            $value['selesaikan'] == 'sudah' ? 'linear-gradient(135deg, #198754, #20c997)' :
-                        ($value['selesaikan'] == 'pembayaran' ? 'linear-gradient(135deg, #dc3545, #ff6b6b)' :
-                            ($value['selesaikan'] == 'proses' ? 'linear-gradient(135deg, #0d6efd, #0dcaf0)' :
-                                'linear-gradient(135deg, #6c757d, #adb5bd)')) 
+                                                            $value['selesaikan'] == 'sudah' ? '#111111' :
+                        ($value['selesaikan'] == 'pembayaran' ? '#E5484D' :
+                            ($value['selesaikan'] == 'proses' ? '#111111' :
+                                '#6c757d')) 
                                                          }};">
                                                 {{ substr($value['nama'], 0, 1) }}
                                             </div>
@@ -208,7 +208,7 @@
         }
 
         .h-hover:hover {
-            background-color: rgba(220, 53, 69, 0.02) !important;
+            background-color: rgba(229, 72, 77, 0.02) !important;
             transform: translateY(-1px);
         }
 
@@ -218,8 +218,8 @@
 
         /* Search Input Focus */
         #customSearch:focus {
-            box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.1);
-            border-color: #dc3545 !important;
+            box-shadow: 0 0 0 4px rgba(229, 72, 77, 0.1);
+            border-color: #E5484D !important;
         }
     </style>
 

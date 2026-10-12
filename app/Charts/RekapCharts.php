@@ -28,7 +28,11 @@ class RekapCharts
 
         return (new LarapexChart)
             ->setTitle('Rekap Pendapatan '.$tahunSekarang)
-            ->setType('area')
+            ->setType('bar')
+            ->setColors(['#111111'])
+            ->setFontFamily('Outfit')
+            ->setToolbar(false)
+            ->setDataLabels(false)
             ->setXAxis(['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'])
             ->setDataset([
                 [

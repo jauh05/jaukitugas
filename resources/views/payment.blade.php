@@ -3,7 +3,7 @@
 @section('temp')
     <div class="container py-5 mt-1">
         <div class="text-center mb-5">
-            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill mb-3 fw-bold">
+            <span class="jt-chip px-3 py-2 mb-3">
                 Informasi Pembayaran
             </span>
             <h1 class="display-5 fw-bold">Selesaikan Pembayaran Anda</h1>
@@ -15,18 +15,18 @@
         <div class="row justify-content-center g-5">
             <!-- QRIS Section -->
             <div class="col-lg-5">
-                <div class="glass-card p-0 bg-white h-100 border-0 shadow-sm overflow-hidden">
+                <div class="glass-card p-0 h-100 overflow-hidden">
                     <!-- Mobile Toggle / Desktop Header -->
                     <button
-                        class="btn w-100 text-start p-3 d-flex align-items-center justify-content-between border-0 rounded-0 bg-transparent"
+                        class="btn w-100 text-start p-4 d-flex align-items-center justify-content-between border-0 rounded-0 bg-transparent"
                         type="button" data-bs-toggle="collapse" data-bs-target="#qrisContent" aria-expanded="false">
                         <div class="d-flex align-items-center">
-                            <div class="bg-white rounded-circle d-flex align-items-center justify-content-center me-3 shadow-sm border"
-                                style="width: 40px; height: 40px;">
+                            <div class="bg-white rounded-circle d-flex align-items-center justify-content-center me-3 shadow-sm"
+                                style="width: 44px; height: 44px;">
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_QRIS.svg" alt="QRIS" height="15">
                             </div>
                             <div>
-                                <h5 class="fw-bold mb-0 text-dark">Scan QRIS</h5>
+                                <h5 class="fw-bold mb-0 text-jt-brown">Scan QRIS</h5>
                                 <small class="text-muted d-md-none">Klik untuk melihat QR Code</small>
                             </div>
                         </div>
@@ -34,11 +34,9 @@
                     </button>
 
                     <!-- Content -->
-                    <div class="collapse d-md-block p-3 pt-0 text-center" id="qrisContent">
-                        <hr class="d-md-none my-0 mb-4 opacity-10">
-                        <div class="bg-white p-3 rounded-4 shadow-sm d-inline-block mb-3 border">
-                            <img src="{{ asset('asset/qris.jpeg') }}" alt="QRIS Payment" class="img-fluid rounded-3"
-                                style="max-height: 350px;">
+                    <div class="collapse d-md-block px-4 pb-4 pt-0 text-center" id="qrisContent">
+                        <div class="jt-arch bg-jt-yellow mx-auto mb-3" style="width: 260px; height: 360px;">
+                            <img src="{{ asset('asset/qris.jpeg') }}" alt="QRIS Payment" style="padding: 22px 22px 0; object-fit: contain;">
                         </div>
                         <p class="text-muted small mb-0">Mendukung semua e-wallet & mobile banking</p>
                     </div>
@@ -49,21 +47,21 @@
             <div class="col-lg-6">
                 <div class="d-flex flex-column gap-3">
                     <!-- DANA -->
-                    <div class="glass-card p-0 bg-white border-start border-4 border-primary shadow-sm overflow-hidden">
+                    <div class="glass-card p-0 border-start border-4 border-primary overflow-hidden">
                         <!-- Mobile Toggle / Desktop Header -->
                         <button
-                            class="btn w-100 text-start p-3 d-flex align-items-center justify-content-between border-0 rounded-0 bg-transparent"
+                            class="btn w-100 text-start p-4 d-flex align-items-center justify-content-between border-0 rounded-0 bg-transparent"
                             type="button" data-bs-toggle="collapse" data-bs-target="#danaContent" aria-expanded="false">
                             <div class="d-flex align-items-center">
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg"
                                     alt="DANA" height="22" class="me-3">
-                                <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill">E-Wallet</span>
+                                <span class="jt-chip py-1 text-nowrap">E-Wallet</span>
                             </div>
                             <i class="bi bi-chevron-down d-md-none text-muted"></i>
                         </button>
 
                         <!-- Content -->
-                        <div class="collapse d-md-block p-3 pt-0" id="danaContent">
+                        <div class="collapse d-md-block px-4 pb-4 pt-0" id="danaContent">
                             <hr class="d-md-none my-0 mb-3 opacity-10">
                             <div class="d-flex justify-content-between align-items-end flex-wrap gap-3">
                                 <div>
@@ -71,7 +69,7 @@
                                     <small class="text-muted text-uppercase fw-bold letter-spacing-1">A.N JAUHAR FAUZI ULUL
                                         ALBAB</small>
                                 </div>
-                                <button class="btn btn-light btn-sm rounded-pill px-3 fw-bold text-primary shadow-sm"
+                                <button class="btn btn-light btn-sm rounded-pill px-3 fw-bold text-jt-brown shadow-sm"
                                     onclick="copyToClipboard('089529104230')">
                                     <i class="bi bi-copy me-2"></i>Salin
                                 </button>
@@ -80,26 +78,26 @@
                     </div>
 
                     <!-- SHOPEEPAY -->
-                    <div class="glass-card p-0 bg-white border-start border-4 border-warning shadow-sm overflow-hidden">
+                    <div class="glass-card p-0 border-start border-4 border-warning overflow-hidden">
                         <button
-                            class="btn w-100 text-start p-3 d-flex align-items-center justify-content-between border-0 rounded-0 bg-transparent"
+                            class="btn w-100 text-start p-4 d-flex align-items-center justify-content-between border-0 rounded-0 bg-transparent"
                             type="button" data-bs-toggle="collapse" data-bs-target="#shopeeContent" aria-expanded="false">
                             <div class="d-flex align-items-center">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/ShopeePay_logo.svg"
+                                <img src="{{ asset('asset/generated/logo-shopeepay.svg') }}"
                                     alt="ShopeePay" height="22" class="me-3">
-                                <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill">E-Wallet</span>
+                                <span class="jt-chip py-1 text-nowrap">E-Wallet</span>
                             </div>
                             <i class="bi bi-chevron-down d-md-none text-muted"></i>
                         </button>
 
-                        <div class="collapse d-md-block p-3 pt-0" id="shopeeContent">
+                        <div class="collapse d-md-block px-4 pb-4 pt-0" id="shopeeContent">
                             <hr class="d-md-none my-0 mb-3 opacity-10">
                             <div class="d-flex justify-content-between align-items-end flex-wrap gap-3">
                                 <div>
                                     <h4 class="fw-bold mb-1 font-monospace text-dark">089529104230</h4>
                                     <small class="text-muted text-uppercase fw-bold letter-spacing-1">A.N JAU.ID</small>
                                 </div>
-                                <button class="btn btn-light btn-sm rounded-pill px-3 fw-bold text-warning shadow-sm"
+                                <button class="btn btn-light btn-sm rounded-pill px-3 fw-bold text-jt-orange shadow-sm"
                                     onclick="copyToClipboard('089529104230')">
                                     <i class="bi bi-copy me-2"></i>Salin
                                 </button>
@@ -108,19 +106,19 @@
                     </div>
 
                     <!-- GOPAY -->
-                    <div class="glass-card p-0 bg-white border-start border-4 border-success shadow-sm overflow-hidden">
+                    <div class="glass-card p-0 border-start border-4 border-success overflow-hidden">
                         <button
-                            class="btn w-100 text-start p-3 d-flex align-items-center justify-content-between border-0 rounded-0 bg-transparent"
+                            class="btn w-100 text-start p-4 d-flex align-items-center justify-content-between border-0 rounded-0 bg-transparent"
                             type="button" data-bs-toggle="collapse" data-bs-target="#gopayContent" aria-expanded="false">
                             <div class="d-flex align-items-center">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg"
+                                <img src="{{ asset('asset/generated/logo-gopay.svg') }}"
                                     alt="Gopay" height="22" class="me-3">
-                                <span class="badge bg-success bg-opacity-10 text-success rounded-pill">E-Wallet</span>
+                                <span class="jt-chip py-1 text-nowrap">E-Wallet</span>
                             </div>
                             <i class="bi bi-chevron-down d-md-none text-muted"></i>
                         </button>
 
-                        <div class="collapse d-md-block p-3 pt-0" id="gopayContent">
+                        <div class="collapse d-md-block px-4 pb-4 pt-0" id="gopayContent">
                             <hr class="d-md-none my-0 mb-3 opacity-10">
                             <div class="d-flex justify-content-between align-items-end flex-wrap gap-3">
                                 <div>
@@ -128,7 +126,7 @@
                                     <small class="text-muted text-uppercase fw-bold letter-spacing-1">A.N JAUHAR FAUZI ULUL
                                         ALBAB</small>
                                 </div>
-                                <button class="btn btn-light btn-sm rounded-pill px-3 fw-bold text-success shadow-sm"
+                                <button class="btn btn-light btn-sm rounded-pill px-3 fw-bold text-jt-green shadow-sm"
                                     onclick="copyToClipboard('0895291054230')">
                                     <i class="bi bi-copy me-2"></i>Salin
                                 </button>
@@ -138,8 +136,8 @@
                 </div>
                 <!-- keterangan -->
                 <div
-                    class="alert alert-primary bg-primary bg-opacity-10 border-0 rounded-4 p-4 text-primary d-flex align-items-start mt-4">
-                    <i class="bi bi-info-circle-fill fs-4 me-3 mt-1"></i>
+                    class="alert alert-primary bg-primary bg-opacity-10 border-0 rounded-4 p-4 text-jt-brown d-flex align-items-start mt-4">
+                    <i class="bi bi-info-circle-fill fs-4 me-3 mt-1 text-jt-orange"></i>
                     <div>
                         <h5 class="fw-bold mb-1">Penting!</h5>
                         <p class="mb-0 small opacity-75">Mohon simpan bukti transfer Anda untuk konfirmasi pembayaran
@@ -148,13 +146,12 @@
                 </div>
                 <div class="text-center mt-3">
                     <a href="https://wa.me/6285184771744?text=Halo%20Admin%2C%20saya%20sudah%20melakukan%20pembayaran"
-                        class="btn btn-premium w-100 py-3 rounded-pill fw-bold shadow-lg">
+                        class="btn btn-premium w-100 py-3 rounded-pill fw-bold">
                         <i class="bi bi-whatsapp me-2"></i> Konfirmasi Pembayaran ke WA
                     </a>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
     <!-- Toast for Copy -->
@@ -184,15 +181,6 @@
     </script>
 
     <style>
-        .hover-up:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
-        }
-
-        .transition-all {
-            transition: all 0.3s ease;
-        }
-
         .letter-spacing-1 {
             letter-spacing: 1px;
         }

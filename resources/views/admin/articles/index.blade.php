@@ -8,7 +8,7 @@
             <small class="text-muted">Kelola konten artikel dan insight untuk website</small>
         </div>
         <div>
-            <a href="{{ route('admin.articles.create') }}" class="btn btn-premium px-4 rounded-pill shadow-sm fw-bold d-flex align-items-center gap-2 text-white" style="background: linear-gradient(45deg, #4834d4, #686de0);">
+            <a href="{{ route('admin.articles.create') }}" class="btn btn-premium px-4 rounded-pill shadow-sm fw-bold d-flex align-items-center gap-2 text-white" style="background: #111111;">
                 <i class="bi bi-plus-circle"></i> Tulis Artikel Baru
             </a>
         </div>
@@ -26,12 +26,12 @@
             <div class="position-relative">
                 <input type="text" name="search" class="form-control border-0 bg-white py-2 ps-5 shadow-sm rounded-pill"
                     placeholder="Cari judul atau slug..." value="{{ request('search') }}"
-                    style="border: 1px solid rgba(72, 52, 212, 0.1) !important;">
+                    style="border: 1px solid rgba(17, 17, 17, 0.1) !important;">
                 <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
             </div>
         </div>
         <div class="col-md-3">
-            <select name="status" class="form-select border-0 bg-white py-2 shadow-sm rounded-pill" style="border: 1px solid rgba(72, 52, 212, 0.1) !important;" onchange="this.form.submit()">
+            <select name="status" class="form-select border-0 bg-white py-2 shadow-sm rounded-pill" style="border: 1px solid rgba(17, 17, 17, 0.1) !important;" onchange="this.form.submit()">
                 <option value="">Semua Status</option>
                 <option value="draft" {{ request('status') == 'draft' ? 'selected' : '' }}>Draft</option>
                 <option value="review" {{ request('status') == 'review' ? 'selected' : '' }}>Review</option>

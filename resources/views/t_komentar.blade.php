@@ -5,7 +5,7 @@
             Swal.fire({
                 position: "top-center",
                 icon: "success",
-                html: "<p style='color: #28a745; font-size: 18px;'>{{ session('pesan_berhasil') }}</p>",
+                html: "<p style='color: #111111; font-size: 18px;'>{{ session('pesan_berhasil') }}</p>",
                 showConfirmButton: false,
                 timer: 2500,
                 customClass: {
@@ -19,7 +19,7 @@
             Swal.fire({
                 position: "top-center",
                 icon: "error",
-                html: "<p style='color: #dc3545; font-size: 18px;'>{{ session('pesan_gagal') }}</p>",
+                html: "<p style='color: #E5484D; font-size: 18px;'>{{ session('pesan_gagal') }}</p>",
                 showConfirmButton: false,
                 timer: 2500,
                 customClass: {
@@ -34,255 +34,320 @@
     </ol> --}}
 @endsection
 @section('info')
-    <div class="row mt-4 mb-4">
-        <div class="col-12">
-            <div class="glass-card bg-primary text-white p-4 position-relative overflow-hidden border-0">
-                <div class="position-absolute top-0 end-0 opacity-25 p-3">
-                    <i class="bi bi-calendar-event fs-1"></i>
-                </div>
-                <h4 class="fw-bold mb-1">Rekapitulasi: {{ $namaBulanSekarang }}</h4>
-                <p class="mb-0 text-white-50">Pantau performa harian dan bulanan Anda secara real-time.</p>
-            </div>
-        </div>
-    </div>
+    @php
+        $pesananBulan = (int) $jumlah_costomer_sudah + (int) $jumlah_costomer_belum;
+        $persenSelesai = $pesananBulan > 0 ? round(($jumlah_costomer_sudah / $pesananBulan) * 100) : 0;
+    @endphp
 
-    <!-- Stats Row 1 -->
-    <div class="row g-4 mb-4">
-        <!-- New Comment Card -->
-        <div class="col-xl col-md-4">
-            <div class="glass-card h-100 p-4 position-relative overflow-hidden border-0"
-                style="background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white;">
-                <div class="d-flex justify-content-between align-items-center">
+    <div class="col-xl-8">
+        <div class="row g-4">
+            <!-- Sapaan: lonceng bulat, CTA gelap, dan pill terang (gaya referensi) -->
+            <div class="col-12">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
                     <div>
-                        <p class="mb-0 opacity-75 fw-bold">Komentar</p>
-                        <h2 class="display-5 fw-bold mb-0">{{ $jumlah_komentar }}</h2>
+                        <h3 class="fw-semibold mb-1" style="font-size: 1.7rem;">Selamat datang, {{ session('username') ?? 'Admin' }}!</h3>
+                        <div class="card-sub">Rekapitulasi {{ $namaBulanSekarang }}. Pantau pesanan, deadline, dan keuangan Anda.</div>
                     </div>
-                    <i class="bi bi-chat-quote-fill opacity-25" style="font-size: 2.5rem;"></i>
-                </div>
-            </div>
-        </div>
-
-        <!-- Pending Talent -->
-        <div class="col-xl col-md-4">
-            <div class="glass-card h-100 p-4 position-relative overflow-hidden border-0"
-                style="background: linear-gradient(135deg, #f0932b, #ffbe76); color: white;">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <p class="mb-0 opacity-75 fw-bold">Pendaftar Talent</p>
-                        <h2 class="display-5 fw-bold mb-0">{{ $jumlah_talent }}</h2>
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                        <a href="{{ route('costomer.jadwal') }}" class="home-bell" title="Lihat jadwal pesanan">
+                            <i class="bi bi-bell"></i>
+                            @if ($jumlah_costomer_belum > 0)
+                                <span class="home-bell-dot"></span>
+                            @endif
+                        </a>
+                        <a href="{{ route('costomer.tambah') }}" class="btn btn-primary rounded-pill px-4"><i class="bi bi-plus-lg me-1"></i>Pesanan Baru</a>
+                        <a href="{{ route('kalender.index') }}" class="btn btn-light rounded-pill px-4"><i class="bi bi-calendar3 me-1"></i>Kalender</a>
                     </div>
-                    <i class="bi bi-person-badge-fill opacity-25" style="font-size: 2.5rem;"></i>
-                </div>
-                <div class="mt-3">
-                    <a href="{{ route('admin.talent.index') }}" class="badge bg-white bg-opacity-25 rounded-pill text-white text-decoration-none">
-                        Cek Pendaftar <i class="bi bi-arrow-right"></i>
-                    </a>
                 </div>
             </div>
-        </div>
 
-        <!-- Completed Tasks -->
-        <div class="col-xl col-md-4">
-            <div class="glass-card h-100 p-4 position-relative overflow-hidden border-0"
-                style="background: linear-gradient(135deg, #00b894, #55efc4); color: white;">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <p class="mb-0 opacity-75 fw-bold">Selesai</p>
-                        <h2 class="display-5 fw-bold mb-0">{{ $jumlah_costomer_sudah }}</h2>
-                    </div>
-                    <i class="bi bi-check-circle-fill opacity-25" style="font-size: 2.5rem;"></i>
+            <!-- Tiga kartu statistik: gelap, lavender, biru muda -->
+            <div class="col-md-4">
+                <div class="home-tile home-tile--dark">
+                    <div class="home-tile-num">{{ $pesananBulan }}</div>
+                    <div class="home-tile-label">Pesanan bulan ini</div>
+                    <div class="home-tile-sub">{{ $jumlah_costomer_belum }} menunggu diproses</div>
                 </div>
             </div>
-        </div>
-
-        <!-- Pending Tasks -->
-        <div class="col-xl col-md-6">
-            <div class="glass-card h-100 p-4 position-relative overflow-hidden border-0"
-                style="background: linear-gradient(135deg, #ff7675, #fab1a0); color: white;">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <p class="mb-0 opacity-75 fw-bold">Pending</p>
-                        <h2 class="display-5 fw-bold mb-0">{{ $jumlah_costomer_belum }}</h2>
-                    </div>
-                    <i class="bi bi-clock-history opacity-25" style="font-size: 2.5rem;"></i>
+            <div class="col-md-4">
+                <div class="home-tile home-tile--lav">
+                    <div class="home-tile-num">{{ $jumlah_costomer_sudah }}</div>
+                    <div class="home-tile-label">Pesanan selesai</div>
+                    <div class="home-tile-sub">{{ $persenSelesai }}% dari pesanan bulan ini</div>
                 </div>
             </div>
-        </div>
-
-        <!-- Total Revenue -->
-        <div class="col-xl col-md-4">
-            <div class="glass-card h-100 p-4 position-relative overflow-hidden border-0"
-                style="background: linear-gradient(135deg, #0984e3, #74b9ff); color: white;">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <p class="mb-0 opacity-75 fw-bold">Pendapatan (Bln)</p>
-                        <h3 class="fw-bold mb-0 fs-3">Rp {{ number_format($total_pendapatan) }}</h3>
-                    </div>
-                    <i class="bi bi-wallet-fill opacity-25" style="font-size: 2.5rem;"></i>
+            <div class="col-md-4">
+                <div class="home-tile home-tile--sky">
+                    <div class="home-tile-num home-tile-num--sm">Rp {{ number_format($total_bersih) }}</div>
+                    <div class="home-tile-label">Keuangan bersih</div>
+                    <div class="home-tile-sub">Pendapatan Rp {{ number_format($total_pendapatan) }}</div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-xl col-md-4">
-            <div class="glass-card h-100 p-4 position-relative overflow-hidden border-0"
-                style="background: linear-gradient(135deg, #e17055, #fab1a0); color: white;">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <p class="mb-0 opacity-75 fw-bold">Pengeluaran (Bln)</p>
-                        <h3 class="fw-bold mb-0 fs-3">Rp {{ number_format($total_pengeluaran) }}</h3>
+            <!-- Order harian -->
+            <div class="col-md-6">
+                <div class="glass-card mb-0 h-100">
+                    <div class="card-head">
+                        <div>
+                            <h5 class="card-title-lg"><i class="bi bi-bag me-2"></i>Order Harian</h5>
+                            <div class="card-sub">Jumlah pesanan per hari bulan ini</div>
+                        </div>
                     </div>
-                    <i class="bi bi-cash-stack opacity-25" style="font-size: 2.5rem;"></i>
+                    <canvas id="dailyCountChart" height="150"></canvas>
                 </div>
             </div>
-        </div>
 
-        <div class="col-xl col-md-4">
-            <div class="glass-card h-100 p-4 position-relative overflow-hidden border-0"
-                style="background: linear-gradient(135deg, #00b894, #55efc4); color: white;">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <p class="mb-0 opacity-75 fw-bold">Bersih (Bln)</p>
-                        <h3 class="fw-bold mb-0 fs-3">Rp {{ number_format($total_bersih) }}</h3>
+            <!-- Pendapatan harian + filter -->
+            <div class="col-md-6">
+                <div class="glass-card mb-0 h-100">
+                    <div class="card-head">
+                        <div>
+                            <h5 class="card-title-lg"><i class="bi bi-graph-up me-2"></i>Pendapatan Harian</h5>
+                            <div class="card-sub">Tren harian pendapatan bulan ini</div>
+                        </div>
                     </div>
-                    <i class="bi bi-graph-up-arrow opacity-25" style="font-size: 2.5rem;"></i>
+                    <div class="d-flex align-items-center gap-2 flex-wrap mb-3">
+                        <input type="date" id="dailyFilterStart" class="form-control form-control-sm home-input" style="min-width: 140px;">
+                        <span class="small" style="color: var(--ink-2);">s/d</span>
+                        <input type="date" id="dailyFilterEnd" class="form-control form-control-sm home-input" style="min-width: 140px;">
+                        <button class="btn btn-sm btn-primary" id="applyDailyFilterBtn">Filter</button>
+                    </div>
+                    <canvas id="dailyIncomeChart" height="150"></canvas>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Stats Row 2 (Daily & Overall) -->
-    <div class="row g-4 mb-4">
-        <div class="col-xl-6 col-md-6">
-            <div class="glass-card h-100 p-4 bg-white border-start border-5 border-warning">
-                <div class="d-flex align-items-center mb-3">
-                    <div class="bg-warning bg-opacity-10 p-3 rounded-circle me-3">
-                        <i class="bi bi-sun-fill text-warning fs-3"></i>
+            <!-- Status pengerjaan -->
+            <div class="col-md-6">
+                <div class="glass-card mb-0 h-100">
+                    <div class="card-head">
+                        <div>
+                            <h5 class="card-title-lg"><i class="bi bi-check2-circle me-2"></i>Status Pengerjaan</h5>
+                            <div class="card-sub">Pesanan selesai bulan ini</div>
+                        </div>
+                        <span class="chip chip--green fw-semibold">{{ $persenSelesai }}%</span>
                     </div>
+                    <div class="home-progress mb-3"><span style="width: {{ $persenSelesai }}%;"></span></div>
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <div class="home-mini">
+                                <div class="home-mini-label">Selesai</div>
+                                <div class="home-mini-value">{{ $jumlah_costomer_sudah }}</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="home-mini">
+                                <div class="home-mini-label">Belum</div>
+                                <div class="home-mini-value">{{ $jumlah_costomer_belum }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Keuangan -->
+            <div class="col-md-6">
+                <div class="glass-card mb-0 h-100">
+                    <div class="card-head">
+                        <div>
+                            <h5 class="card-title-lg"><i class="bi bi-wallet2 me-2"></i>Keuangan</h5>
+                            <div class="card-sub">Bersih setelah pengeluaran</div>
+                        </div>
+                    </div>
+                    <div class="home-mini mb-2 d-flex justify-content-between align-items-center">
+                        <span class="home-mini-label mb-0">Pendapatan</span>
+                        <span class="fw-semibold">Rp {{ number_format($total_pendapatan) }}</span>
+                    </div>
+                    <div class="home-mini d-flex justify-content-between align-items-center">
+                        <span class="home-mini-label mb-0">Pengeluaran</span>
+                        <span class="fw-semibold" style="color: var(--danger);">Rp {{ number_format($total_pengeluaran) }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ringkasan harian dan keseluruhan -->
+            <div class="col-md-6">
+                <div class="glass-card mb-0 h-100 d-flex align-items-center gap-3 flex-wrap">
+                    <span class="bubble" style="background: var(--yellow);"><i class="bi bi-sun"></i></span>
                     <div>
-                        <small class="text-uppercase text-muted fw-bold ls-1">Hari Ini</small>
-                        <h3 class="fw-bold mb-0">Rp {{ number_format($rekap_harian_sum) }}</h3>
+                        <div class="card-sub text-uppercase fw-semibold" style="letter-spacing: 0.08em;">Hari Ini</div>
+                        <div class="kpi-value kpi-value--sm">Rp {{ number_format($rekap_harian_sum) }}</div>
                     </div>
                     <div class="ms-auto text-end">
-                        <small class="d-block text-muted">Customer</small>
-                        <span class="fw-bold fs-4 text-warning">{{ $rekap_harian_count }}</span>
+                        <div class="card-sub">Customer</div>
+                        <span class="chip chip--yellow fw-semibold">{{ $rekap_harian_count }}</span>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="col-xl-6 col-md-6">
-            <div class="glass-card h-100 p-4 bg-white border-start border-5 border-primary">
-                <div class="d-flex align-items-center mb-3">
-                    <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
-                        <i class="bi bi-exclude text-primary fs-3"></i>
-                    </div>
+            <div class="col-md-6">
+                <div class="glass-card mb-0 h-100 d-flex align-items-center gap-3 flex-wrap">
+                    <span class="bubble" style="background: var(--sky);"><i class="bi bi-wallet"></i></span>
                     <div>
-                        <small class="text-uppercase text-muted fw-bold ls-1">Total Keseluruhan</small>
-                        <h3 class="fw-bold mb-0">Rp {{ number_format($rekap_total_sum) }}</h3>
-                        <small class="d-block text-danger mt-1">Pengeluaran: Rp {{ number_format($rekap_total_pengeluaran) }}</small>
+                        <div class="card-sub text-uppercase fw-semibold" style="letter-spacing: 0.08em;">Total Keseluruhan</div>
+                        <div class="kpi-value kpi-value--sm">Rp {{ number_format($rekap_total_sum) }}</div>
+                        <div class="small" style="color: var(--danger);">Pengeluaran: Rp {{ number_format($rekap_total_pengeluaran) }}</div>
                     </div>
                     <div class="ms-auto text-end">
-                        <small class="d-block text-muted">Total Order</small>
-                        <span class="fw-bold fs-4 text-primary">{{ number_format($rekap_total_count) }}</span>
+                        <div class="card-sub">Total Order</div>
+                        <span class="chip chip--sky fw-semibold">{{ number_format($rekap_total_count) }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top customers -->
+            <div class="col-12">
+                <div class="glass-card mb-0">
+                    <div class="card-head">
+                        <div>
+                            <h5 class="card-title-lg"><i class="bi bi-trophy me-2"></i>Top 10 Pelanggan Setia</h5>
+                            <div class="card-sub">Pelanggan dengan total belanja terbesar</div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#topCustomersModal">
+                            Lihat Selengkapnya <i class="bi bi-arrows-angle-expand ms-1"></i>
+                        </button>
+                    </div>
+
+                    <!-- Daftar pelanggan: baris abu muda dengan avatar bulat (gaya "Your assignments") -->
+                    <div class="home-list">
+                        @forelse($top_customers->take(10) as $index => $cus)
+                        <div class="home-row">
+                            <span class="home-row-avatar">{{ substr($cus->nama, 0, 1) }}</span>
+                            <div class="flex-grow-1" style="min-width: 0;">
+                                <div class="fw-semibold text-truncate">{{ $cus->nama }}</div>
+                                <div class="small" style="color: var(--muted);">{{ $cus->total_order }} order</div>
+                            </div>
+                            <div class="text-end">
+                                <div class="fw-semibold">Rp {{ number_format($cus->total_spend) }}</div>
+                                <div class="small" style="color: var(--muted);">Total spend</div>
+                            </div>
+                            <span class="chip {{ $index === 0 ? 'chip--yellow' : ($index < 3 ? 'chip--lav' : '') }} fw-semibold">#{{ $index + 1 }}</span>
+                        </div>
+                        @empty
+                        <div class="home-agenda-empty">Belum ada data transaksi</div>
+                        @endforelse
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistik customer + pendapatan tahunan (Larapex) -->
+            <div class="col-md-6">
+                <div class="glass-card mb-0 h-100">
+                    <div class="card-head">
+                        <div>
+                            <h5 class="card-title-lg"><i class="bi bi-calendar-range me-2"></i>Statistik Customer</h5>
+                            <div class="card-sub">Jumlah customer per bulan</div>
+                        </div>
+                    </div>
+                    {!! $chartCos->container() !!}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="glass-card mb-0 h-100">
+                    <div class="card-head">
+                        <div>
+                            <h5 class="card-title-lg"><i class="bi bi-clipboard-data me-2"></i>Pendapatan Tahunan</h5>
+                            <div class="card-sub">Visualisasi performa tahunan pendapatan bisnis.</div>
+                        </div>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <span class="chip chip--green">{{ $tahunSekarang }}</span>
+                        </div>
+                    </div>
+                    {!! $chart->container() !!}
+                </div>
+            </div>
+
+            <!-- Filter rekap interaktif -->
+            <div class="col-12">
+                <div class="glass-card mb-0">
+                    <div class="card-head">
+                        <div>
+                            <h5 class="card-title-lg"><i class="bi bi-sliders me-2"></i>Filter Rekap Interaktif</h5>
+                            <div class="card-sub">Pilih tahun dan bulan untuk melihat rekap</div>
+                        </div>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <select class="form-select form-select-sm" id="rekapTahunSelect" style="min-width: 120px;">
+                                @foreach ($rekap_tahun_pilihan as $tahun)
+                                    <option value="{{ $tahun }}" @selected($tahun == $tahunSekarang)>{{ $tahun }}</option>
+                                @endforeach
+                            </select>
+                            <select class="form-select form-select-sm" id="rekapBulanSelect" style="min-width: 150px;">
+                                @php
+                                    $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                                @endphp
+                                @foreach ($months as $idx => $monthName)
+                                    <option value="{{ $idx + 1 }}" @selected($idx + 1 == now()->month)>{{ $monthName }}</option>
+                                @endforeach
+                            </select>
+                            <button class="btn btn-sm btn-primary" id="btnShowRekapDynamic">Tampilkan</button>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-3"><div class="home-mini"><div class="home-mini-label">Pendapatan Tahun</div><div class="fw-semibold" id="yearIncomeText">-</div></div></div>
+                        <div class="col-md-3"><div class="home-mini"><div class="home-mini-label">Pengeluaran Tahun</div><div class="fw-semibold" id="yearExpenseText">-</div></div></div>
+                        <div class="col-md-3"><div class="home-mini"><div class="home-mini-label">Pendapatan Bulan Dipilih</div><div class="fw-semibold" id="monthIncomeText">-</div></div></div>
+                        <div class="col-md-3"><div class="home-mini"><div class="home-mini-label">Keterangan</div><div class="fw-semibold" id="monthInfoText">-</div></div></div>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-lg-8">
+                            <h6 class="fw-semibold mb-3" style="color: var(--ink-2);">Grafik Bulanan (Tahun Dipilih)</h6>
+                            <canvas id="yearDynamicChart" height="110"></canvas>
+                        </div>
+                        <div class="col-lg-4">
+                            <h6 class="fw-semibold mb-3" style="color: var(--ink-2);">Perbandingan Bulan Dipilih</h6>
+                            <canvas id="monthDynamicChart" height="220"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- Daily Charts (Income & Count) --}}
-    <div class="row g-4 mb-4">
-        <div class="col-md-8">
-            <div class="glass-card p-4 bg-white h-100 shadow-sm border-0">
-                <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-3">
-                    <h5 class="fw-bold mb-0 text-primary"><i class="bi bi-graph-up me-2"></i>Tren Pendapatan Harian</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <input type="date" id="dailyFilterStart" class="form-control form-control-sm" style="min-width: 145px;">
-                        <span class="text-muted small">s/d</span>
-                        <input type="date" id="dailyFilterEnd" class="form-control form-control-sm" style="min-width: 145px;">
-                        <button class="btn btn-sm btn-outline-primary" id="applyDailyFilterBtn">Filter</button>
-                    </div>
+    <!-- Kolom kanan: kalender, agenda, dan feed deadline (mengisi tinggi kolom kiri) -->
+    <div class="col-xl-4 d-flex flex-column">
+        <div class="glass-card home-calendar mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <div class="card-sub text-uppercase fw-semibold" style="letter-spacing: 0.08em;">Kalender</div>
+                    <h5 class="fw-semibold m-0" id="homeCalTitle">-</h5>
                 </div>
-                <canvas id="dailyIncomeChart" height="100"></canvas>
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-light btn-icon" id="homeCalPrev" title="Bulan sebelumnya"><i class="bi bi-chevron-left"></i></button>
+                    <button type="button" class="btn btn-light btn-icon" id="homeCalNext" title="Bulan berikutnya"><i class="bi bi-chevron-right"></i></button>
+                </div>
             </div>
+            <div class="home-cal-grid" id="homeCalGrid"></div>
+            <a href="{{ route('kalender.index') }}" class="btn btn-primary w-100 mt-3"><i class="bi bi-plus-lg me-1"></i>Buka Kalender</a>
         </div>
-        <div class="col-md-4">
-            <div class="glass-card p-4 bg-white h-100 shadow-sm border-0">
-                <h5 class="fw-bold mb-4 text-warning"><i class="bi bi-bar-chart me-2"></i>Order Harian</h5>
-                <canvas id="dailyCountChart" height="200"></canvas>
-            </div>
-        </div>
-    </div>
 
-    {{-- Top Customers Table & Customer Stats --}}
-    <div class="row g-4 mb-4">
-        <div class="col-md-8">
-            <div class="glass-card p-4 bg-white h-100 shadow-sm border-0">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h5 class="fw-bold text-dark m-0"><i class="bi bi-trophy-fill text-warning me-2"></i>Top 10 Pelanggan Setia</h5>
-                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#topCustomersModal">
-                        Lihat Selengkapnya <i class="bi bi-arrows-angle-expand ms-1"></i>
-                    </button>
-                </div>
-                
-                <div class="table-responsive">
-                    <table class="table table-borderless align-middle mb-0">
-                        <thead class="bg-light text-secondary small text-uppercase fw-bold">
-                            <tr>
-                                <th class="ps-3 rounded-start">Rank</th>
-                                <th>Nama Customer</th>
-                                <th class="text-center">Jumlah Order</th>
-                                <th class="text-end pe-3 rounded-end">Total Spend</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($top_customers->take(10) as $index => $cus)
-                            <tr class="border-bottom hover-bg transition-all">
-                                <td class="ps-3 fw-bold text-muted">#{{ $index + 1 }}</td>
-                                <td class="fw-bold text-dark">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 35px; height: 35px;">
-                                            {{ substr($cus->nama, 0, 1) }}
-                                        </div>
-                                        {{ $cus->nama }}
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <span class="badge bg-info bg-opacity-10 text-info rounded-pill px-3">{{ $cus->total_order }} Order</span>
-                                </td>
-                                <td class="text-end pe-3 fw-bold text-success">Rp {{ number_format($cus->total_spend) }}</td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="4" class="text-center text-muted py-4">Belum ada data transaksi</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="glass-card mb-4">
+            <div class="card-sub text-uppercase fw-semibold" style="letter-spacing: 0.08em;">Deadline</div>
+            <h5 class="fw-semibold mb-3" id="homeAgendaTitle">-</h5>
+            <div id="homeAgendaList"></div>
         </div>
-        
-        <div class="col-md-4">
-             <div class="glass-card p-4 bg-white h-100 shadow-sm border-0">
-                 <h5 class="fw-bold mb-4 text-secondary"><i class="bi bi-calendar-range me-2"></i>Statistik Customer</h5>
-                {!! $chartCos->container() !!}
+
+        <!-- Feed deadline bulan ini: memanjang mengisi sisa tinggi kolom -->
+        <div class="glass-card mb-0 flex-grow-1 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="fw-semibold m-0" style="font-size: 1.05rem;">Deadline bulan ini</h5>
+                <span class="chip" id="homeFeedCount">0</span>
             </div>
+            <div id="homeFeedList" class="flex-grow-1"></div>
         </div>
     </div>
 
     <!-- Modal Top Customers (Full List) -->
     <div class="modal fade" id="topCustomersModal" tabindex="-1" aria-labelledby="topCustomersModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-            <div class="modal-content border-0 shadow-lg overflow-hidden">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title fw-bold" id="topCustomersModalLabel"><i class="bi bi-trophy-fill me-2"></i>Leaderboard Pelanggan Setia</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content shadow-lg overflow-hidden">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-semibold" id="topCustomersModalLabel"><i class="bi bi-trophy me-2"></i>Leaderboard Pelanggan Setia</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-0">
                     <div class="table-responsive">
-                         <table class="table table-striped align-middle mb-0">
-                            <thead class="bg-light sticky-top">
+                         <table class="table align-middle mb-0">
+                            <thead class="sticky-top">
                                 <tr>
                                     <th class="ps-4 py-3">Rank</th>
                                     <th class="py-3">Nama Customer</th>
@@ -293,15 +358,15 @@
                             <tbody>
                                 @forelse($top_customers as $index => $cus)
                                 <tr>
-                                    <td class="ps-4 fw-bold {{ $index < 3 ? 'text-warning' : 'text-muted' }}">
-                                        @if($index < 3) <i class="bi bi-crown-fill me-1"></i> @endif
+                                    <td class="ps-4 fw-semibold" style="color: {{ $index < 3 ? 'var(--ink)' : 'var(--muted)' }};">
+                                        @if($index < 3) <i class="bi bi-award me-1"></i> @endif
                                         #{{ $index + 1 }}
                                     </td>
-                                    <td class="fw-bold">{{ $cus->nama }}</td>
+                                    <td class="fw-semibold">{{ $cus->nama }}</td>
                                     <td class="text-center">
-                                         <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill">{{ $cus->total_order }} Order</span>
+                                         <span class="chip">{{ $cus->total_order }} Order</span>
                                     </td>
-                                    <td class="text-end pe-4 fw-bold text-success">Rp {{ number_format($cus->total_spend) }}</td>
+                                    <td class="text-end pe-4 fw-semibold">Rp {{ number_format($cus->total_spend) }}</td>
                                 </tr>
                                 @empty
                                 <tr>
@@ -312,39 +377,14 @@
                         </table>
                     </div>
                 </div>
-                <div class="modal-footer bg-light">
-                    <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Tutup</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary px-4" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- Yearly Revenue Chart --}}
-    <div class="row mb-5">
-         <div class="col-12">
-             <div class="glass-card p-4 bg-white shadow-sm border-0 yearly-revenue-card">
-                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
-                    <div>
-                        <h5 class="fw-bold mb-1 text-dark"><i class="bi bi-clipboard-data me-2"></i>Pendapatan Tahunan</h5>
-                        <small class="text-muted">Visualisasi performa tahunan pendapatan bisnis.</small>
-                    </div>
-                    <div class="d-flex gap-2 flex-wrap">
-                        <span class="badge rounded-pill px-3 py-2 text-bg-light">Tahun aktif: {{ $tahunSekarang }}</span>
-                        <span class="badge rounded-pill px-3 py-2 text-bg-primary">Bulan aktif: {{ $namaBulanSekarang }}</span>
-                    </div>
-                </div>
-                {!! $chart->container() !!}
-            </div>
-        </div>
-    </div>
-    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .yearly-revenue-card {
-            background: linear-gradient(180deg, #ffffff 0%, #f7f8ff 100%);
-            border: 1px solid rgba(72, 52, 212, 0.08);
-        }
-    </style>
     <script>
         const currentYear = {{ $tahunSekarang }};
         const currentMonth = {{ now()->month }};
@@ -370,7 +410,7 @@
         startInput.value = toDateString(1);
         endInput.value = toDateString(daysInCurrentMonth);
 
-        // Daily Income Chart
+        // Tren pendapatan harian (kartu pink): garis hitam, titik halus, tanpa area
         const ctxDaily = document.getElementById('dailyIncomeChart').getContext('2d');
         const dailyIncomeChart = new Chart(ctxDaily, {
             type: 'line',
@@ -379,17 +419,29 @@
                 datasets: [{
                     label: 'Pendapatan (Rp)',
                     data: baseDailyIncome,
-                    borderColor: '#4834d4',
-                    backgroundColor: 'rgba(72, 52, 212, 0.1)',
+                    borderColor: '#111111',
+                    backgroundColor: '#111111',
                     borderWidth: 2,
-                    fill: true,
-                    tension: 0.4
+                    pointRadius: 2.5,
+                    pointHoverRadius: 5,
+                    pointBackgroundColor: '#111111',
+                    pointBorderColor: '#F6BEE0',
+                    pointBorderWidth: 2,
+                    fill: false,
+                    tension: 0.35
                 }]
             },
-            options: { responsive: true, scales: { y: { beginAtZero: true, grid: { borderDash: [5, 5] } }, x: { grid: { display: false } } } }
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(17,17,17,0.08)' }, border: { display: false } },
+                    x: { grid: { display: false }, border: { display: false } }
+                }
+            }
         });
 
-        // Daily Count Chart (Bar)
+        // Order harian (kartu kuning): batang hitam membulat
         const ctxCount = document.getElementById('dailyCountChart').getContext('2d');
         const dailyCountChart = new Chart(ctxCount, {
             type: 'bar',
@@ -398,11 +450,20 @@
                 datasets: [{
                     label: 'Jumlah Order',
                     data: baseDailyCount,
-                    backgroundColor: '#fbc531',
-                    borderRadius: 4
+                    backgroundColor: '#111111',
+                    borderRadius: 8,
+                    borderSkipped: false,
+                    maxBarThickness: 16
                 }]
             },
-            options: { responsive: true, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } }, x: { grid: { display: false } } } }
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: 'rgba(17,17,17,0.08)' }, border: { display: false } },
+                    x: { grid: { display: false }, border: { display: false } }
+                }
+            }
         });
 
         function applyDailyFilter() {
@@ -446,46 +507,150 @@
     <script src="{{ $chart->cdn() }}"></script>
     {!! $chart->script() !!}
 
-    <div class="glass-card p-4 mb-5 bg-white shadow-sm border-0">
-        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
-            <h5 class="fw-bold m-0 text-dark"><i class="bi bi-sliders me-2"></i>Filter Rekap Interaktif</h5>
-            <div class="d-flex gap-2">
-                <select class="form-select form-select-sm" id="rekapTahunSelect" style="min-width: 120px;">
-                    @foreach ($rekap_tahun_pilihan as $tahun)
-                        <option value="{{ $tahun }}" @selected($tahun == $tahunSekarang)>{{ $tahun }}</option>
-                    @endforeach
-                </select>
-                <select class="form-select form-select-sm" id="rekapBulanSelect" style="min-width: 150px;">
-                    @php
-                        $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-                    @endphp
-                    @foreach ($months as $idx => $monthName)
-                        <option value="{{ $idx + 1 }}" @selected($idx + 1 == now()->month)>{{ $monthName }}</option>
-                    @endforeach
-                </select>
-                <button class="btn btn-primary btn-sm" id="btnShowRekapDynamic">Tampilkan</button>
-            </div>
-        </div>
+    <script>
+        // ===== Kalender mini di halaman utama: ambil deadline dari endpoint kalender =====
+        const calDataUrl = @json(route('kalender.data'));
+        const calMonthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        const calStatusLabel = { sudah: 'Selesai', pembayaran: 'Bayar', proses: 'Proses', belum: 'Belum' };
+        const calStatusClass = { sudah: 'sudah', pembayaran: 'pembayaran', proses: 'proses', belum: 'belum' };
+        const calToday = new Date();
+        const calTodayKey = [calToday.getFullYear(), String(calToday.getMonth() + 1).padStart(2, '0'), String(calToday.getDate()).padStart(2, '0')].join('-');
+        const calState = { bulan: calToday.getMonth() + 1, tahun: calToday.getFullYear(), events: [], selected: calTodayKey };
 
-        <div class="row g-3 mb-4">
-            <div class="col-md-3"><div class="p-3 bg-light rounded-4"><small class="text-muted">Pendapatan Tahun</small><div class="fw-bold text-primary" id="yearIncomeText">-</div></div></div>
-            <div class="col-md-3"><div class="p-3 bg-light rounded-4"><small class="text-muted">Pengeluaran Tahun</small><div class="fw-bold text-danger" id="yearExpenseText">-</div></div></div>
-            <div class="col-md-3"><div class="p-3 bg-light rounded-4"><small class="text-muted">Pendapatan Bulan Dipilih</small><div class="fw-bold text-primary" id="monthIncomeText">-</div></div></div>
-            <div class="col-md-3"><div class="p-3 bg-light rounded-4"><small class="text-muted">Keterangan</small><div class="fw-bold text-success" id="monthInfoText">-</div></div></div>
-        </div>
+        function calKey(e) {
+            return String(e.tanggal || '').slice(0, 10);
+        }
 
-        <div class="row g-4">
-            <div class="col-md-8">
-                <h6 class="fw-bold text-secondary mb-3">Grafik Bulanan (Tahun Dipilih)</h6>
-                <canvas id="yearDynamicChart" height="100"></canvas>
-            </div>
-            <div class="col-md-4">
-                <h6 class="fw-bold text-secondary mb-3">Perbandingan Bulan Dipilih</h6>
-                <canvas id="monthDynamicChart" height="220"></canvas>
-            </div>
-        </div>
-    </div>
+        function calEl(tag, cls, text) {
+            const node = document.createElement(tag);
+            if (cls) node.className = cls;
+            if (text !== undefined) node.textContent = text;
+            return node;
+        }
 
+        function renderCal() {
+            const title = document.getElementById('homeCalTitle');
+            const grid = document.getElementById('homeCalGrid');
+            title.textContent = `${calMonthNames[calState.bulan - 1]} ${calState.tahun}`;
+            grid.innerHTML = '';
+
+            ['S', 'S', 'R', 'K', 'J', 'S', 'M'].forEach(h => grid.appendChild(calEl('div', 'home-cal-head', h)));
+
+            const first = new Date(calState.tahun, calState.bulan - 1, 1);
+            const offset = (first.getDay() + 6) % 7; // Senin = 0
+            const days = new Date(calState.tahun, calState.bulan, 0).getDate();
+            const counts = {};
+            calState.events.forEach(e => { const k = calKey(e); counts[k] = (counts[k] || 0) + 1; });
+
+            for (let i = 0; i < offset; i++) grid.appendChild(calEl('span', 'home-cal-blank'));
+
+            for (let d = 1; d <= days; d++) {
+                const key = [calState.tahun, String(calState.bulan).padStart(2, '0'), String(d).padStart(2, '0')].join('-');
+                const btn = calEl('button', 'home-cal-day' + (key === calState.selected ? ' is-selected' : '') + (key === calTodayKey ? ' is-today' : ''), String(d));
+                btn.type = 'button';
+                if (counts[key]) {
+                    btn.appendChild(calEl('span', 'home-cal-dot'));
+                    btn.title = `${counts[key]} deadline`;
+                }
+                btn.addEventListener('click', () => { calState.selected = key; renderCal(); renderAgenda(); });
+                grid.appendChild(btn);
+            }
+        }
+
+        function renderAgenda() {
+            const title = document.getElementById('homeAgendaTitle');
+            const list = document.getElementById('homeAgendaList');
+            const [y, m, d] = calState.selected.split('-').map(Number);
+            title.textContent = `${d} ${calMonthNames[m - 1]} ${y}`;
+            list.innerHTML = '';
+
+            const items = calState.events.filter(e => calKey(e) === calState.selected);
+            if (items.length === 0) {
+                list.appendChild(calEl('div', 'home-agenda-empty', 'Tidak ada deadline di tanggal ini'));
+                return;
+            }
+            items.forEach(e => {
+                const row = calEl('div', 'home-agenda-item home-agenda-item--' + (calStatusClass[e.selesaikan] || 'belum'));
+                row.appendChild(calEl('div', 'home-agenda-time', String(e.waktu || '').slice(0, 5)));
+                const body = calEl('div', 'flex-grow-1');
+                body.style.minWidth = '0';
+                body.appendChild(calEl('div', 'fw-semibold text-truncate', e.nama));
+                body.appendChild(calEl('div', 'small', `${e.nama_metode} · #${e.id_costomer}`));
+                row.appendChild(body);
+                row.appendChild(calEl('span', 'status-pill status-pill--' + (calStatusClass[e.selesaikan] || 'belum'), calStatusLabel[e.selesaikan] || e.selesaikan));
+                list.appendChild(row);
+            });
+        }
+
+        // Feed deadline bulan ini: daftar terurut tanggal dan jam, dari data kalender
+        function renderFeed() {
+            const list = document.getElementById('homeFeedList');
+            const count = document.getElementById('homeFeedCount');
+            const tones = ['#DFD8F9', '#D2EFFA', '#FCF1C8', '#D6E2C3'];
+            list.innerHTML = '';
+
+            const sorted = calState.events.slice().sort((a, b) => {
+                const ka = calKey(a) + ' ' + String(a.waktu || '');
+                const kb = calKey(b) + ' ' + String(b.waktu || '');
+                return ka < kb ? -1 : ka > kb ? 1 : 0;
+            });
+            count.textContent = sorted.length;
+
+            if (sorted.length === 0) {
+                list.appendChild(calEl('div', 'home-agenda-empty', 'Belum ada deadline bulan ini'));
+                return;
+            }
+
+            sorted.slice(0, 12).forEach(e => {
+                const row = calEl('div', 'home-feed-item');
+                const av = calEl('span', 'home-avatar', String(e.nama || '?').charAt(0));
+                av.style.background = tones[Number(e.id_costomer) % tones.length];
+                row.appendChild(av);
+
+                const body = calEl('div', 'flex-grow-1');
+                body.style.minWidth = '0';
+                body.appendChild(calEl('div', 'fw-semibold text-truncate', e.nama));
+                const [, m, d] = calKey(e).split('-').map(Number);
+                body.appendChild(calEl('div', 'small', `${d} ${calMonthNames[m - 1].slice(0, 3)} · ${String(e.waktu || '').slice(0, 5)}`));
+                row.appendChild(body);
+
+                row.appendChild(calEl('span', 'status-pill status-pill--' + (calStatusClass[e.selesaikan] || 'belum'), calStatusLabel[e.selesaikan] || e.selesaikan));
+                list.appendChild(row);
+            });
+        }
+
+        async function loadCal(bulan, tahun) {
+            try {
+                const res = await fetch(`${calDataUrl}?bulan=${bulan}&tahun=${tahun}`, { credentials: 'same-origin', headers: { 'Accept': 'application/json' } });
+                calState.events = res.ok ? await res.json() : [];
+            } catch (err) {
+                calState.events = [];
+            }
+            calState.bulan = bulan;
+            calState.tahun = tahun;
+            if (!calState.selected.startsWith(`${tahun}-${String(bulan).padStart(2, '0')}`)) {
+                calState.selected = `${tahun}-${String(bulan).padStart(2, '0')}-01`;
+            }
+            renderCal();
+            renderAgenda();
+            renderFeed();
+        }
+
+        document.getElementById('homeCalPrev').addEventListener('click', () => {
+            let b = calState.bulan - 1, t = calState.tahun;
+            if (b < 1) { b = 12; t -= 1; }
+            loadCal(b, t);
+        });
+        document.getElementById('homeCalNext').addEventListener('click', () => {
+            let b = calState.bulan + 1, t = calState.tahun;
+            if (b > 12) { b = 1; t += 1; }
+            loadCal(b, t);
+        });
+
+        loadCal(calState.bulan, calState.tahun);
+    </script>
+
+    <!-- Rekap dinamis (filter tahun & bulan) -->
     <script>
         const rekapPerTahun = {!! $rekap_per_tahun_json !!};
         const rekapPerBulan = {!! $rekap_per_bulan_json !!};
@@ -498,12 +663,26 @@
         const yearChart = new Chart(yearCtx, {
             type: 'line',
             data: { labels: monthNames, datasets: [] },
-            options: { responsive: true, scales: { y: { beginAtZero: true } } }
+            options: {
+                responsive: true,
+                interaction: { mode: 'index', intersect: false },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#F2F3F6' }, border: { display: false } },
+                    x: { grid: { display: false }, border: { display: false } }
+                }
+            }
         });
         const monthChart = new Chart(monthCtx, {
             type: 'bar',
-            data: { labels: ['Pendapatan', 'Pengeluaran', 'Bersih'], datasets: [{ data: [0, 0, 0], backgroundColor: ['#0d6efd', '#dc3545', '#20c997'] }] },
-            options: { responsive: true, plugins: { legend: { display: false } } }
+            data: { labels: ['Pendapatan', 'Pengeluaran', 'Bersih'], datasets: [{ data: [0, 0, 0], backgroundColor: ['#111111', '#D9A21B', '#5E9E4A'], borderRadius: 10, borderSkipped: false, maxBarThickness: 46 }] },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#F2F3F6' }, border: { display: false } },
+                    x: { grid: { display: false }, border: { display: false } }
+                }
+            }
         });
 
         function formatRupiah(val) {
@@ -525,8 +704,8 @@
             }
 
             yearChart.data.datasets = [
-                { label: 'Pendapatan', data: monthlyIncome, borderColor: '#0d6efd', backgroundColor: 'rgba(13,110,253,0.1)', fill: true, tension: 0.3 },
-                { label: 'Pengeluaran', data: monthlyExpense, borderColor: '#dc3545', backgroundColor: 'rgba(220,53,69,0.08)', fill: true, tension: 0.3 }
+                { label: 'Pendapatan', data: monthlyIncome, borderColor: '#111111', backgroundColor: '#111111', fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2 },
+                { label: 'Pengeluaran', data: monthlyExpense, borderColor: '#D9A21B', backgroundColor: '#D9A21B', fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2 }
             ];
             yearChart.update();
 
@@ -543,5 +722,258 @@
         document.getElementById('btnShowRekapDynamic').addEventListener('click', renderDynamicRekap);
         renderDynamicRekap();
     </script>
+
+    <style>
+        /* ===== Tiga kartu statistik gaya referensi: angka besar di tengah, warna solid (tanpa gradien) ===== */
+        .home-tile {
+            border-radius: 28px;
+            padding: 26px 22px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--ink);
+        }
+
+        .home-tile--dark { background: var(--ink); color: #FFFFFF; }
+        .home-tile--lav { background: var(--lav); }
+        .home-tile--sky { background: var(--sky); }
+
+        .home-tile-num {
+            font-size: 2.6rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .home-tile-num--sm { font-size: 1.7rem; }
+
+        .home-tile-label {
+            font-weight: 500;
+            margin-top: 6px;
+        }
+
+        .home-tile-sub {
+            font-size: 0.82rem;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        /* Lonceng bulat; titik kuning muncul bila ada pesanan menunggu diproses */
+        .home-bell {
+            position: relative;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--panel);
+            color: var(--ink);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            text-decoration: none;
+        }
+
+        .home-bell-dot {
+            position: absolute;
+            top: 9px;
+            right: 10px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #F5B841;
+            border: 2px solid #FFFFFF;
+        }
+
+        /* Daftar pelanggan: baris abu muda, avatar bulat di kiri */
+        .home-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .home-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            background: var(--panel);
+            border-radius: 18px;
+        }
+
+        .home-row-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .home-input {
+            background: var(--panel);
+        }
+
+        .home-progress {
+            height: 10px;
+            border-radius: 999px;
+            background: var(--panel);
+            overflow: hidden;
+        }
+
+        .home-progress span {
+            display: block;
+            height: 100%;
+            border-radius: 999px;
+            background: var(--ink);
+        }
+
+        .home-mini {
+            background: var(--panel);
+            border-radius: 16px;
+            padding: 10px 14px;
+        }
+
+        .home-mini-label {
+            font-size: 0.75rem;
+            color: var(--ink-2);
+            margin-bottom: 2px;
+        }
+
+        .home-mini-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        /* Kalender mini */
+        .home-cal-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 4px;
+        }
+
+        .home-cal-head {
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--muted);
+            padding: 2px 0 6px;
+        }
+
+        .home-cal-blank {
+            display: block;
+        }
+
+        .home-cal-day {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            border: 0;
+            border-radius: 50%;
+            background: transparent;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s ease;
+        }
+
+        .home-cal-day:hover {
+            background: var(--panel);
+        }
+
+        .home-cal-day.is-today {
+            background: var(--sky);
+        }
+
+        .home-cal-day.is-selected {
+            background: var(--lav);
+            box-shadow: inset 0 0 0 1.5px var(--accent);
+        }
+
+        .home-cal-dot {
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        /* Agenda deadline */
+        /* Blok agenda pastel per status (gaya Schedule) */
+        .home-agenda-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 14px;
+            margin-bottom: 10px;
+            border-radius: 18px;
+            background: var(--panel);
+        }
+
+        .home-agenda-item--sudah { background: var(--pill-green); }
+        .home-agenda-item--pembayaran { background: var(--yellow); }
+        .home-agenda-item--proses { background: var(--sky); }
+        .home-agenda-item--belum { background: var(--lav); }
+
+        .home-agenda-time {
+            min-width: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--ink-2);
+            padding-top: 2px;
+        }
+
+        .home-agenda-empty {
+            text-align: center;
+            padding: 18px 0;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .status-pill {
+            font-size: 0.72rem;
+            font-weight: 500;
+            padding: 3px 10px;
+            border-radius: 999px;
+            white-space: nowrap;
+            color: var(--ink);
+        }
+
+        .status-pill--sudah { background: var(--pill-green); }
+        .status-pill--pembayaran { background: var(--yellow); }
+        .status-pill--proses { background: var(--sky); }
+        .status-pill--belum { background: #ECEEF2; }
+
+        .home-feed-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-top: 1px solid var(--line);
+        }
+
+        .home-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--ink);
+            flex-shrink: 0;
+        }
+    </style>
 
 @endsection

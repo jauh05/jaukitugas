@@ -10,12 +10,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- GSAP for Premium Animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -24,117 +24,371 @@
     <link rel="icon" type="image/svg+xml" href="{{ asset('asset/jlogo.svg') }}" />
 
     <style>
+        /* Palet diambil dari contoh desain: krem peach, cokelat, oranye, kuning, hijau, biru, pink */
         :root {
-            /* Bright Glass Theme Variables */
-            --glass-bg: rgba(255, 255, 255, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.8);
-            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
-            --glass-blur: blur(20px);
+            --jt-cream: #FFE8D0;
+            --jt-cream-light: #FEF4EB;
+            --jt-brown: #532923;
+            --jt-brown-hover: #6E3B31;
+            --jt-muted: #7D5F54;
+            --jt-orange: #E07540;
+            --jt-yellow: #F3C75F;
+            --jt-green: #46A375;
+            --jt-blue: #7CB1EB;
+            --jt-pink: #F4A6B8;
+            --jt-shadow: 0 16px 36px rgba(83, 41, 35, 0.10);
+            --jt-shadow-sm: 0 6px 18px rgba(83, 41, 35, 0.08);
 
-            --primary-accent: #4834d4;
-            /* Deep Blurple */
-            --secondary-accent: #686de0;
-            /* Soft Blurple */
-            --highlight: #f0932b;
-            /* Orange for CTA */
-
-            --text-main: #2d3436;
-            --text-muted: #636e72;
-
-            --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            /* Override tema Bootstrap supaya utilitas bawaan ikut palet baru */
+            --bs-primary: #532923;
+            --bs-primary-rgb: 83, 41, 35;
+            --bs-dark: #532923;
+            --bs-dark-rgb: 83, 41, 35;
+            --bs-secondary-color: #7D5F54;
+            --bs-light: #FEF4EB;
+            --bs-light-rgb: 254, 244, 235;
+            --bs-warning: #F3C75F;
+            --bs-warning-rgb: 243, 199, 95;
+            --bs-success: #46A375;
+            --bs-success-rgb: 70, 163, 117;
+            --bs-danger: #E07540;
+            --bs-danger-rgb: 224, 117, 64;
+            --bs-info: #7CB1EB;
+            --bs-info-rgb: 124, 177, 235;
+            --bs-border-color: rgba(83, 41, 35, 0.12);
+            --bs-link-color: #532923;
+            --bs-link-color-rgb: 83, 41, 35;
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: #f0f3f7;
-            color: var(--text-main);
+            background: #FFFFFF;
+            color: var(--jt-brown);
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* Animated Background Blobs (Bright Version) */
-        .bg-gradient-blobs {
-            position: fixed;
-            top: 0;
-            left: 0;
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .navbar-brand {
+            font-family: 'Outfit', sans-serif;
+            color: var(--jt-brown);
+            letter-spacing: -0.02em;
+        }
+
+        /* Kartu putih dengan sudut besar, dipakai di semua halaman publik */
+        .glass-card {
+            background: #FFFFFF;
+            border: 0;
+            border-radius: 28px;
+            box-shadow: var(--jt-shadow);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 22px 44px rgba(83, 41, 35, 0.14);
+        }
+
+        /* Kartu arch: lengkung penuh di bagian atas, untuk frame gambar */
+        .jt-arch {
+            border-radius: 50% 50% 24px 24px / 36% 36% 24px 24px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .jt-arch > img,
+        .jt-arch > svg {
             width: 100%;
             height: 100%;
-            z-index: -1;
+            object-fit: contain;
+            display: block;
+        }
+
+        .jt-arch > img.jt-cover {
+            object-fit: cover;
+        }
+
+        /* Baris list pill putih (gaya "Weekly Podcast") */
+        .jt-list-row {
+            background: #FFFFFF;
+            border-radius: 26px;
+            box-shadow: var(--jt-shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0.55rem 0.6rem 0.55rem 0.55rem;
+            color: var(--jt-brown);
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .jt-list-row:hover {
+            transform: translateX(4px);
+            box-shadow: var(--jt-shadow);
+            color: var(--jt-brown);
+        }
+
+        .jt-list-body {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        .jt-thumb {
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
             overflow: hidden;
-            background: linear-gradient(to bottom right, #f6f8fb, #eef2f5);
         }
 
-        .blob {
-            position: absolute;
-            width: 700px;
-            height: 700px;
+        .jt-thumb svg,
+        .jt-thumb img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .jt-play {
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            filter: blur(90px);
-            opacity: 0.6;
-            animation: floatblob 25s infinite alternate ease-in-out;
+            background: var(--jt-yellow);
+            color: var(--jt-brown);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-left: auto;
         }
 
-        .blob-1 {
-            top: -20%;
-            left: -10%;
-            background: #dfe6e9;
-            opacity: 0.8;
+        /* Ikon centang kuning (gaya "What makes us different") */
+        .jt-check {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--jt-yellow);
+            color: var(--jt-brown);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
-        /* Soft Grey */
-        .blob-2 {
-            bottom: -20%;
-            right: -10%;
-            background: #dff9fb;
-            animation-delay: -7s;
+        /* Angka statistik oranye besar */
+        .jt-stat-num {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            color: var(--jt-orange);
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1;
+            letter-spacing: -0.03em;
         }
 
-        /* Soft Cyan */
-        .blob-3 {
-            top: 40%;
-            left: 30%;
-            background: #e3f2fd;
-            animation-duration: 35s;
+        .jt-stat-label {
+            color: var(--jt-brown);
+            font-weight: 600;
+            font-size: 0.9rem;
         }
 
-        /* Soft Blue */
-
-        @keyframes floatblob {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-
-            100% {
-                transform: translate(100px, 50px) scale(1.1);
-            }
+        /* Banner cokelat gelap dengan CTA kuning (gaya "Listen to the latest") */
+        .jt-banner {
+            background: var(--jt-brown);
+            color: #FFFFFF;
+            border-radius: 36px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 24px 50px rgba(83, 41, 35, 0.25);
         }
 
-        /* Glassmorphism Components */
+        .jt-banner h1,
+        .jt-banner h2,
+        .jt-banner h3,
+        .jt-banner h4,
+        .jt-banner h5 {
+            color: #FFFFFF;
+        }
+
+        .jt-banner p {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .jt-banner .jt-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Shape dekoratif geometris, pengganti blob blur */
+        .jt-shape {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+            background: var(--c, var(--jt-orange));
+        }
+
+        .jt-shape--semi {
+            width: 150px;
+            height: 75px;
+            border-radius: 150px 150px 0 0;
+        }
+
+        .jt-shape--quarter {
+            width: 140px;
+            height: 140px;
+            border-radius: 100% 0 0 0;
+        }
+
+        .jt-shape--ring {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: transparent;
+            border: 22px solid var(--c, var(--jt-green));
+        }
+
+        .jt-shape--dot {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+        }
+
+        .jt-shape--pill {
+            width: 110px;
+            height: 36px;
+            border-radius: 999px;
+        }
+
+        .jt-shape--blob {
+            width: 130px;
+            height: 130px;
+            border-radius: 62% 38% 55% 45% / 48% 60% 40% 52%;
+        }
+
+        .jt-shape--spark {
+            width: 44px;
+            height: 44px;
+            clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+        }
+
+        /* Chip dan label kecil */
+        .jt-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            border-radius: 999px;
+            padding: 0.35rem 0.85rem;
+            font-weight: 700;
+            font-size: 0.78rem;
+            background: #FFFFFF;
+            color: var(--jt-brown);
+            box-shadow: var(--jt-shadow-sm);
+        }
+
+        .jt-eyebrow {
+            display: inline-block;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-size: 0.75rem;
+            color: var(--jt-orange);
+        }
+
+        /* Warna utilitas sendiri */
+        .text-jt-orange { color: var(--jt-orange) !important; }
+        .text-jt-brown { color: var(--jt-brown) !important; }
+        .bg-jt-yellow { background-color: var(--jt-yellow) !important; }
+        .bg-jt-green { background-color: var(--jt-green) !important; }
+        .bg-jt-blue { background-color: var(--jt-blue) !important; }
+        .bg-jt-pink { background-color: var(--jt-pink) !important; }
+        .bg-jt-orange { background-color: var(--jt-orange) !important; }
+        .bg-jt-brown { background-color: var(--jt-brown) !important; }
+        .bg-jt-cream-light { background-color: var(--jt-cream-light) !important; }
+
+        /* Glass navbar dan footer diganti krem solid */
         .glass-nav {
-            background: rgba(255, 255, 255, 0.7) !important;
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border-bottom: 1px solid white;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.03);
+            background: #FFFFFF !important;
+            border-bottom: 0;
+            box-shadow: none;
             padding: 1rem 0;
             transition: all 0.3s ease;
         }
 
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid white;
-            border-radius: 24px;
-            box-shadow: var(--glass-shadow);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .glass-footer {
+            background: var(--jt-cream-light);
+            border-top: 0;
+            padding: 3.5rem 0 2rem;
+            margin-top: 3rem;
         }
 
-        .glass-card:hover {
-            transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.85);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            border-color: var(--secondary-accent);
+        /* Tombol: CTA utama kuning pill dengan teks cokelat */
+        .btn-premium {
+            background: var(--jt-yellow);
+            border: none;
+            color: var(--jt-brown);
+            font-weight: 800;
+            padding: 0.8rem 2rem;
+            border-radius: 999px;
+            box-shadow: 0 10px 22px rgba(243, 199, 95, 0.45);
+            transition: all 0.3s ease;
+        }
+
+        .btn-premium:hover,
+        .btn-premium:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(243, 199, 95, 0.55);
+            color: var(--jt-brown);
+            background: #F7D27A;
+        }
+
+        .btn-glass-outline-premium {
+            background: #FFFFFF;
+            border: 2px solid rgba(83, 41, 35, 0.10);
+            color: var(--jt-brown);
+            border-radius: 999px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-glass-outline-premium:hover {
+            border-color: var(--jt-orange);
+            box-shadow: var(--jt-shadow-sm);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            --bs-btn-color: #FFFFFF;
+            --bs-btn-bg: #532923;
+            --bs-btn-border-color: #532923;
+            --bs-btn-hover-color: #FFFFFF;
+            --bs-btn-hover-bg: #6E3B31;
+            --bs-btn-hover-border-color: #6E3B31;
+            --bs-btn-focus-shadow-rgb: 83, 41, 35;
+            --bs-btn-active-color: #FFFFFF;
+            --bs-btn-active-bg: #6E3B31;
+            --bs-btn-active-border-color: #6E3B31;
+            --bs-btn-disabled-color: #FFFFFF;
+            --bs-btn-disabled-bg: #532923;
+            --bs-btn-disabled-border-color: #532923;
+            font-weight: 700;
+        }
+
+        .btn-outline-primary {
+            --bs-btn-color: #532923;
+            --bs-btn-border-color: #532923;
+            --bs-btn-hover-color: #FFFFFF;
+            --bs-btn-hover-bg: #532923;
+            --bs-btn-hover-border-color: #532923;
+            --bs-btn-focus-shadow-rgb: 83, 41, 35;
+            --bs-btn-active-color: #FFFFFF;
+            --bs-btn-active-bg: #532923;
+            --bs-btn-active-border-color: #532923;
+            --bs-btn-disabled-color: #532923;
+            --bs-btn-disabled-border-color: #532923;
         }
 
         .bg-whatsapp {
@@ -149,96 +403,25 @@
             box-shadow: 0 10px 20px rgba(37, 211, 102, 0.25) !important;
         }
 
-        .glass-footer {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border-top: 1px solid white;
-            padding: 3.5rem 0 2rem;
-            margin-top: 2.5rem;
-        }
-
-        /* Buttons */
-        .btn-premium {
-            background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
-            border: none;
-            color: white;
-            font-weight: 700;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            box-shadow: 0 10px 20px rgba(72, 52, 212, 0.15);
-            transition: all 0.3s ease;
-        }
-
-        .btn-premium:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(72, 52, 212, 0.25);
-            color: white;
-        }
-
-        .btn-glass-outline {
-            background: rgba(255, 255, 255, 0.5);
-            border: 2px solid var(--primary-accent);
-            color: var(--primary-accent);
-            font-weight: 700;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-glass-outline:hover {
-            background: var(--primary-accent);
-            color: white;
-        }
-
-        /* Typography */
-        h1,
-        h2,
-        h3,
-        h4,
-        .navbar-brand {
-            font-family: 'Outfit', sans-serif;
-            color: var(--text-main);
-            letter-spacing: -0.03em;
-        }
-
+        /* Teks gradien lama dibuat warna solid */
         .text-gradient {
-            background: linear-gradient(135deg, #4834d4 0%, #a29bfe 50%, #6c5ce7 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            position: relative;
-            display: inline-block;
-            background-size: 200% auto;
-            animation: shine 5s linear infinite;
-        }
-
-        .text-premium-dark {
-            background: linear-gradient(to right, #2d3436, #4834d4, #686de0, #4834d4, #2d3436);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 5s linear infinite;
+            color: var(--jt-orange);
             font-weight: 800;
         }
 
-        .text-glow-soft {
-            text-shadow: 0 0 15px rgba(72, 52, 212, 0.3);
+        .text-premium-dark {
+            color: var(--jt-brown);
+            font-weight: 800;
         }
 
-        @keyframes shine {
-            to {
-                background-position: 200% center;
-            }
-        }
-
+        .text-glow-soft,
         .hero-title {
-            text-shadow: 0 10px 30px rgba(72, 52, 212, 0.1);
-            letter-spacing: -0.05em;
+            text-shadow: none;
         }
 
-        /* Navigation */
+        /* Navigasi */
         .nav-link {
-            color: var(--text-muted) !important;
+            color: var(--jt-muted) !important;
             font-weight: 600;
             margin: 0 10px;
             transition: color 0.3s ease;
@@ -246,7 +429,24 @@
 
         .nav-link:hover,
         .nav-link.active {
-            color: var(--primary-accent) !important;
+            color: var(--jt-orange) !important;
+        }
+
+        /* Form dan accordion */
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--jt-orange);
+            box-shadow: 0 0 0 0.2rem rgba(224, 117, 64, 0.2);
+        }
+
+        .accordion-button:not(.collapsed) {
+            color: var(--jt-brown);
+            background-color: var(--jt-cream-light);
+            box-shadow: none;
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
         }
 
         /* Scrollbar */
@@ -255,20 +455,20 @@
         }
 
         ::-webkit-scrollbar-track {
-            background: #f1f2f6;
+            background: var(--jt-cream-light);
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #cbd5e0;
+            background: #D9B9A4;
             border-radius: 10px;
-            border: 3px solid #f1f2f6;
+            border: 3px solid var(--jt-cream-light);
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--secondary-accent);
+            background: var(--jt-orange);
         }
 
-        /* Mobile Responsiveness */
+        /* Mobile */
         @media (max-width: 768px) {
             .glass-card {
                 padding: 1.5rem !important;
@@ -284,12 +484,6 @@
 
             .navbar-brand span {
                 font-size: 1.2rem;
-            }
-
-            /* Hide giant blobs on mobile to improve performance and readability */
-            .blob {
-                opacity: 0.4;
-                filter: blur(60px);
             }
 
             .glass-footer {
@@ -315,19 +509,12 @@
 </head>
 
 <body>
-    <!-- Animated BG -->
-    <div class="bg-gradient-blobs">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
-    </div>
-
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light glass-nav sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
                 <img src="{{ asset("asset/jlogo.svg") }}" alt="Logo" height="40" class="me-2">
-                <span class="fw-bold fs-3 text-premium-dark">Jauki<span class="text-primary text-glow-soft">Tugas</span></span>
+                <span class="fw-bold fs-3 text-premium-dark">Jauki<span class="text-jt-orange">Tugas</span></span>
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -350,7 +537,7 @@
                         <a class="nav-link" href="{{ url('/#testimonials') }}">Testimoni</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-bold text-primary" href="{{ url('/payment') }}">
+                        <a class="nav-link fw-bold text-jt-orange" href="{{ url('/payment') }}">
                             Info Pembayaran
                         </a>
                     </li>
@@ -377,7 +564,7 @@
                 <div class="col-lg-4">
                     <div class="d-flex align-items-center mb-4">
                         <img src="{{ asset("asset/jlogo.svg") }}" alt="Logo" height="35" class="me-2">
-                        <span class="fw-bold fs-4">Jauki<span class="text-primary">Tugas</span></span>
+                        <span class="fw-bold fs-4">Jauki<span class="text-jt-orange">Tugas</span></span>
                     </div>
                     <p class="text-muted pe-lg-5">Joki tugas Jogja terpercaya nomor 1 di Indonesia. Kami hadir
                         untuk meringankan beban studi Anda dengan kualitas terbaik.</p>
@@ -421,7 +608,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content glass-card border-0 overflow-hidden">
                 <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title fw-bold text-primary"><i class="bi bi-wallet2 me-2"></i>Informasi Pembayaran
+                    <h5 class="modal-title fw-bold text-jt-brown"><i class="bi bi-wallet2 me-2"></i>Informasi Pembayaran
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -463,7 +650,7 @@
                                 <!-- SHOPEEPAY -->
                                 <div class="bg-white p-3 rounded-4 shadow-sm border-start border-4 border-warning">
                                     <div class="d-flex align-items-center mb-2">
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/ShopeePay_logo.svg"
+                                        <img src="{{ asset('asset/generated/logo-shopeepay.svg') }}"
                                             alt="ShopeePay" height="18" class="me-2">
                                         <span class="fw-bold text-dark">SHOPEEPAY</span>
                                     </div>
@@ -481,7 +668,7 @@
                                 <!-- GOPAY -->
                                 <div class="bg-white p-3 rounded-4 shadow-sm border-start border-4 border-success">
                                     <div class="d-flex align-items-center mb-2">
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg"
+                                        <img src="{{ asset('asset/generated/logo-gopay.svg') }}"
                                             alt="Gopay" height="18" class="me-2">
                                         <span class="fw-bold text-dark">GOPAY</span>
                                     </div>
@@ -536,7 +723,7 @@
         document.addEventListener('submit', function (e) {
             const form = e.target;
             const submitButton = form.querySelector('button[type="submit"], button:not([type])');
-            
+
             if (submitButton && !submitButton.disabled) {
                 // If native HTML5 validation exists, check it
                 if (form.checkValidity && !form.checkValidity()) {
@@ -548,7 +735,7 @@
                     e.preventDefault();
                     return;
                 }
-                
+
                 form.setAttribute('data-submitting', 'true');
 
                 // Using setTimeout ensures the browser processes the submit event
@@ -565,9 +752,9 @@
     </script>
 
     <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/6285184771744?text=Halo%20Jauki%20Tugas%2C%20saya%20ingin%20konsultasi" 
-       class="btn-whatsapp-floating shadow-lg" 
-       target="_blank" 
+    <a href="https://wa.me/6285184771744?text=Halo%20Jauki%20Tugas%2C%20saya%20ingin%20konsultasi"
+       class="btn-whatsapp-floating shadow-lg"
+       target="_blank"
        aria-label="Chat with us on WhatsApp">
         <i class="bi bi-whatsapp"></i>
         <span>Chat CS</span>

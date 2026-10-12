@@ -28,7 +28,7 @@
                             <td class="ps-4 text-muted">{{ $key + 1 }}</td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <div class="avatar-circle me-3 bg-primary bg-gradient">
+                                    <div class="avatar-circle me-3 bg-primary">
                                         {{ substr($value['nama'], 0, 1) }}
                                     </div>
                                     <div class="fw-bold text-dark">{{ $value['nama'] }}</div>
@@ -93,7 +93,7 @@
         }
 
         .h-hover:hover {
-            background-color: rgba(72, 52, 212, 0.02) !important;
+            background-color: rgba(17, 17, 17, 0.02) !important;
             transform: translateY(-1px);
         }
 

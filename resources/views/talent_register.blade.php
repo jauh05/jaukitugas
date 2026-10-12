@@ -10,7 +10,7 @@
                         <span class="badge bg-warning text-dark px-3 py-2 rounded-pill mb-3 fw-bold shadow-sm">
                             <i class="bi bi-stars me-2"></i>Join Our Elite Team
                         </span>
-                        <h1 class="display-3 fw-bold mb-4 lh-sm">Wujudkan Karir <br><span
+                        <h1 class="display-3 fw-bold mb-4 lh-sm text-white">Wujudkan Karir <br><span
                                 class="text-warning">Akademikmu</span> Bersama Kami</h1>
                         <p class="lead opacity-75 mb-5">
                             Bantu ribuan mahasiswa meraih impian mereka sambil mengasah keahlian dan mendapatkan penghasilan
@@ -25,7 +25,7 @@
                                     <i class="bi bi-clock-fill fs-4"></i>
                                 </div>
                                 <div>
-                                    <h5 class="mb-0 fw-bold">Waktu Fleksibel</h5>
+                                    <h5 class="mb-0 fw-bold text-white">Waktu Fleksibel</h5>
                                     <small class="opacity-75">Kerja kapan saja, di mana saja.</small>
                                 </div>
                             </div>
@@ -36,7 +36,7 @@
                                     <i class="bi bi-cash-stack fs-4"></i>
                                 </div>
                                 <div>
-                                    <h5 class="mb-0 fw-bold">Penghasilan Menarik</h5>
+                                    <h5 class="mb-0 fw-bold text-white">Penghasilan Menarik</h5>
                                     <small class="opacity-75">Sistem bagi hasil yang transparan.</small>
                                 </div>
                             </div>
@@ -47,7 +47,7 @@
                                     <i class="bi bi-shield-lock-fill fs-4"></i>
                                 </div>
                                 <div>
-                                    <h5 class="mb-0 fw-bold">Keamanan Terjamin</h5>
+                                    <h5 class="mb-0 fw-bold text-white">Keamanan Terjamin</h5>
                                     <small class="opacity-75">Sistem pembayaran & data aman.</small>
                                 </div>
                             </div>
@@ -245,7 +245,7 @@
 
     <style>
         .registration-page {
-            background: linear-gradient(135deg, #4834d4 0%, #686de0 100%);
+            background: linear-gradient(135deg, #532923 0%, #7A4236 100%);
             min-height: 100vh;
             background-attachment: fixed;
         }
@@ -269,7 +269,7 @@
         .input-icon {
             position: absolute;
             left: 20px;
-            color: var(--primary-accent);
+            color: var(--jt-orange);
             font-weight: bold;
             z-index: 5;
         }
@@ -285,8 +285,8 @@
 
         .input-group-custom .form-control:focus {
             background-color: #fff !important;
-            border-color: var(--primary-accent) !important;
-            box-shadow: 0 0 0 4px rgba(72, 52, 212, 0.1) !important;
+            border-color: var(--jt-orange) !important;
+            box-shadow: 0 0 0 4px rgba(224, 117, 64, 0.15) !important;
         }
 
         /* Skill Checkboxes */
@@ -296,9 +296,9 @@
         }
 
         .btn-check:checked+.skill-label {
-            border-color: var(--primary-accent) !important;
-            background: rgba(72, 52, 212, 0.05) !important;
-            box-shadow: 0 5px 15px rgba(72, 52, 212, 0.1);
+            border-color: var(--jt-orange) !important;
+            background: rgba(224, 117, 64, 0.08) !important;
+            box-shadow: 0 5px 15px rgba(224, 117, 64, 0.15);
         }
 
         .btn-check:checked+.skill-label i {
@@ -313,8 +313,8 @@
         }
 
         .upload-area:hover {
-            border-color: var(--primary-accent);
-            background-color: rgba(72, 52, 212, 0.02) !important;
+            border-color: var(--jt-orange);
+            background-color: rgba(224, 117, 64, 0.06) !important;
         }
 
         /* Animations */

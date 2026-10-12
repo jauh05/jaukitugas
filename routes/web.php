@@ -64,6 +64,8 @@ Route::middleware('cekuser')->prefix('dashboard')->group(function () {
     Route::get('/costomer', [CostomerController::class, 'index'])->name('costomer.index');
     Route::get('/costomer/tambah', [CostomerController::class, 'tambah'])->name('costomer.tambah');
     Route::get('/jadwal', [CostomerController::class, 'jadwal'])->name('costomer.jadwal');
+    Route::get('/kalender', [CostomerController::class, 'kalender'])->name('kalender.index');
+    Route::get('/kalender/data', [CostomerController::class, 'kalenderData'])->name('kalender.data');
     Route::get('/pengeluaran', [PengeluaranController::class, 'index'])->name('pengeluaran.index');
 });
 

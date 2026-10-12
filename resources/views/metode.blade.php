@@ -27,7 +27,7 @@
                     showConfirmButton: false,
                     timer: 2000,
                     background: '#fff',
-                    color: '#2d3436'
+                    color: '#111111'
                 });
             </script>
         @endif
@@ -122,7 +122,7 @@
         }
 
         .h-hover:hover {
-            background-color: rgba(72, 52, 212, 0.02) !important;
+            background-color: rgba(17, 17, 17, 0.02) !important;
             transform: translateY(-1px);
         }
 
@@ -131,14 +131,14 @@
         }
 
         .btn-premium {
-            background: linear-gradient(135deg, #4834d4, #686de0);
+            background: #111111;
             color: white;
             border: none;
             transition: all 0.3s ease;
         }
 
         .btn-premium:hover {
-            box-shadow: 0 8px 20px rgba(72, 52, 212, 0.3);
+            box-shadow: 0 8px 20px rgba(17, 17, 17, 0.3);
             transform: translateY(-2px);
             color: white;
         }

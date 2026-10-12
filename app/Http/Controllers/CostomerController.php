@@ -41,6 +41,34 @@ class CostomerController extends Controller
     return view('jadwal', $data);
   }
 
+  // Kalender: deadline = tanggal target customer (sama dengan yang diisi di kanban / data customer)
+  function kalender(Request $request)
+  {
+    return view('kalender', $this->kalenderPeriode($request));
+  }
+
+  function kalenderData(Request $request)
+  {
+    return response()->json($this->kalenderPeriode($request)['events']);
+  }
+
+  private function kalenderPeriode(Request $request): array
+  {
+    $bulan = min(12, max(1, (int) $request->query('bulan', now()->month)));
+    $tahun = (int) $request->query('tahun', now()->year);
+    $awal = \Carbon\Carbon::create($tahun, $bulan, 1)->startOfMonth();
+    $akhir = $awal->copy()->endOfMonth();
+
+    $events = Costomer::join('metode', 'costomer.id_metode', '=', 'metode.id_metode')
+      ->select('costomer.id_costomer', 'costomer.nama', 'costomer.tanggal', 'costomer.waktu', 'costomer.selesaikan', 'costomer.label_custom', 'costomer.total', 'metode.nama_metode')
+      ->whereBetween('costomer.tanggal', [$awal->toDateString(), $akhir->toDateString()])
+      ->orderBy('costomer.tanggal')
+      ->orderBy('costomer.waktu')
+      ->get();
+
+    return ['bulan' => $bulan, 'tahun' => $tahun, 'awal' => $awal, 'events' => $events];
+  }
+
   function tambah()
   {
     $data['costomer'] = MetodePembayaran::all();

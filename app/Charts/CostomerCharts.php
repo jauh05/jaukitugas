@@ -23,7 +23,10 @@ class CostomerCharts
 
         return $chart->horizontalBarChart()
             ->setTitle('Rekap Costomer ' .$tahunSekarang)
-            ->setColors(['#FFC107', '#D32F2F'])
+            ->setColors(['#789FEC'])
+            ->setFontFamily('Outfit')
+            ->setToolbar(false)
+            ->setDataLabels(false)
             ->addData('Jumlah Costomer', $jumlahCos)
             ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June','Juli','Agustus','September','Oktober','November','Desember']);
     }
