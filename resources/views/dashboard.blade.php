@@ -14,20 +14,17 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="{{ asset('asset/jlogo.svg') }}" />
 
-    <!-- Bootstrap 5 & Icons -->
-    <!-- Jika jsDelivr gagal dimuat (jaringan tertentu), pakai cdnjs agar tampilan tidak hilang -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        onerror="this.onerror=null;this.href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css';">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-        onerror="this.onerror=null;this.href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css';">
+    <!-- Bootstrap 5 & Icons (lokal di public/vendor, tidak bergantung CDN) -->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/vendor/bootstrap-icons/bootstrap-icons.min.css">
 
     <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.all.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="/vendor/sweetalert2/sweetalert2.all.min.js"></script>
+    <link href="/vendor/sweetalert2/sweetalert2.min.css" rel="stylesheet">
 
     <!-- Chart.js & Datatables -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <script src="/vendor/chart.js/chart.umd.js"></script>
+    <link href="/vendor/simple-datatables/style.css" rel="stylesheet" />
 
     <style>
         /* Palet dari gambar DR+ (diambil dari piksel): putih dominan, navbar hitam,
@@ -1134,9 +1131,8 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
-        crossorigin="anonymous"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/simple-datatables/simple-datatables.js"></script>
 
     <script>
         // Navbar: buka/tutup mode label, dan simpan pilihan di browser

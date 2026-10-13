@@ -384,7 +384,6 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const currentYear = {{ $tahunSekarang }};
         const currentMonth = {{ now()->month }};
