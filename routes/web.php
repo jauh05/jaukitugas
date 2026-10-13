@@ -35,7 +35,7 @@ Route::middleware(['auth', 'office.owner'])->prefix('office')->group(function ()
 Route::get('/login', [UtamaController::class, 'index2']);
 Route::post('/login/admin', [UtamaController::class, 'dologin']);
 Route::get('/logout', [UtamaController::class, 'logout'])->middleware('cekuser');
-Route::post('/utama/komentar', [UtamaController::class, 'store']);
+Route::post('/utama/komentar', [UtamaController::class, 'store'])->middleware('throttle:5,1');
 Route::get('/pricelist', [UtamaController::class, 'pricelist']);
 Route::get('/payment', [UtamaController::class, 'payment']);
 

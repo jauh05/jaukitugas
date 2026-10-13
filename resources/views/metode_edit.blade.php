@@ -1,25 +1,22 @@
 @extends('dashboard')
 @section('tabel')
-<div class="row">
-    <div class="col-md-5">
-        <div class="card mb-4 mt-5">
-            <div class="card-header">
-                <h4>Form Edit Metode</h4>
-            </div>
-            <div class="card-body">
-                <form action="{{ url('metode/edit/'.$metode['id_metode']) }}" method="post">
-                    @method('put')
-                    @csrf
-                    <label for="">Metode</label>
-                    <input type="text" name="metode" id="" class="form-control" value="{{ $metode['nama_metode'] }}">
-                </form>
-            </div>
-            <div class="p-3">
-                <a href="{{ url('metodepembayaran') }}" class="btn btn-danger"><i class="bi bi-backspace-fill"></i></a>
-                <button class="btn btn-success"><i>Submit</i></button>
-            </div>
+    <div class="card-head">
+        <div>
+            <h5 class="card-title-lg"><i class="bi bi-pencil me-2"></i>Edit Metode Pembayaran</h5>
+            <div class="card-sub">ID #{{ $metode['id_metode'] }}</div>
         </div>
     </div>
-</div>
 
+    <form action="{{ url('metode/edit/' . $metode['id_metode']) }}" method="post" class="row g-3" style="max-width: 560px;">
+        @method('put')
+        @csrf
+        <div class="col-12">
+            <label class="form-label small fw-semibold" style="color: var(--ink-2);" for="metodeEdit">Nama Metode</label>
+            <input type="text" name="metode" id="metodeEdit" class="form-control" value="{{ $metode['nama_metode'] }}" required>
+        </div>
+        <div class="col-12 d-flex gap-2">
+            <a href="{{ url('metodepembayaran') }}" class="btn btn-light rounded-pill px-4">Kembali</a>
+            <button type="submit" class="btn btn-primary rounded-pill px-4">Simpan Perubahan</button>
+        </div>
+    </form>
 @endsection

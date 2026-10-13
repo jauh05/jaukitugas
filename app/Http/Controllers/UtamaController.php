@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Komentar;
 use App\Models\Costomer;
 use App\Models\Admin;
@@ -64,19 +65,32 @@ class UtamaController extends Controller
 
     function store(Request $request)
     {
+        // Bersihkan dulu (buang tag HTML dan karakter kontrol), baru validasi hasil bersihnya
+        $bersih = [
+            'nama' => $this->teksAman($request->input('nama', '')),
+            'tentang' => $this->teksAman($request->input('tentang', '')),
+            'komentar' => $this->teksAman($request->input('komentar', '')),
+        ];
 
-        $nama = $request->nama;
-        $tentang = $request->tentang;
-        $komentar = $request->komentar;
+        $validated = Validator::make($bersih, [
+            'nama' => ['required', 'string', 'min:2', 'max:60'],
+            'tentang' => ['required', 'string', 'min:2', 'max:80'],
+            'komentar' => ['required', 'string', 'min:10', 'max:500'],
+        ], [
+            'komentar.min' => 'Komentar terlalu pendek.',
+            'komentar.required' => 'Komentar wajib diisi dengan teks.',
+        ])->validate();
 
-        $masuk['nama'] = $nama;
-        $masuk['tentang'] = $tentang;
-        $masuk['komentar'] = $komentar;
-
-
-        Komentar::create($masuk);
+        Komentar::create($validated);
         return redirect('/')->with('pesan_berhasil', 'Terima kasih! Komentar Anda berhasil dikirim.');
+    }
 
+    // Hanya teks biasa: tanpa tag HTML/script, tanpa karakter kontrol, spasi dirapikan
+    private function teksAman(string $teks): string
+    {
+        $teks = strip_tags($teks);
+        $teks = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', $teks);
+        return trim(preg_replace('/\s+/u', ' ', $teks));
     }
 
     function pricelist()
