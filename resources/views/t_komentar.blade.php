@@ -509,7 +509,8 @@
 
     <script>
         // ===== Kalender mini di halaman utama: ambil deadline dari endpoint kalender =====
-        const calDataUrl = @json(route('kalender.data'));
+        // Pakai path saja, bukan URL penuh dari APP_URL, supaya request selalu ke host yang sedang dibuka
+        const calDataUrl = @json(parse_url(route('kalender.data'), PHP_URL_PATH));
         const calMonthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
         const calStatusLabel = { sudah: 'Selesai', pembayaran: 'Bayar', proses: 'Proses', belum: 'Belum' };
         const calStatusClass = { sudah: 'sudah', pembayaran: 'pembayaran', proses: 'proses', belum: 'belum' };
