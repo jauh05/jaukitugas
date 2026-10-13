@@ -59,8 +59,9 @@ class CostomerController extends Controller
     $awal = \Carbon\Carbon::create($tahun, $bulan, 1)->startOfMonth();
     $akhir = $awal->copy()->endOfMonth();
 
+    // Sumber data sama dengan kanban (jadwal): semua kolom costomer, supaya kolom opsional (mis. label_custom) tidak membuat query gagal
     $events = Costomer::join('metode', 'costomer.id_metode', '=', 'metode.id_metode')
-      ->select('costomer.id_costomer', 'costomer.nama', 'costomer.tanggal', 'costomer.waktu', 'costomer.selesaikan', 'costomer.label_custom', 'costomer.total', 'metode.nama_metode')
+      ->select('costomer.*', 'metode.nama_metode')
       ->whereBetween('costomer.tanggal', [$awal->toDateString(), $akhir->toDateString()])
       ->orderBy('costomer.tanggal')
       ->orderBy('costomer.waktu')

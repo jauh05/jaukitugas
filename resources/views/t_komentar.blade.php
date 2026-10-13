@@ -563,6 +563,10 @@
             const [y, m, d] = calState.selected.split('-').map(Number);
             title.textContent = `${d} ${calMonthNames[m - 1]} ${y}`;
             list.innerHTML = '';
+            if (calState.error) {
+                list.appendChild(calEl('div', 'home-agenda-empty', calState.error));
+                return;
+            }
 
             const items = calState.events.filter(e => calKey(e) === calState.selected);
             if (items.length === 0) {
@@ -588,6 +592,11 @@
             const count = document.getElementById('homeFeedCount');
             const tones = ['#DFD8F9', '#D2EFFA', '#FCF1C8', '#D6E2C3'];
             list.innerHTML = '';
+            if (calState.error) {
+                count.textContent = '!';
+                list.appendChild(calEl('div', 'home-agenda-empty', calState.error));
+                return;
+            }
 
             const sorted = calState.events.slice().sort((a, b) => {
                 const ka = calKey(a) + ' ' + String(a.waktu || '');
@@ -622,9 +631,14 @@
         async function loadCal(bulan, tahun) {
             try {
                 const res = await fetch(`${calDataUrl}?bulan=${bulan}&tahun=${tahun}`, { credentials: 'same-origin', headers: { 'Accept': 'application/json' } });
-                calState.events = res.ok ? await res.json() : [];
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                calState.events = await res.json();
+                calState.error = null;
             } catch (err) {
+                // Server error, atau sesi habis (dialihkan ke halaman login): tampilkan pesan, jangan diam-diam kosong
+                console.error('Deadline gagal dimuat:', err);
                 calState.events = [];
+                calState.error = 'Deadline belum bisa dimuat. Muat ulang halaman, atau login ulang jika sesi sudah habis.';
             }
             calState.bulan = bulan;
             calState.tahun = tahun;
