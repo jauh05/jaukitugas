@@ -135,7 +135,7 @@
                                     @endif
 
                                     <div class="my-3" style="border-top: 1px dashed var(--line);"></div>
-                                    <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex flex-column gap-1">
                                         <span class="fw-semibold">Total Harus Dibayar</span>
                                         <span class="invoice-grand">Rp {{ number_format($total_akhir) }}</span>
                                     </div>
@@ -265,6 +265,7 @@
             font-size: 1.5rem;
             font-weight: 600;
             color: var(--ink);
+            white-space: nowrap;
         }
 
         #notaCard .table thead th {
@@ -299,26 +300,57 @@
         qty.addEventListener('input', calcTotal);
         harga.addEventListener('input', calcTotal);
 
-        // Capture & Download
-        document.getElementById("btnCapture").addEventListener("click", function() {
-            let cardElement = document.getElementById("notaCard");
+        // Capture & Download: salinan kartu dirapikan di onclone, jadi halaman asli tidak berubah
+        const btnCapture = document.getElementById("btnCapture");
+        const notaFileName = @json('Invoice_' . $costomer['nama'] . '.jpg');
 
-            // Hide delete buttons before capture
-            document.querySelectorAll('.action-cell').forEach(el => el.style.display = 'none');
+        btnCapture.addEventListener("click", async function() {
+            const cardElement = document.getElementById("notaCard");
+            btnCapture.disabled = true;
 
-            html2canvas(cardElement, {
-                scale: 2,
-                useCORS: true,
-                backgroundColor: "#ffffff"
-            }).then(canvas => {
-                let link = document.createElement("a");
-                link.href = canvas.toDataURL("image/jpeg", 0.9);
-                link.download = "Invoice_{{ $costomer['nama'] }}.jpg";
+            try {
+                if (typeof html2canvas !== 'function') {
+                    throw new Error('Library pembuat gambar belum termuat. Muat ulang halaman lalu coba lagi.');
+                }
+
+                const canvas = await html2canvas(cardElement, {
+                    scale: 2,
+                    useCORS: true,
+                    backgroundColor: "#ffffff",
+                    windowWidth: 1200,
+                    scrollX: -window.scrollX,
+                    scrollY: -window.scrollY,
+                    onclone: function(doc) {
+                        // Tombol aksi dibuang dan tata letak dikunci hanya di salinan
+                        doc.querySelectorAll('.action-cell').forEach(el => el.remove());
+                        const card = doc.getElementById("notaCard");
+                        card.style.width = "720px";
+                        card.style.margin = "0 auto";
+                        card.style.overflow = "visible";
+                        card.style.borderRadius = "0";
+                        card.style.boxShadow = "none";
+                        doc.querySelectorAll('.invoice-bill, .invoice-total').forEach(el => el.style.display = "block");
+                    }
+                });
+
+                // Blob + object URL, bukan data URL besar: unduhan tidak memicu navigasi
+                const blob = await new Promise((resolve, reject) => {
+                    canvas.toBlob(b => b ? resolve(b) : reject(new Error('Gagal membuat file gambar.')), "image/jpeg", 0.92);
+                });
+
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = notaFileName;
+                document.body.appendChild(link);
                 link.click();
-
-                // Show buttons again
-                document.querySelectorAll('.action-cell').forEach(el => el.style.display = '');
-            });
+                link.remove();
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+            } catch (err) {
+                Swal.fire({ icon: 'error', title: 'Gagal membuat JPG', text: err.message, confirmButtonText: 'Tutup' });
+            } finally {
+                btnCapture.disabled = false;
+            }
         });
     </script>
 @endsection
