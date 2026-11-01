@@ -10,7 +10,7 @@
             <p class="mb-1"><strong>Nama layanan:</strong> Jauki Tugas</p>
             <p class="mb-1"><strong>Website:</strong> <a href="https://jaukitugas.my.id">https://jaukitugas.my.id</a></p>
             <p class="mb-1"><strong>Kontak:</strong> <a href="mailto:jaukiacademu@gmail.com">jaukiacademu@gmail.com</a></p>
-            <p class="mb-4"><strong>Terakhir diperbarui:</strong> [ISI TANGGAL]</p>
+            <p class="mb-4"><strong>Terakhir diperbarui:</strong> 1 November 2026</p>
 
             <h2 class="h4 fw-bold mt-4">1. Ruang lingkup layanan</h2>
             <p>Jauki Tugas menyediakan fitur penjadwalan dan pengiriman draft konten ke akun TikTok yang dihubungkan oleh pemilik akun. Kami tidak memposting konten secara langsung. Konten dikirim sebagai draf, dan hanya terbit jika pemilik akun mempublikasikannya sendiri dari aplikasi TikTok.</p>
@@ -42,7 +42,7 @@
             <p class="mb-1"><strong>Service name:</strong> Jauki Tugas</p>
             <p class="mb-1"><strong>Website:</strong> <a href="https://jaukitugas.my.id">https://jaukitugas.my.id</a></p>
             <p class="mb-1"><strong>Contact:</strong> <a href="mailto:jaukiacademu@gmail.com">jaukiacademu@gmail.com</a></p>
-            <p class="mb-4"><strong>Last updated:</strong> [ISI TANGGAL]</p>
+            <p class="mb-4"><strong>Last updated:</strong> 1 November 2026</p>
 
             <h2 class="h4 fw-bold mt-4">1. Scope of the service</h2>
             <p>Jauki Tugas provides scheduling and delivery of content drafts to a TikTok account connected by the account owner. We do not post content directly. Content is sent as a draft and is published only if the account owner publishes it themselves from the TikTok app.</p>

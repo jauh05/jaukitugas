@@ -10,7 +10,7 @@
             <p class="mb-1"><strong>Nama layanan:</strong> Jauki Tugas</p>
             <p class="mb-1"><strong>Website:</strong> <a href="https://jaukitugas.my.id">https://jaukitugas.my.id</a></p>
             <p class="mb-1"><strong>Kontak:</strong> <a href="mailto:jaukiacademu@gmail.com">jaukiacademu@gmail.com</a></p>
-            <p class="mb-4"><strong>Terakhir diperbarui:</strong> [ISI TANGGAL]</p>
+            <p class="mb-4"><strong>Terakhir diperbarui:</strong> 1 November 2026</p>
 
             <h2 class="h4 fw-bold mt-4">1. Data yang kami gunakan</h2>
             <ul>
@@ -47,7 +47,7 @@
             <p class="mb-1"><strong>Service name:</strong> Jauki Tugas</p>
             <p class="mb-1"><strong>Website:</strong> <a href="https://jaukitugas.my.id">https://jaukitugas.my.id</a></p>
             <p class="mb-1"><strong>Contact:</strong> <a href="mailto:jaukiacademu@gmail.com">jaukiacademu@gmail.com</a></p>
-            <p class="mb-4"><strong>Last updated:</strong> [ISI TANGGAL]</p>
+            <p class="mb-4"><strong>Last updated:</strong> 1 November 2026</p>
 
             <h2 class="h4 fw-bold mt-4">1. Data we use</h2>
             <ul>
