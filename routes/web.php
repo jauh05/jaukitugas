@@ -39,6 +39,10 @@ Route::post('/utama/komentar', [UtamaController::class, 'store']);
 Route::get('/pricelist', [UtamaController::class, 'pricelist']);
 Route::get('/payment', [UtamaController::class, 'payment']);
 
+// Halaman legal (draf untuk verifikasi aplikasi TikTok)
+Route::view('/terms', 'legal.terms')->name('terms');
+Route::view('/privacy', 'legal.privacy')->name('privacy');
+
 // Talent Registration Routes
 Route::get('/talent/register', [TalentRegistrationController::class, 'create'])->name('talent.register');
 Route::post('/talent/register', [TalentRegistrationController::class, 'store'])->name('talent.register.store');
