@@ -9,7 +9,7 @@
 
             <p class="mb-1"><strong>Nama layanan:</strong> Jauki Tugas</p>
             <p class="mb-1"><strong>Website:</strong> <a href="https://jaukitugas.my.id">https://jaukitugas.my.id</a></p>
-            <p class="mb-1"><strong>Kontak:</strong> [ISI EMAIL KONTAK]</p>
+            <p class="mb-1"><strong>Kontak:</strong> <a href="mailto:jaukiacademu@gmail.com">jaukiacademu@gmail.com</a></p>
             <p class="mb-4"><strong>Terakhir diperbarui:</strong> [ISI TANGGAL]</p>
 
             <h2 class="h4 fw-bold mt-4">1. Data yang kami gunakan</h2>
@@ -36,7 +36,7 @@
             <h2 class="h4 fw-bold mt-4">5. Hak Anda</h2>
             <ul>
                 <li>Memutus koneksi akun TikTok kapan saja.</li>
-                <li>Meminta penghapusan data Anda dengan menghubungi [ISI EMAIL KONTAK].</li>
+                <li>Meminta penghapusan data Anda dengan menghubungi <a href="mailto:jaukiacademu@gmail.com">jaukiacademu@gmail.com</a>.</li>
             </ul>
 
             <hr class="my-5">
@@ -46,7 +46,7 @@
 
             <p class="mb-1"><strong>Service name:</strong> Jauki Tugas</p>
             <p class="mb-1"><strong>Website:</strong> <a href="https://jaukitugas.my.id">https://jaukitugas.my.id</a></p>
-            <p class="mb-1"><strong>Contact:</strong> [ISI EMAIL KONTAK]</p>
+            <p class="mb-1"><strong>Contact:</strong> <a href="mailto:jaukiacademu@gmail.com">jaukiacademu@gmail.com</a></p>
             <p class="mb-4"><strong>Last updated:</strong> [ISI TANGGAL]</p>
 
             <h2 class="h4 fw-bold mt-4">1. Data we use</h2>
@@ -73,7 +73,7 @@
             <h2 class="h4 fw-bold mt-4">5. Your rights</h2>
             <ul>
                 <li>Disconnect your TikTok account at any time.</li>
-                <li>Request deletion of your data by contacting [ISI EMAIL KONTAK].</li>
+                <li>Request deletion of your data by contacting <a href="mailto:jaukiacademu@gmail.com">jaukiacademu@gmail.com</a>.</li>
             </ul>
 
             <div class="text-center mt-5">

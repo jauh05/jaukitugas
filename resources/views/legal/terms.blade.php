@@ -9,7 +9,7 @@
 
             <p class="mb-1"><strong>Nama layanan:</strong> Jauki Tugas</p>
             <p class="mb-1"><strong>Website:</strong> <a href="https://jaukitugas.my.id">https://jaukitugas.my.id</a></p>
-            <p class="mb-1"><strong>Kontak:</strong> [ISI EMAIL KONTAK]</p>
+            <p class="mb-1"><strong>Kontak:</strong> <a href="mailto:jaukiacademu@gmail.com">jaukiacademu@gmail.com</a></p>
             <p class="mb-4"><strong>Terakhir diperbarui:</strong> [ISI TANGGAL]</p>
 
             <h2 class="h4 fw-bold mt-4">1. Ruang lingkup layanan</h2>
@@ -41,7 +41,7 @@
 
             <p class="mb-1"><strong>Service name:</strong> Jauki Tugas</p>
             <p class="mb-1"><strong>Website:</strong> <a href="https://jaukitugas.my.id">https://jaukitugas.my.id</a></p>
-            <p class="mb-1"><strong>Contact:</strong> [ISI EMAIL KONTAK]</p>
+            <p class="mb-1"><strong>Contact:</strong> <a href="mailto:jaukiacademu@gmail.com">jaukiacademu@gmail.com</a></p>
             <p class="mb-4"><strong>Last updated:</strong> [ISI TANGGAL]</p>
 
             <h2 class="h4 fw-bold mt-4">1. Scope of the service</h2>
