@@ -26,13 +26,13 @@
             <p>Penggunaan layanan ini wajib mematuhi Terms of Service dan Community Guidelines TikTok. Konten yang melanggar ketentuan TikTok dapat ditolak oleh TikTok, dan kami dapat membatasi akses pengguna yang melanggar.</p>
 
             <h2 class="h4 fw-bold mt-4">4. Batasan tanggung jawab</h2>
-            <p>Layanan disediakan apa adanya. Kami tidak bertanggung jawab atas kerugian tidak langsung, termasuk kehilangan konten, kehilangan jangkauan, atau keputusan TikTok terhadap konten Anda. Batas tanggung jawab kami: [PERLU KEPUTUSAN: batas nilai ganti rugi].</p>
+            <p>Layanan disediakan apa adanya. Kami tidak bertanggung jawab atas kerugian tidak langsung, termasuk kehilangan konten, kehilangan jangkauan, atau keputusan TikTok terhadap konten Anda. Sejauh diizinkan hukum, tanggung jawab kami tidak melebihi nilai yang dibayarkan pengguna untuk layanan dalam 3 bulan terakhir. Jika layanan gratis, batasnya nol rupiah.</p>
 
             <h2 class="h4 fw-bold mt-4">5. Perubahan layanan</h2>
-            <p>Kami dapat mengubah atau menghentikan sebagian fitur layanan. Perubahan penting akan diumumkan melalui website. Jangka waktu pemberitahuan sebelum perubahan berlaku: [PERLU KEPUTUSAN].</p>
+            <p>Kami dapat mengubah atau menghentikan sebagian fitur layanan. Perubahan penting akan diumumkan melalui website. Jangka waktu pemberitahuan sebelum perubahan berlaku: 14 (empat belas) hari.</p>
 
             <h2 class="h4 fw-bold mt-4">6. Hukum yang berlaku</h2>
-            <p>Ketentuan ini tunduk pada hukum Republik Indonesia. Perselisihan diselesaikan terlebih dahulu melalui musyawarah. Pengadilan yang berwenang: [PERLU KEPUTUSAN].</p>
+            <p>Ketentuan ini tunduk pada hukum Republik Indonesia. Perselisihan diselesaikan terlebih dahulu melalui musyawarah. Pengadilan yang berwenang: Pengadilan Negeri di wilayah domisili pengelola layanan.</p>
 
             <hr class="my-5">
 
@@ -58,13 +58,13 @@
             <p>Use of this service must comply with TikTok's Terms of Service and Community Guidelines. TikTok may reject content that violates its rules, and we may restrict access for users who violate them.</p>
 
             <h2 class="h4 fw-bold mt-4">4. Limitation of liability</h2>
-            <p>The service is provided "as is". We are not liable for indirect losses, including loss of content, loss of reach, or TikTok's decisions about your content. Our liability cap: [PERLU KEPUTUSAN: liability cap amount].</p>
+            <p>The service is provided "as is". We are not liable for indirect losses, including loss of content, loss of reach, or TikTok's decisions about your content. To the extent permitted by law, our total liability shall not exceed the amount you paid for the service in the last 3 months. If the service is free, the limit is zero (Rp 0).</p>
 
             <h2 class="h4 fw-bold mt-4">5. Changes to the service</h2>
-            <p>We may change or discontinue parts of the service. Material changes will be announced on the website. Notice period before changes take effect: [PERLU KEPUTUSAN].</p>
+            <p>We may change or discontinue parts of the service. Material changes will be announced on the website. Notice period before changes take effect: 14 (fourteen) days.</p>
 
             <h2 class="h4 fw-bold mt-4">6. Governing law</h2>
-            <p>These terms are governed by the laws of the Republic of Indonesia. Disputes are first resolved through good-faith discussion. Competent court: [PERLU KEPUTUSAN].</p>
+            <p>These terms are governed by the laws of the Republic of Indonesia. Disputes are first resolved through good-faith discussion. Competent court: the District Court (Pengadilan Negeri) with jurisdiction over the domicile of the service operator.</p>
 
             <div class="text-center mt-5">
                 <a href="{{ url('/') }}" class="btn btn-link text-decoration-none text-muted"><i class="bi bi-arrow-left me-2"></i>Kembali ke Beranda</a>

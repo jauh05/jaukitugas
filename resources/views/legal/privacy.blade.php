@@ -30,8 +30,8 @@
             <p>Kami tidak menjual data Anda dan tidak membagikannya ke pihak ketiga, kecuali penyedia infrastruktur yang diperlukan untuk menjalankan layanan.</p>
 
             <h2 class="h4 fw-bold mt-4">4. Retensi (lama penyimpanan)</h2>
-            <p>[PERLU KEPUTUSAN: berapa lama token akses dan token refresh disimpan]</p>
-            <p>[PERLU KEPUTUSAN: berapa lama file video disimpan, dan kapan dihapus setelah dikirim ke TikTok]</p>
+            <p>Token akses dan token refresh disimpan selama akun TikTok masih terhubung, dan dihapus saat pengguna memutus koneksi.</p>
+            <p>File video disimpan di server paling lama 7 hari, dan dihapus setelah TikTok mengonfirmasi pengiriman draf, atau segera jika pengiriman gagal.</p>
 
             <h2 class="h4 fw-bold mt-4">5. Hak Anda</h2>
             <ul>
@@ -67,8 +67,8 @@
             <p>We do not sell your data and do not share it with third parties, except infrastructure providers needed to run the service.</p>
 
             <h2 class="h4 fw-bold mt-4">4. Retention</h2>
-            <p>[PERLU KEPUTUSAN: how long access and refresh tokens are stored]</p>
-            <p>[PERLU KEPUTUSAN: how long video files are stored, and when they are deleted after being sent to TikTok]</p>
+            <p>Access and refresh tokens are stored while your TikTok account remains connected and are deleted when you disconnect.</p>
+            <p>Video files are kept on our server for no more than 7 days and are deleted once TikTok confirms the draft upload, or immediately if the upload fails.</p>
 
             <h2 class="h4 fw-bold mt-4">5. Your rights</h2>
             <ul>
